@@ -1,0 +1,22 @@
+# vertex shader
+# version 410 core
+
+layout (location = 0) in vec2 v_offset;
+
+void main(void) {
+  const vec4 vertices[3] = vec4[3](
+      vec4( 0.25, -0.25, 0.5, 1),
+      vec4(-0.25, -0.25, 0.5, 1),
+      vec4( 0.00,  0.25, 0.5, 1));
+
+  gl_Position = vertices[gl_VertexID] + vec4(v_offset, 0, 0);
+  //gl_Position = vertices[gl_VertexID];
+}
+# fragment shader
+# version 410 core
+
+out vec4 fs_color;
+
+void main(void) {
+  fs_color = vec4(.5, .5, 1, 1);
+}
