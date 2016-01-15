@@ -1,13 +1,13 @@
 from OpenGL.GL import *
 
-class GLObject(object):
+class _GLObject_(object):
     def create(self): pass
     def delete(self): pass
 
     def __del__(self):  self.delete()
     def __init__(self, *args, **kwargs): self.create(*args, **kwargs)
 
-class VertexArray(GLObject):
+class VertexArray(_GLObject_):
     def create(self):
         self._h = glGenVertexArrays(1)
 
@@ -19,7 +19,7 @@ class VertexArray(GLObject):
     def bind(self):
         glBindVertexArray(self._h)
 
-class VertexBuffer(GLObject):
+class VertexBuffer(_GLObject_):
     def create(self, names):
         '''VertexBuffer('position normal color texture')'''
         names = names.split()

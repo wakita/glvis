@@ -3,10 +3,10 @@ from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
-from sn.gl.globject import GLObject
+from sn.gl.globject import _GLObject_
 from sn.qt import (Application, GLWidget)
 
-class Program(GLObject):
+class Program(_GLObject_):
     shadertypes = dict(
             vs       = GL_VERTEX_SHADER,
             vert     = GL_VERTEX_SHADER,

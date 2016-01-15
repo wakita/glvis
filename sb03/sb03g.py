@@ -1,18 +1,14 @@
 import math
-from OpenGL.GL import *
+from sb03 import *
 
-from sn.qt import Time
-from sn.gl import Program
-import sb03
-
-class W(sb03.SB03):
+class W(SB03):
 
     program = None
 
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
         self.program = self.program or Program('sb03g.shaders')
-        self.VAO = glGenVertexArrays(1)
+        self.vao = VertexArray()
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
         glPointSize(5)
 
@@ -20,7 +16,7 @@ class W(sb03.SB03):
         super(self.__class__, self).paintGL()
 
         self.program.use()
-        glBindVertexArray(self.VAO)
+        self.vao.bind()
         t = Time.time
         c = math.cos(t); s = math.sin(t)
         glVertexAttrib2f(0, c / 2, s / 2)
@@ -29,4 +25,4 @@ class W(sb03.SB03):
         glDrawArrays(GL_PATCHES, 0, 3)
         glFlush()
 
-if __name__ == '__main__': sb03.start(W)
+if __name__ == '__main__': start(W)

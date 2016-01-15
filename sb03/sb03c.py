@@ -1,11 +1,7 @@
 import math
-from OpenGL.GL import *
+from sb03 import *
 
-from sn.qt import Time
-from sn.gl import Program
-import sb03
-
-class W(sb03.SB03):
+class W(SB03):
     '''
     見た目はsb03bと同じ。シェーダの書き方だけが異なる。
     
@@ -18,14 +14,14 @@ class W(sb03.SB03):
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
         self.program = self.program or Program('sb03c.shaders')
-        self.VAO = glGenVertexArrays(1)
+        self.vao = VertexArray()
 
     def paintGL(self):
         super(self.__class__, self).paintGL()
 
         self.program.use()
 
-        glBindVertexArray(self.VAO)
+        self.vao.bind()
         t = Time.time
         c = math.cos(t); s = math.sin(t)
 # Todo: 変数をlocation(=0)ではなく，シンボルで指定したい．
@@ -35,4 +31,4 @@ class W(sb03.SB03):
         glDrawArrays(GL_TRIANGLES, 0, 3)
         glFlush()
 
-if __name__ == '__main__': sb03.start(W)
+if __name__ == '__main__': start(W)

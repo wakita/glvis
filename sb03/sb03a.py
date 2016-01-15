@@ -1,13 +1,7 @@
 import math
+from sb03 import *
 
-from OpenGL.GL import *
-
-from sn.qt import Time
-from sn.gl import Program
-from sn.gl.globject import *
-import sb03
-
-class W(sb03.SB03):
+class W(SB03):
     '''glVertexAttrib2fvを使ってデータをシェーダに送る例'''
 
     program = None
@@ -30,4 +24,4 @@ class W(sb03.SB03):
         glDrawArrays(GL_TRIANGLES, 0, 3)
         glFlush()
 
-if __name__ == '__main__': sb03.start(W)
+if __name__ == '__main__': start(W)

@@ -1,17 +1,14 @@
 import math
-from OpenGL.GL import *
+from sb03 import *
+from PyQt5.QtGui import QColor
 
-from sn.qt import Time
-from sn.gl import Program
-import sb03
-
-class W(sb03.SB03):
+class W(SB03):
     program = None
 
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
         self.program = self.program or Program('sb03e.shaders')
-        self.VAO = glGenVertexArrays(1)
+        self.vao = VertexArray()
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
         glPointSize(5)
 
@@ -19,13 +16,13 @@ class W(sb03.SB03):
         super(self.__class__, self).paintGL()
 
         self.program.use()
-        glBindVertexArray(self.VAO)
+        self.vao.bind()
         t = Time.time
-        c = math.cos(t); s = math.sin(t)
-        glVertexAttrib2f(0, c / 2, s / 2)
-        glVertexAttrib4f(1, (c + 1) / 2, (s + 1) / 2, 0, 1)
+        glVertexAttrib2f(0, math.cos(t) / 2, math.sin(t) / 2)
+        c = QColor.fromHsvF(math.fmod(t / math.pi, 1), 1, .5)
+        glVertexAttrib3f(1, c.redF(), c.greenF(), c.blueF())
 
         glDrawArrays(GL_PATCHES, 0, 3)
         glFlush()
 
-if __name__ == '__main__': sb03.start(W)
+if __name__ == '__main__': start(W)
