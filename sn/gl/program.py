@@ -1,12 +1,12 @@
-#import numpy as np
 import re, sys
 from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
+from sn.gl.globject import GLObject
 from sn.qt import (Application, GLWidget)
 
-class Program(object):
+class Program(GLObject):
     shadertypes = dict(
             vs       = GL_VERTEX_SHADER,
             vert     = GL_VERTEX_SHADER,
@@ -33,6 +33,14 @@ class Program(object):
         self.load(path)
         self.create()
         self.compile()
+
+    def __del__(self):
+        self.delete()
+
+    def delete(self):
+        if self._program and bool(glDeleteProgram):
+            p = self._program; self._program = None
+            glDeleteProgram(p)
 
     def load(self, path):
         shadertypes = self.shadertypes

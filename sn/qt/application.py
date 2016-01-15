@@ -24,9 +24,8 @@ class Application(QApplication):
     @classmethod
     def addOnTick(cls, onTick): cls._timer.timeout.connect(onTick)
 
-    from sys import exit
     def run(self):
-        exit(self.exec_())
+        sys.exit(self.exec_())
 
 if __name__ == '__main__':
     app = Application()
