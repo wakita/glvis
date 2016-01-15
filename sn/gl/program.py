@@ -34,9 +34,6 @@ class Program(_GLObject_):
         self._create()
         self._compile()
 
-#   def __del__(self):
-#       self.delete()
-
     def delete(self):
         if self._program and bool(glDeleteProgram):
             p = self._program; self._program = None
