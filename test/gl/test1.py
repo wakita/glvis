@@ -1,12 +1,9 @@
 import math
-import numpy as np
-from ctypes import c_void_p
 
-from OpenGL.GL import *
-from PyQt5 import QtGui
+from PyQt5.QtGui import QColor
 
-from sn.qt import (Application, GLWidget, Time, Window)
-from sn.gl import (Program)
+from sn.qt import *
+from sn.gl import *
 
 class Widget(GLWidget):
     v_offset = np.array([[.1, .1], [.9, .1], [.1, .9]], dtype = np.float32)
@@ -29,7 +26,7 @@ class Widget(GLWidget):
 
 #       pos = glGetAttribLocation(self.program._program, 'v_offset')
 #       print('pos:', pos)
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, c_void_p(0))
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, None)
         glEnableVertexAttribArray(0)
 
     def paintGL(self):
@@ -42,7 +39,7 @@ class Widget(GLWidget):
     def onTick(self):
         t = Time.time
         hue = math.fmod(t / 10, 1)
-        c = QtGui.QColor.fromHsvF(hue, 1., .5)
+        c = QColor.fromHsvF(hue, 1., .5)
         glClearColor(c.redF(), c.greenF(), c.blueF(), 1)
 
 #       c, s = math.cos(t), math.sin(t)

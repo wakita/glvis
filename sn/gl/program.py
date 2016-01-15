@@ -29,20 +29,20 @@ class Program(_GLObject_):
             cs       = GL_COMPUTE_SHADER,
             compute  = GL_COMPUTE_SHADER)
 
-    def __init__(self, path):
-        self.load(path)
-        self.create()
-        self.compile()
+    def create(self, path):
+        self._load(path)
+        self._create()
+        self._compile()
 
-    def __del__(self):
-        self.delete()
+#   def __del__(self):
+#       self.delete()
 
     def delete(self):
         if self._program and bool(glDeleteProgram):
             p = self._program; self._program = None
             glDeleteProgram(p)
 
-    def load(self, path):
+    def _load(self, path):
         shadertypes = self.shadertypes
         shaderset = []
         kind = None; code = []
@@ -59,14 +59,14 @@ class Program(_GLObject_):
             shaderset.append((kind, ''.join(code)))
         self._shaderset = shaderset
 
-    def create(self):
+    def _create(self):
         self._program = glCreateProgram()
         self._validated = self._linked = False
         self._variables = dict(vertex=set(), uniform=set())
         self._samplers = {}
         self._known_invalid = set()
 
-    def compile(self):
+    def _compile(self):
         self._linked = False
         program = self._program
         shaderlist = []

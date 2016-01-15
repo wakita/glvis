@@ -1,9 +1,11 @@
 import math
+
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QGridLayout, QWidget)
 from PyQt5.QtGui import QColor
-from sn.qt import (Application, GLWidget, Time, Window)
-from OpenGL.GL import *
+
+from sn.qt import *
+from sn.gl import *
 
 class GLW(GLWidget):
     serial = 0
