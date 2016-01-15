@@ -7,9 +7,11 @@ import sb03
 
 class W(sb03.SB03):
 
+    program = None
+
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
-        self.program = Program('sb03d.shaders')
+        self.program = self.program or Program('sb03d.shaders')
         self.VAO = glGenVertexArrays(1)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 

@@ -9,9 +9,11 @@ import sb03
 class W(sb03.SB03):
     '''glVertexAttrib... を使って複数のデータをシェーダに送る例'''
 
+    program = None
+
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
-        self.program = Program('sb03b.shaders')
+        self.program = self.program or Program('sb03b.shaders')
         self.VAO = glGenVertexArrays(1)
 
     def paintGL(self):

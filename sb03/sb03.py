@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
     app = Application()
     app.startTimer(1000/60)
+
     w = SB03(None)
     grid = QGridLayout(w)
     for r, c, W in [
