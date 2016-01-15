@@ -13,9 +13,6 @@ class W(sb03.SB03):
     ことで関連する複数のデータをひとまとめに扱うとともに、異なるシェーダから見え
     る同じデータを異なる名前で参照できる。 '''
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def initializeGL(self):
         super(self.__class__, self).initializeGL()
         self.program = Program('sb03c.shaders')
