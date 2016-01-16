@@ -7,19 +7,19 @@ class W(SB03):
     program = None
 
     def initializeGL(self):
-        super(self.__class__, self).initializeGL()
+        super().initializeGL()
         self.program = self.program or Program('sb03a.shaders')
         self.va = VertexArray()
 
     def paintGL(self):
-        super(self.__class__, self).paintGL()
+        super().paintGL()
 
-        self.program.use()
+        program = self.program
+        program.use()
 
         self.va.bind()
         t = Time.time
-# Todo: 変数をlocation(=0)ではなく，シンボルで指定したい．program.a['v_offset'] = self.v_offset と書きたい
-        glVertexAttrib2f(0, math.cos(t) * 0.5, math.sin(t) * 0.5)
+        program.a['offset_vs'](math.cos(t) * 0.5, math.sin(t) * 0.5)
 
         glDrawArrays(GL_TRIANGLES, 0, 3)
         glFlush()

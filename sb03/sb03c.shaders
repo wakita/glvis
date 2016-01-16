@@ -1,8 +1,8 @@
 # vertex shader
 # version 410 core
 
-layout (location = 0) in vec2 offset;
-layout (location = 1) in vec3 color;
+in vec2 offset_vs;
+in vec3 color_vs;
 
 out VS_OUT {
   vec3 color;
@@ -14,9 +14,9 @@ void main(void) {
       vec4(-0.25, -0.25, 0.5, 1.0),
       vec4( 0.00,  0.25, 0.5, 1.0));
 
-  gl_Position = vertices[gl_VertexID] + vec4(offset, 0, 0);
+  gl_Position = vertices[gl_VertexID] + vec4(offset_vs, 0, 0);
 
-  vs_out.color = color;
+  vs_out.color = color_vs;
 }
 # fragment shader
 # version 410 core
@@ -25,8 +25,8 @@ in VS_OUT {
   vec3 color;
 } fs_in;
 
-out vec4 color;
+out vec4 color_fb;
 
 void main(void) {
-  color = vec4(fs_in.color, 1);
+  color_fb = vec4(fs_in.color, 1);
 }

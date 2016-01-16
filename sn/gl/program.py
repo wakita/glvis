@@ -1,7 +1,11 @@
-import re, sys
+import collections, re, sys
+from ctypes import c_void_p as null
+
 from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
+
+import numpy as np
 
 from sn.gl.globject import _GLObject_
 from sn.qt import (Application, GLWidget)
@@ -32,7 +36,9 @@ class Program(_GLObject_):
     def create(self, path):
         self._load(path)
         self._create()
-        self._compile()
+        self._compileLink()
+        self._validate()
+        self._examineVariables()
 
     def delete(self):
         if self._program and bool(glDeleteProgram):
@@ -63,7 +69,7 @@ class Program(_GLObject_):
         self._samplers = {}
         self._known_invalid = set()
 
-    def _compile(self):
+    def _compileLink(self):
         self._linked = False
         program = self._program
         shaderlist = []
@@ -87,6 +93,9 @@ class Program(_GLObject_):
             glDetachShader(program, shader)
             glDeleteShader(shader)
         self._linked = True
+
+    def _validate(self):
+        pass
 
     def _get_error(self, code, errors, indentation=0):
         results = []
@@ -128,6 +137,43 @@ class Program(_GLObject_):
             return int(m.group(2)), m.group(4)
         # Other ...
         return None, error
+
+    def _examineVariables(self):
+        self._examineAttributes()
+
+    from OpenGL.arrays import buffers
+
+    vertexAttribFunc = dict()
+    vertexAttribFunc[GL_FLOAT_VEC2] = glVertexAttrib2f
+    vertexAttribFunc[GL_FLOAT_VEC3] = glVertexAttrib3f
+    vertexAttribFunc[GL_FLOAT_VEC4] = glVertexAttrib4f
+
+    def _examineAttributes(self):
+        program = self._program
+
+        nattrs = np.zeros(1, dtype=np.int32)
+        glGetProgramInterfaceiv(program, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, nattrs)
+        # print('#attributes = {0}'.format(nattrs[0]))
+
+        properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION ])
+
+        bbuf = bytes(1024)
+        info = np.zeros(3, dtype=np.int32)
+        length = np.zeros(1, dtype=np.int32)
+        a = self.a = dict()
+        for attr in range(nattrs[0]):
+            glGetProgramResourceiv(program, GL_PROGRAM_INPUT, attr,
+                    3, properties, 3, length, info)
+            # print('length = {0}, info = {1}'.format(length, info))
+            glGetProgramResourceName(program, GL_PROGRAM_INPUT, attr, len(bbuf), length, bbuf)
+            location = info[2]
+            if location < 0: continue
+            name = bbuf[:length].decode('utf-8')
+            types = list(self.vertexAttribFunc.keys())
+            typestr = types[types.index(info[1])].__repr__()
+            # print('attribute {0}:{1}@{2}'.format(name, typestr, location))
+            f = self.vertexAttribFunc[info[1]]
+            a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
 
     def use(self):
         glUseProgram(self._program)

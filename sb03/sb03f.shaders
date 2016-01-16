@@ -1,8 +1,8 @@
 # vertex shader
 # version 410 core
 
-layout (location = 0) in vec2 offset;
-layout (location = 1) in vec4 color;
+in vec2 offset_vs;
+in vec4 color_vs;
 
 out vec4 color_tcs;
 
@@ -12,14 +12,17 @@ void main(void) {
       vec4(-.25, -.25, .5, 1.0),
       vec4( .00,  .25, .5, 1.0));
 
-  gl_Position = vertices[gl_VertexID] + vec4(offset, 0, 0);
+  gl_Position = vertices[gl_VertexID] + vec4(offset_vs, 0, 0);
 
-  color_tcs = color;
+  color_tcs = color_vs;
 }
 # tessellation control shader
 # version 410 core
 
 layout (vertices = 3) out;
+
+      in  vec4 color_tcs[];
+patch out vec4 color_tes;
 
 void main(void) {
   if (gl_InvocationID == 0) {
@@ -30,17 +33,22 @@ void main(void) {
     gl_TessLevelOuter[2] = 5.0;
   }
   gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+  color_tes = color_tcs[gl_InvocationID];
 }
 # tessellation evaluation shader
 # version 410 core
 
 layout (triangles, equal_spacing, cw) in;
 
+patch in  vec4 color_tes;
+      out vec4 color_gs;
+
 void main(void) {
   gl_Position = (
       gl_TessCoord.x * gl_in[0].gl_Position +
       gl_TessCoord.y * gl_in[1].gl_Position +
       gl_TessCoord.z * gl_in[2].gl_Position);
+  color_gs = color_tes;
 }
 # geometry shader
 # version 410 core
@@ -48,20 +56,24 @@ void main(void) {
 layout (triangles) in;
 layout (points, max_vertices = 3) out;
 
+in  vec4 color_gs[];
+out vec4 color_fs;
+
 void main(void) {
   for (int i = 0; i < gl_in.length(); i++) {
     gl_Position = gl_in[i].gl_Position;
+    color_fs = color_gs[i];
     EmitVertex();
   }
 }
 # fragment shader
 # version 410 core
 
-in  vec4 vs_color;
-out vec4 color;
+in  vec4 color_fs;
+out vec4 color_fb;
 
 void main(void) {
   float s = sin(gl_FragCoord.x * .25);
   float c = cos(gl_FragCoord.y * .25);
-  color = vec4(s * .5 + .5, c * .5 + .5, s * c, 1.0);
+  color_fb = color_fs;
 }

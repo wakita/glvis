@@ -1,7 +1,8 @@
 # vertex shader
 # version 410 core
 
-layout (location = 0) in vec2 offset;
+in vec2 offset_vs;
+in vec4 color_vs;
 
 out vec4 color_tcs;
 
@@ -11,9 +12,10 @@ void main(void) {
       vec4(-.25, -.25, .5, 1.0),
       vec4( .00,  .25, .5, 1.0));
 
-  gl_Position = vertices[gl_VertexID] + vec4(offset, 0, 0);
-  color_tcs = vec4(0, 0, 1, 1.0);
+  gl_Position = vertices[gl_VertexID] + vec4(offset_vs, 0, 0);
+  color_tcs = color_vs;
 }
+
 # tessellation control shader
 # version 410 core
 
@@ -34,6 +36,7 @@ void main(void) {
 
   color_tes = color_tcs[gl_InvocationID];
 }
+
 # tessellation evaluation shader
 # version 410 core
 
@@ -49,6 +52,7 @@ void main(void) {
       gl_TessCoord.z * gl_in[2].gl_Position);
   color_gs = color_tes;
 }
+
 # geometry shader
 # version 410 core
 
@@ -65,12 +69,13 @@ void main(void) {
     EmitVertex();
   }
 }
+
 # fragment shader
 # version 410 core
 
 in  vec4 color_fs;
-out vec4 color;
+out vec4 color_fb;
 
 void main(void) {
-  color = color_fs;
+  color_fb = color_fs;
 }

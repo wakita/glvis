@@ -14,12 +14,13 @@ class W(SB03):
     def paintGL(self):
         super(self.__class__, self).paintGL()
 
-        self.program.use()
+        program = self.program
+        program.use()
         self.vao.bind()
+
         t = Time.time
         c = math.cos(t); s = math.sin(t)
-        glVertexAttrib2f(0, c / 2, s / 2)
-        glVertexAttrib4f(1, (c + 1) / 2, (s + 1) / 2, 0, 1)
+        program.a['offset_vs'](c / 2, s / 2)
 
         glDrawArrays(GL_PATCHES, 0, 3)
         glFlush()

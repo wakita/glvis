@@ -15,12 +15,14 @@ class W(SB03):
     def paintGL(self):
         super(self.__class__, self).paintGL()
 
-        self.program.use()
+        program = self.program
+        program.use()
         self.vao.bind()
+
         t = Time.time
-        glVertexAttrib2f(0, math.cos(t) / 2, math.sin(t) / 2)
+        program.a['offset_vs'](math.cos(t) / 2, math.sin(t) / 2)
         c = QColor.fromHsvF(math.fmod(t / math.pi, 1), 1, .5)
-        glVertexAttrib3f(1, c.redF(), c.greenF(), c.blueF())
+        program.a['color_vs'](c.redF(), c.greenF(), c.blueF())
 
         glDrawArrays(GL_PATCHES, 0, 3)
         glFlush()
