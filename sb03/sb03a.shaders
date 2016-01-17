@@ -9,14 +9,16 @@ void main(void) {
       vec4(-0.25, -0.25, 0.5, 1),
       vec4( 0.00,  0.25, 0.5, 1));
 
-  gl_Position += vertices[gl_VertexID] + vec4(offset_vs, 0, 0);
+  gl_Position = vertices[gl_VertexID] + vec4(offset_vs, 0, 0);
 }
 
 # fragment shader
 # version 410 core
 
+uniform vec2 color_u;
 out vec4 color_fb;
 
 void main(void) {
-  color_fb = vec4(.5, .5, 1, 1);
+  color_fb = vec4(color_u, 1, 1);
+  //color_fb = vec4(.5, .5, 1, 1);
 }

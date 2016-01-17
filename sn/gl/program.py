@@ -39,6 +39,8 @@ class Program(_GLObject_):
         self._compileLink()
         self._validate()
         self._examineVariables()
+        self._examineUniforms()
+        self._examineUniformBlocks()
 
     def delete(self):
         if self._program and bool(glDeleteProgram):
@@ -143,37 +145,78 @@ class Program(_GLObject_):
 
     from OpenGL.arrays import buffers
 
-    vertexAttribFunc = dict()
-    vertexAttribFunc[GL_FLOAT_VEC2] = glVertexAttrib2f
-    vertexAttribFunc[GL_FLOAT_VEC3] = glVertexAttrib3f
-    vertexAttribFunc[GL_FLOAT_VEC4] = glVertexAttrib4f
+    vertexAttribHandler = dict()
+    vertexAttribHandler[GL_FLOAT_VEC2] = glVertexAttrib2f
+    vertexAttribHandler[GL_FLOAT_VEC3] = glVertexAttrib3f
+    vertexAttribHandler[GL_FLOAT_VEC4] = glVertexAttrib4f
 
     def _examineAttributes(self):
         program = self._program
 
-        nattrs = np.zeros(1, dtype=np.int32)
-        glGetProgramInterfaceiv(program, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, nattrs)
-        # print('#attributes = {0}'.format(nattrs[0]))
+        n = np.zeros(1, dtype=np.int32)
+        glGetProgramInterfaceiv(program, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, n)
+        # print('#attributes = {0}'.format(n[0]))
 
+        types = list(self.vertexAttribHandler.keys())
         properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION ])
 
-        bbuf = bytes(1024)
+        bbuf = bytes(256)
         info = np.zeros(3, dtype=np.int32)
         length = np.zeros(1, dtype=np.int32)
         a = self.a = dict()
-        for attr in range(nattrs[0]):
+        for attr in range(n[0]):
             glGetProgramResourceiv(program, GL_PROGRAM_INPUT, attr,
                     3, properties, 3, length, info)
             # print('length = {0}, info = {1}'.format(length, info))
             glGetProgramResourceName(program, GL_PROGRAM_INPUT, attr, len(bbuf), length, bbuf)
             location = info[2]
-            if location < 0: continue
+            if location == -1: continue
             name = bbuf[:length].decode('utf-8')
-            types = list(self.vertexAttribFunc.keys())
             typestr = types[types.index(info[1])].__repr__()
             # print('attribute {0}:{1}@{2}'.format(name, typestr, location))
-            f = self.vertexAttribFunc[info[1]]
+            f = self.vertexAttribHandler[info[1]]
             a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
+
+    uniformHandler = dict()
+    uniformHandler[GL_FLOAT] = glUniform1f
+    uniformHandler[GL_FLOAT_VEC2] = glUniform2f
+    uniformHandler[GL_FLOAT_VEC3] = glUniform3f
+    uniformHandler[GL_FLOAT_VEC4] = glUniform4f
+
+    def _examineUniforms(self):
+        p = self._program
+
+        ibuf = np.zeros(5, dtype=np.int32)
+        bbuf = bytes(256)
+
+        glGetProgramInterfaceiv(p, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
+        n = ibuf[0]
+
+        types = list(self.uniformHandler.keys())
+        properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
+        u = self.u = dict()
+        # print('#uniforms = {0}'.format(n))
+        for i in range(n):
+            glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
+                    len(ibuf), ibuf[len(properties):], ibuf)
+            loc = ibuf[2]
+            if loc == -1: continue
+
+            length = ibuf[0] + 1
+            _t = ibuf[1]
+            t = types[types.index(ibuf[1])].__repr__()
+            # print('length = {0}, type = {1}, location = {2}' .format(length, t, loc))
+
+            glGetProgramResourceName(p, GL_UNIFORM, i, len(bbuf), ibuf[:1], bbuf)
+            length = ibuf[0]
+            name = bbuf[:length].decode('utf-8')
+            # print('uniform {0}:{1}@{2}'.format(name, t, loc))
+            f = self.uniformHandler[_t]
+            u[name] = (lambda *args, f=f, loc=loc: f(*([loc] + list(args))))
+        # print(u)
+
+    def _examineUniformBlocks(self):
+        pass
 
     def use(self):
         glUseProgram(self._program)
