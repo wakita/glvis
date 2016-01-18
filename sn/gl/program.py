@@ -1,5 +1,4 @@
 import collections, re, sys
-from ctypes import c_void_p as null
 
 from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *

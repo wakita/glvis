@@ -1,5 +1,8 @@
 from PyQt5.QtCore import QSize
 from PyQt5 import (QtGui, QtOpenGL, QtWidgets)
+#import OpenGL
+#OpenGL.ERROR_CHEKING = True
+#OpenGL.FULL_LOGGING = True
 from OpenGL.GL import *
 from vispy.util.transforms import perspective
 
@@ -13,18 +16,23 @@ class GLWidget(QtOpenGL.QGLWidget):
 
     def __init__(self, parent):
         super(GLWidget, self).__init__(self.format, parent)
+        self.parent = parent
 
     def minimumSizeHint(self):
         return QSize(800, 600)
 
     def initializeGL(self):
+        super().initializeGL()
+        if not self.parent: GLWidget.printGLInfo()
         glClearColor(.8, .8, .8, 1)
 
     def resizeGL(self, w, h):
+        super().resizeGL(w, h)
         glViewport(0, 0, w, h)
         self.Projection = perspective(45., w/float(h), 1., 1000.)
 
     def paintGL(self):
+        super().paintGL()
         glClear(GL_COLOR_BUFFER_BIT)
 
     @classmethod
