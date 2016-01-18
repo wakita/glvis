@@ -1,8 +1,6 @@
 import math
 from sb05 import *
 
-from OpenGL.arrays import vbo
-
 class W(SB05):
     program = None
 
@@ -40,4 +38,3 @@ class W(SB05):
         glFlush()
 
 if __name__ == '__main__': start(W)
-

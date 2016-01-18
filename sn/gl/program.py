@@ -179,7 +179,7 @@ class Program(_GLObject_):
             a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
 
     uniformHandler = dict()
-    uniformHandler[GL_FLOAT] = glUniform1f
+    uniformHandler[GL_FLOAT]      = glUniform1f
     uniformHandler[GL_FLOAT_VEC2] = glUniform2f
     uniformHandler[GL_FLOAT_VEC3] = glUniform3f
     uniformHandler[GL_FLOAT_VEC4] = glUniform4f
@@ -196,6 +196,7 @@ class Program(_GLObject_):
         types = list(self.uniformHandler.keys())
         properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
         u = self.u = dict()
+        U = self.U = dict()
         # print('#uniforms = {0}'.format(n))
         for i in range(n):
             glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
@@ -214,6 +215,7 @@ class Program(_GLObject_):
             # print('uniform {0}:{1}@{2}'.format(name, t, loc))
             f = self.uniformHandler[_t]
             u[name] = (lambda *args, f=f, loc=loc: f(*([loc] + list(args))))
+            U[name] = loc
         # print(u)
 
     def _examineUniformBlocks(self):

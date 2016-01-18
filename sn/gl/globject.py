@@ -13,7 +13,7 @@ class VertexArray(_GLObject_):
     def create(self):
         self._h = glGenVertexArrays(1)
         self.bind()
-        self.enable()
+#       self.enable()
 
     def delete(self):
         if self._h and bool(glDeleteVertexArrays):

@@ -11,12 +11,13 @@ class SB05(GLWidget):
 
     def initializeGL(self, path):
         super().initializeGL()
-        self.program = Program(path)
+        self.program = self.program or Program(path)
         self.va = VertexArray()
 
     def minimumSizeHint(self): return QtCore.QSize(self._width, self._height)
 
-    def onTick(self): self.updateGL()
+    def onTick(self):
+        self.updateGL()
 
     keyPressEvent = Window.keyPressEvent
 
