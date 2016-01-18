@@ -22,10 +22,10 @@ class W(SB05):
         vertex_b = vbo.VBO(v)
         vertex_b.bind()
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 24, None)
+        glVertexAttribPointer(self.program.A['position_vs'], 3, GL_FLOAT, GL_FALSE, 24, None)
         glEnableVertexAttribArray(0)
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+        glVertexAttribPointer(self.program.A['color_vs'], 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
         glEnableVertexAttribArray(1)
 
         print('initialization done')
