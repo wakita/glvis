@@ -5,17 +5,13 @@ class W(SB05):
 
     def initializeGL(self):
         super().initializeGL('sb05c.shaders')
-        self.time_l = self.program.U['time_u']
+        self.setTime = self.program.u['time_u']
 
     def paintGL(self):
         super().paintGL()
 
-#       time_b = np.array([Time.time], dtype=np.float32)
-#       glUniform1fv(self.time_l, 1, time_b)
-
         self.program.use()
-        glUniform1f(self.time_l, float(Time.time))
-
+        self.setTime(Time.time)
         self.va.bind()
         glDrawArrays(GL_TRIANGLES, 0, 3)
         glFlush()
