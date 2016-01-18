@@ -17,11 +17,11 @@ class W(SB05):
         glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
         glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_STATIC_DRAW)
 
-        glVertexAttribPointer(p.A['position_vs'], 3, GL_FLOAT, GL_FALSE, 24, None)
-        glEnableVertexAttribArray(0)
-
-        glVertexAttribPointer(p.A['color_vs'], 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
-        glEnableVertexAttribArray(1)
+        position_l, color_l = p.A['position_vs'], p.A['color_vs']
+        glVertexAttribPointer(position_l, 3, GL_FLOAT, GL_FALSE, 24, None)
+        glEnableVertexAttribArray(position_l)
+        glVertexAttribPointer(color_l, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+        glEnableVertexAttribArray(color_l)
 
     def paintGL(self):
         super().paintGL()
