@@ -31,10 +31,6 @@ class W(SB05):
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 12, None)
         glEnableVertexAttribArray(1)
 
-    def onTick(self):
-        t = Time.time
-        hue = math.fmod(t / 10, 1)
-
     def paintGL(self):
         super().paintGL()
 

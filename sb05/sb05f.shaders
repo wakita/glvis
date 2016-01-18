@@ -1,0 +1,20 @@
+#version 410 core
+
+in  vec4 position_vs;
+out vec4 color_fs;
+
+uniform mat4 ModelView;
+uniform mat4 Projection;
+
+void main(void) {
+  gl_Position = Projection * ModelView * position_vs;
+  color_fs = Position * 1.5 + vec4(0.5, 0.5, 0.5, 0.0);
+}
+#version 410 core
+
+in  vec4 color_fs;
+out vec4 color_fb;
+
+void main(void) {
+  color_fb = color_fs;
+}

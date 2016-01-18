@@ -1,0 +1,38 @@
+# vertex shader
+# version 410 core
+
+uniform Parameter {
+  float time;
+  float alpha;
+} params;
+
+out float theta_fs;
+
+void main(void) {
+  const vec3 triangle_vertices[3] = vec3[3](
+    vec3(0.25,  -0.25,  0.5),
+    vec3(-0.25, -0.25,  0.5),
+    vec3(0.0,    0.25,  0.5));
+
+  float t = params.time;
+  float c = cos(t), s = sin(t);
+
+  gl_Position = vec4(triangle_vertices[gl_VertexID], 1) +
+    vec4(c / 2, s / 2, 0, 0);
+  theta_fs = acos(-1) * gl_VertexID * 2 / 3;
+}
+#version 410 core
+
+uniform Parameter {
+  float time;
+  float alpha;
+} params;
+
+in float theta_fs;
+out vec4 color_fb;
+
+void main(void) {
+  float t = theta_fs + params.time;
+  float c = cos(t), s = sin(t);
+  color_fb = vec4((c + 1) / 2, (s + 1) / 2, .5, params.alpha);
+}
