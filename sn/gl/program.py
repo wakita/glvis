@@ -163,6 +163,7 @@ class Program(_GLObject_):
         info = np.zeros(3, dtype=np.int32)
         length = np.zeros(1, dtype=np.int32)
         a = self.a = dict()
+        A = self.A = dict()
         for attr in range(n[0]):
             glGetProgramResourceiv(program, GL_PROGRAM_INPUT, attr,
                     3, properties, 3, length, info)
@@ -174,6 +175,7 @@ class Program(_GLObject_):
             typestr = types[types.index(info[1])].__repr__()
             # print('attribute {0}:{1}@{2}'.format(name, typestr, location))
             f = self.vertexAttribHandler[info[1]]
+            A[name] = location
             a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
 
     uniformHandler = dict()

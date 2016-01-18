@@ -6,11 +6,6 @@ layout (location = 1) in  vec3 color_vs;
 out vec4 color_fs;
 
 void main(void) {
-  const vec4 vertices[3] = vec4[3](
-      vec4( 0.25, -0.25, 0.5, 1),
-      vec4(-0.25, -0.25, 0.5, 1),
-      vec4( 0.00,  0.25, 0.5, 1));
-
   gl_Position = vec4(position_vs, 1);
   color_fs = vec4(color_vs, 1);
 }
