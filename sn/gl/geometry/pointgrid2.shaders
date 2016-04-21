@@ -1,0 +1,35 @@
+from .. import *
+from .volume import V as Volume
+
+class V(Volume):
+
+    program = None
+
+    def __init__(self, program, S, r):
+        super().__init__(program)
+        self.radius = r
+
+        N = self.N = S * S * S
+
+        s = float(S - 1) / 2; s2 = 1.0
+        v = np.zeros(3 * N, dtype=np.float32)
+        p = 0
+        for x in range(S):
+            for y in range(S):
+                for z in range(S):
+                    v[p:p+3] = x, y, z
+                    p += 3
+        v = v * 2 / float(S - 1) - 1
+
+        glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
+        glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_STATIC_DRAW)
+
+        position_l = program.A['position_vs']
+        glVertexAttribPointer(position_l, 2, GL_FLOAT, GL_FALSE, 0, None)
+        glEnableVertexAttribArray(position_l)
+        self.unbind()
+
+    def render(self):
+        super().render()
+        glDrawArrays(GL_POINTS, 0, self.N)
+        self.unbind()

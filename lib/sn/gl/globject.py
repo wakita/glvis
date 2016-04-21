@@ -1,5 +1,6 @@
 from OpenGL.GL import *
-from .util import *
+#from .util import *
+import numpy as np
 
 class _GLObject_(object):
     def create(self): pass

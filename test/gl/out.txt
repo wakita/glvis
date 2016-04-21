@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "debug.py", line 12, in initializeGL
+    glDebugMessageCallback(onDebugMessage, None)
+  File "C:\Python34\lib\site-packages\OpenGL\platform\baseplatform.py", line 402, in __call__
+    return self( *args, **named )
+ctypes.ArgumentError: argument 1: <class 'TypeError'>: expected WinFunctionType instance instead of function

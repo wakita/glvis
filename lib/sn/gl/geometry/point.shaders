@@ -1,0 +1,22 @@
+# vertex shader
+# version 410
+
+in vec3 position_vs;
+
+uniform int pointsize;
+
+void main() {
+  gl_Position = vec4(position_vs, 1);
+  gl_PointSize = pointsize;
+}
+
+# fragment shader
+# version 410
+
+out vec4 color_fb;
+
+void main() {
+  vec2 r = gl_PointCoord.xy * 2.0 - 1.0;
+  if (dot(r, r) > 1.0) discard;
+  color_fb = vec4(0, 0, 1, 1);
+}

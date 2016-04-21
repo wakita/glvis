@@ -1,0 +1,23 @@
+# vertex shader
+#version 410
+
+void main(void) {}
+
+# fs
+#version 410
+
+void main(void) {}
+
+# tess control
+#version 410
+
+layout (vertices = 3) out;
+
+void main(void) {}
+
+# tess eval
+#version 410
+
+layout (triangles, equal_spacing, cw) in;
+
+void main(void) {}

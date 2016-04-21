@@ -1,0 +1,34 @@
+# vertex shader
+# version 430
+
+uniform mat4 MV;
+uniform mat4 P;
+uniform float pointsize;
+
+in  vec3 position_vs;
+
+void main() {
+  vec4 p = vec4(position_vs, 1);
+  gl_Position = P * MV * p;
+  gl_PointSize = pointsize / gl_Position.w;
+  vec4 p_mv = MV * p;
+  gl_PointSize = pointsize / (-p_mv.z);
+}
+
+# fragment shader
+# version 430
+
+uniform  vec3 worldlight;
+
+ in vec2 gl_PointCoord;
+out vec4 color_fb;
+
+void main() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+  normal.z = sqrt(normal.z);
+  float luminance = dot(worldlight, normalize(normal));
+
+  color_fb = vec4(vec3(normal.z) * 0.6 + vec3(luminance) * 0.4, 0.5);
+}

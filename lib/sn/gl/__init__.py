@@ -7,4 +7,3 @@ from OpenGL.GL import *
 
 from .program import Program
 from .globject import VertexArray, VertexBuffer
-#from .util import *

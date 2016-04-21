@@ -1,10 +1,13 @@
 import collections, re, sys
+from collections import defaultdict
+import numpy as np
 
 from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
-from .util import *
+#from .util import *
+from . import debug
 from .globject import _GLObject_
 from ..qt.application import Application
 
@@ -162,7 +165,6 @@ class Program(_GLObject_):
         info = np.zeros(3, dtype=np.int32)
         length = np.zeros(1, dtype=np.int32)
         a = self.a = dict()
-        A = self.A = dict()
         for attr in range(n[0]):
             glGetProgramResourceiv(program, GL_PROGRAM_INPUT, attr,
                     3, properties, 3, length, info)
@@ -174,24 +176,41 @@ class Program(_GLObject_):
             typestr = types[types.index(info[1])].__repr__()
             # print('attribute {0}:{1}@{2}'.format(name, typestr, location))
             f = self.vertexAttribHandler[info[1]]
-            A[name] = location
             a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
+            a[name].name = name; a[name].loc = location
 
     uniformHandler = dict()
-    uniformHandler[GL_INT]        = glUniform1i
+
+    def _glUniformv_(f, loc, name, v):
+        if debug._logOnSetUniform_:
+            print('Uniform[{0}]: {1}\n'.format(name, v))
+        f(loc, v)
+
+    def _uniformv_(f): return lambda loc, name, v: Program._glUniformv_(f, loc, name, v)
+
+    uniformHandler[GL_INT]        = _uniformv_(glUniform1i)
     uniformHandler[GL_INT_VEC2]   = glUniform2i
     uniformHandler[GL_INT_VEC3]   = glUniform3i
     uniformHandler[GL_INT_VEC4]   = glUniform4i
-    uniformHandler[GL_FLOAT]      = glUniform1f
+    uniformHandler[GL_FLOAT]      = _uniformv_(glUniform1f)
     uniformHandler[GL_FLOAT_VEC2] = glUniform2f
     uniformHandler[GL_FLOAT_VEC3] = glUniform3f
     uniformHandler[GL_FLOAT_VEC4] = glUniform4f
-    def umatrix(f): return lambda loc, M: f(loc, 1, GL_FALSE, M)
+
+    def _glUniformMatrix_(f, loc, name, M):
+        if debug._logOnSetUniform_: print('Uniform[{0}]:\n{1}\n'.format(name, M))
+        f(loc, 1, GL_FALSE, M.T)  # Row-major --> Column-major conversion
+#       f(loc, 1, GL_FALSE, M)
+
+#   def umatrix(f): return lambda loc, M: f(loc, 1, GL_FALSE, M.T)
+    def _uniformMatrix_(f): return lambda loc, name, M: Program._glUniformMatrix_(f, loc, name, M)
+    def _uniformMatrixIgnored_(): return lambda *args: None
+
     uniformHandler[GL_FLOAT_MAT2] = glUniformMatrix2fv
     uniformHandler[GL_FLOAT_MAT3] = glUniformMatrix3fv
-#   uniformHandler[GL_FLOAT_MAT4] = lambda loc, M: glUniformMatrix4fv(loc, 1, GL_FALSE, M)
-    uniformHandler[GL_FLOAT_MAT4] = umatrix(glUniformMatrix4fv)
+    uniformHandler[GL_FLOAT_MAT4] = _uniformMatrix_(glUniformMatrix4fv)
     uniformHandler[GL_FLOAT_MAT2x3] = glUniformMatrix2x3fv
+
     uniformHandler[GL_FLOAT_MAT2x4] = glUniformMatrix2x4fv
     uniformHandler[GL_FLOAT_MAT3x2] = glUniformMatrix3x2fv
     uniformHandler[GL_FLOAT_MAT3x4] = glUniformMatrix3x4fv
@@ -209,8 +228,7 @@ class Program(_GLObject_):
 
         types = list(self.uniformHandler.keys())
         properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
-        u = self.u = dict()
-        U = self.U = dict()
+        u = self.u = defaultdict(lambda: lambda *args: None)
         # print('#uniforms = {0}'.format(n))
         for i in range(n):
             glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
@@ -229,8 +247,8 @@ class Program(_GLObject_):
             name = bbuf[:length].decode('utf-8')
             # print('uniform {0}:{1}@{2}'.format(name, t, loc))
             f = self.uniformHandler[_t]
-            u[name] = (lambda *args, f=f, loc=loc: f(*([loc] + list(args))))
-            U[name] = loc
+            u[name] = (lambda *args, f=f, loc=loc, name=name: f(*([loc, name] + list(args))))
+            u[name].name = name; u[name].loc = loc
         # print(u)
 
     def _examineUniformBlocks(self):

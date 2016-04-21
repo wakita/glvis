@@ -1,0 +1,37 @@
+# vertex shader
+# version 430
+
+uniform mat4 MV;
+uniform mat4 P;
+uniform float pointsize;
+
+in  vec3 position_vs;
+
+void main() {
+  vec4 p = vec4(position_vs, 1);
+  gl_Position = P * MV * p;
+  //gl_Position = MV * p;
+  // Possibly be a bug?  Probably need normal projection.
+  gl_PointSize = pointsize / gl_Position.w;
+  gl_PointSize = pointsize;
+  //gl_PointSize = 20;
+}
+
+# fragment shader
+# version 430
+
+uniform  vec3 worldlight;
+
+ in vec2 gl_PointCoord;
+out vec4 color_fb;
+
+void main() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+  normal.z = sqrt(normal.z);
+  float luminance = dot(worldlight, normalize(normal));
+
+  color_fb = vec4(vec3(luminance) * 0.8 + vec3(0.2, 0.2, 0.5), 1);
+  color_fb = vec4(1, 0, 0, 1);
+}

@@ -5,9 +5,7 @@ from PyQt5 import (QtGui, QtOpenGL, QtWidgets)
 #OpenGL.ERROR_CHEKING = True
 #OpenGL.FULL_LOGGING = True
 from OpenGL.GL import *
-# import vispy.util.transforms as T
-#from sn.gl import t3d as T
-from lib import t3d as T
+from ..gl.geometry import t3d as T
 from .application import Application
 from .window import Window
 from ..gl.util import *
@@ -30,7 +28,7 @@ class GLWidget(QtOpenGL.QGLWidget):
     def initializeGL(self):
         super().initializeGL()
         if not self.parent: GLWidget.printGLInfo()
-        glClearColor(.8, .8, .8, 1)
+        glClearColor(.0, .0, .0, 1)
 
     def resizeGL(self, w, h):
         super().resizeGL(w, h)
@@ -66,29 +64,20 @@ class GLWidget(QtOpenGL.QGLWidget):
 
 class GLWidget3D(GLWidget):
 
+    Model = np.eye(4, dtype=np.float32)
+    View = T.translate(0, 0, -3)
+
     def initializeGL(self, *args):
         super().initializeGL()
         glEnable(GL_DEPTH_TEST)
-        self.Model = np.eye(4, dtype=np.float32)
-        self.View = T.translate(0, 0, -3)
-        try:
-            self.program.u['V'](self.View)
-            print('Uniform[V]:\n{0}\n'.format(self.View))
-        except: pass
 
     def resizeGL(self, w, h):
         super().resizeGL(w, h)
-        self.Projection = T.perspective(45., w/float(h), 0.1, 10.)
-        try:
-            self.program.u['P'](self.Projection)
-            print('Uniform[P]:\n{0}\n'.format(self.Projection))
-        except: pass
+        self.Projection = T.perspective(45., w/float(h), 0.1, 1000.)
+        self.program.u['V'](self.View)
+        self.program.u['P'](self.Projection)
 
     def paintGL(self):
         super().paintGL()
         glClear(GL_DEPTH_BUFFER_BIT)
-        try:
-            MV = np.dot(self.View, self.Model)
-            self.program.u['MV'](MV)
-            print('Uniform[MV]:\n{0}\n'.format(MV))
-        except: pass
+        self.program.u['MV'](np.dot(self.View, self.Model))
