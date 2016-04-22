@@ -8,7 +8,6 @@ from OpenGL.GL import *
 from ..gl.geometry import t3d as T
 from .application import Application
 from .window import Window
-from ..gl.util import *
 
 class GLWidget(QtOpenGL.QGLWidget):
 
