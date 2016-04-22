@@ -1,5 +1,3 @@
-import ctypes
-import math
 from sb05 import *
 
 class W(SB05):

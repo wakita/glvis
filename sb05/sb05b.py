@@ -1,5 +1,3 @@
-import ctypes
-import math
 from PyQt5.QtGui import QColor
 from sb05 import *
 
