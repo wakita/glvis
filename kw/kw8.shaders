@@ -1,0 +1,48 @@
+# vertex shader
+# version 430
+
+uniform mat4  MVP;
+uniform float PointSize;
+
+layout (location = 0) in vec3 position_vs;
+
+flat out int vertexID_fs;
+
+void main() {
+  gl_Position = MVP * vec4(position_vs, 1);
+  gl_PointSize = PointSize / gl_Position.w;
+
+  vertexID_fs = gl_VertexID;
+}
+
+# fragment shader
+# version 430
+
+uniform  vec3 Light;
+uniform ivec2 clickedPosition;
+
+layout (origin_upper_left) in  vec4  gl_FragCoord;
+in  vec2  gl_PointCoord;
+flat in int vertexID_fs;
+
+out vec4 FragColor;
+
+layout (std430, binding = 0) buffer SSB {
+  int  pick_oid;
+  float pick_z;
+};
+
+void main() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+  normal.z = sqrt(normal.z);
+  float luminance = dot(Light, normalize(normal));
+
+  FragColor = vec4(vec3(luminance) * 0.8 + vec3(0.2, 0.2, 0.5), 1);
+
+  if (gl_FragCoord.z < pick_z && distance(gl_FragCoord.xy, clickedPosition) < 1) {
+    pick_oid = vertexID_fs;
+    pick_z = gl_FragCoord.z;
+  }
+}

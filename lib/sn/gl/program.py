@@ -186,16 +186,22 @@ class Program(_GLObject_):
             print('Uniform[{0}]: {1}\n'.format(name, v))
         f(loc, v)
 
+    def _glUniformfv_(f, loc, name, V):
+        if debug._logOnSetUniform_:
+            print('Uniform[{0}]: {1}\n'.format(name, V))
+        f(loc, *V)
+
     def _uniformv_(f): return lambda loc, name, v: Program._glUniformv_(f, loc, name, v)
+    def _uniformfv_(f): return lambda loc, name, *V: Program._glUniformfv_(f, loc, name, V)
 
     uniformHandler[GL_INT]        = _uniformv_(glUniform1i)
-    uniformHandler[GL_INT_VEC2]   = glUniform2i
-    uniformHandler[GL_INT_VEC3]   = glUniform3i
-    uniformHandler[GL_INT_VEC4]   = glUniform4i
+    uniformHandler[GL_INT_VEC2]   = _uniformfv_(glUniform2i)
+    uniformHandler[GL_INT_VEC3]   = _uniformfv_(glUniform3i)
+    uniformHandler[GL_INT_VEC4]   = _uniformfv_(glUniform4i)
     uniformHandler[GL_FLOAT]      = _uniformv_(glUniform1f)
-    uniformHandler[GL_FLOAT_VEC2] = glUniform2f
-    uniformHandler[GL_FLOAT_VEC3] = glUniform3f
-    uniformHandler[GL_FLOAT_VEC4] = glUniform4f
+    uniformHandler[GL_FLOAT_VEC2] = _uniformfv_(glUniform2f)
+    uniformHandler[GL_FLOAT_VEC3] = _uniformfv_(glUniform3f)
+    uniformHandler[GL_FLOAT_VEC4] = _uniformfv_(glUniform4f)
 
     def _glUniformMatrix_(f, loc, name, M):
         if debug._logOnSetUniform_: print('Uniform[{0}]:\n{1}\n'.format(name, M))
