@@ -1,6 +1,7 @@
 import numpy as np
-from PyQt5.QtCore import QSize
 from PyQt5 import (QtGui, QtOpenGL, QtWidgets)
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QWindow
 #import OpenGL
 #OpenGL.ERROR_CHEKING = True
 #OpenGL.FULL_LOGGING = True
@@ -54,12 +55,13 @@ class GLWidget(QtOpenGL.QGLWidget):
         print()
 
     @classmethod
-    def start(cls, W, timeout=1000/60):
+    def start(cls, W, fullscreen=False, timeout=1000/60):
         app = Application()
         widget = W(None)
         widget.show()
-        #app.startTimer(timeout = 1000/maxfps, onTick = widget.onTick)
         app.startTimer(timeout = timeout, onTick = widget.onTick)
+        #if fullscreen: app.activeWindow().setVisibility(QWindow.FullScreen)
+        if fullscreen: widget.windowHandle().setVisibility(QWindow.FullScreen)
         app.run()
 
 class GLWidget3D(GLWidget):
