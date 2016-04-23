@@ -2,8 +2,6 @@
 # I attempted to use OpenGL.arrays.vbo feature of PyOpenGL but so far unsuccessful.
 # The app crashes.
 
-import ctypes
-import math
 from sb05 import *
 
 from OpenGL.arrays import vbo
