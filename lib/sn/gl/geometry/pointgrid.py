@@ -13,18 +13,9 @@ class V(Volume):
 
         N = self.N = S * S * S
 
-        vvals = [ s / (S-1) - 0.5 for s in range(S) ]
+        vvals = np.array(range(S)) * 2. / (S - 1) - 1.
         points = [ (x, y, z) for x in vvals for y in vvals for z in vvals ]
         v = np.array(points, dtype=np.float32).flatten()
-
-        v = np.zeros(3 * N, dtype=np.float32)
-        p = 0
-        for x in range(S):
-            for y in range(S):
-                for z in range(S):
-                    v[p:p+3] = x, y, z
-                    p += 3
-        v = v * 2 / float(S - 1) - 1
 
         glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
         glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_STATIC_DRAW)
