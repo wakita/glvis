@@ -54,11 +54,12 @@ class GLWidget(QtOpenGL.QGLWidget):
         print()
 
     @classmethod
-    def start(cls, W):
+    def start(cls, W, timeout=1000/60):
         app = Application()
         widget = W(None)
         widget.show()
-        app.startTimer(timeout = 1000/60, onTick = widget.onTick)
+        #app.startTimer(timeout = 1000/maxfps, onTick = widget.onTick)
+        app.startTimer(timeout = timeout, onTick = widget.onTick)
         app.run()
 
 class GLWidget3D(GLWidget):
