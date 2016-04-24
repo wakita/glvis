@@ -7,14 +7,18 @@ import sn.gl.geometry.t3d as T
 import sn.gl.debug
 debug.logOnSetUniform(True)
 
-from sn.gl.geometry.pointgrid import V as PointGrid
+from sn.gl.geometry.points import V as Points
 from sn.gl.geometry.volume import D as DemoWidget
 
 class KW8Widget(DemoWidget):
+    def points(self, S):
+        vvals = np.array(range(S)) * 2. / (S - 1) - 1.
+        return [ (x, y, z) for x in vvals for y in vvals for z in vvals ]
+
     def initializeGL(self):
 
         S = 100
-        super().initializeGL('kw8.shaders', lambda program: PointGrid(program, S))
+        super().initializeGL('kw1.shaders', lambda program: Points(program, self.points(S)))
         print('doubleBuffering: {0}'.format(self.doubleBuffer()))
         print('autoBufferSwap: {0}'.format(self.autoBufferSwap()))
 
