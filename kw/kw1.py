@@ -24,22 +24,10 @@ class KW8Widget(DemoWidget):
         self.program.u['pointsize'](800/S)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    t = 0
-    nextFPS = 1
-    frames = 0
-
     def paintGL(self):
-        self.t = Time.time
-        if self.t > self.nextFPS:
-            self.nextFPS = self.nextFPS + 1
-            print('Frames/sec = {0}'.format(self.frames))
-            self.frames = 0
-        glClear(GL_COLOR_BUFFER_BIT)
-
-        eye = T.cartesian(T.rotateY(np.pi /20 * self.t).dot(self.eye))
+        eye = T.cartesian(T.rotateY(np.pi /20 * self.time).dot(self.eye))
         self.View = T.lookat(eye, self.target, self.up)
         super().paintGL()
-        self.frames = self.frames + 1
 
     def onTick(self):
         debug.logOnSetUniform(False)

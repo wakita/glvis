@@ -6,6 +6,7 @@ from PyQt5.QtGui import QWindow
 #OpenGL.ERROR_CHEKING = True
 #OpenGL.FULL_LOGGING = True
 from OpenGL.GL import *
+from . import *
 from ..gl.geometry import t3d as T
 from .application import Application
 from .window import Window
@@ -21,6 +22,10 @@ class GLWidget(QtOpenGL.QGLWidget):
     def __init__(self, parent):
         super(GLWidget, self).__init__(self.format, parent)
         self.parent = parent
+        self.time = Time.time
+        self.nextFPS = self.time + 1
+        self.frames = 0
+        self.fps = 0
 
     def minimumSizeHint(self):
         return QSize(800, 600)
@@ -35,6 +40,13 @@ class GLWidget(QtOpenGL.QGLWidget):
         glViewport(0, 0, w, h)
 
     def paintGL(self):
+        self.time = t = Time.time
+        if t > self.nextFPS:
+            self.fps = self.frames
+            print('Frames/sec = {0}'.format(self.fps))
+            self.nextFPS = t + 1
+            self.frames = 0
+        self.frames = self.frames + 1
         super().paintGL()
         glClear(GL_COLOR_BUFFER_BIT)
 
