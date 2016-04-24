@@ -22,4 +22,3 @@ class D(Demo, GLWidget3D):
 
     def resizeGL(self, w, h):
         super().resizeGL(w, h)
-        self.Projection = T.perspective(45, w/float(h), 1., 200.)

@@ -75,11 +75,12 @@ class GLWidget3D(GLWidget):
 
     def resizeGL(self, w, h):
         super().resizeGL(w, h)
-        self.Projection = T.perspective(45., w/float(h), 0.1, 1000.)
         self.program.u['V'](self.View)
+
+        self.Projection = T.perspective(45., w/float(h), 0.1, 1000.)
         self.program.u['P'](self.Projection)
 
     def paintGL(self):
         super().paintGL()
         glClear(GL_DEPTH_BUFFER_BIT)
-        self.program.u['MV'](np.dot(self.View, self.Model))
+        self.program.u['MV'](self.View.dot(self.Model))

@@ -16,9 +16,9 @@ const vec4 colors[] = vec4[](
 
 void main() {
   vec4 p = vec4(position_vs, 1);
-  gl_Position = P * MV * p;
-
   vec4 p_mv = MV * p;
+  gl_Position = P * p_mv;
+
   gl_PointSize = pointsize / (-p_mv.z);
 
   color_fs = colors[(gl_VertexID + P1) * P2 % N_COLORS];
