@@ -6,7 +6,6 @@ from PyQt5 import QtGui, QtOpenGL, QtWidgets
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
-#from .util import *
 from . import debug
 from .globject import _GLObject_
 from ..qt.application import Application

@@ -25,7 +25,7 @@ class KW8Widget(DemoWidget):
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     def paintGL(self):
-        eye = T.cartesian(T.rotateY(np.pi /20 * self.time).dot(self.eye))
+        eye = T.cartesian(T.rotateY(np.pi / 50 * self.time).dot(self.eye))
         self.View = T.lookat(eye, self.target, self.up)
         super().paintGL()
 
@@ -33,4 +33,5 @@ class KW8Widget(DemoWidget):
         debug.logOnSetUniform(False)
         self.updateGL()
 
-KW8Widget.start(KW8Widget, fullscreen=True)
+if __name__ == '__main__':
+    KW8Widget.start(KW8Widget, fullscreen=True)

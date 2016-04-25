@@ -40,13 +40,13 @@ class GLWidget(QtOpenGL.QGLWidget):
         glViewport(0, 0, w, h)
 
     def paintGL(self):
+        self.frames = self.frames + 1
         self.time = t = Time.time
         if t > self.nextFPS:
             self.fps = self.frames
             print('Frames/sec = {0}'.format(self.fps))
             self.nextFPS = t + 1
             self.frames = 0
-        self.frames = self.frames + 1
         super().paintGL()
         glClear(GL_COLOR_BUFFER_BIT)
 
@@ -72,7 +72,6 @@ class GLWidget(QtOpenGL.QGLWidget):
         widget = W(None)
         widget.show()
         app.startTimer(timeout = timeout, onTick = widget.onTick)
-        #if fullscreen: app.activeWindow().setVisibility(QWindow.FullScreen)
         if fullscreen: widget.windowHandle().setVisibility(QWindow.FullScreen)
         app.run()
 

@@ -1,3 +1,4 @@
+from PyQt5.QtCore import QSize
 from ...qt.glwidget import GLWidget
 from .. import *
 
@@ -34,4 +35,4 @@ class D(GLWidget):
         super().paintGL()
         self.geometry.render()
 
-    def minimumSizeHint(self): return QtCore.QSize(200, 200)
+    def minimumSizeHint(self): return QSize(200, 200)

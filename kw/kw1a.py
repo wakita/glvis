@@ -29,7 +29,7 @@ class KW8AWidget(DemoWidget):
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     def paintGL(self):
-        eye = T.cartesian(T.rotateY(np.pi /20 * self.time).dot(self.eye))
+        eye = T.cartesian(T.rotateY(np.pi / 50 * self.time).dot(self.eye))
         self.View = T.lookat(eye, self.target, self.up)
         super().paintGL()
 
