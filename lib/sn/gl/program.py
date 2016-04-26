@@ -98,7 +98,11 @@ class Program(_GLObject_):
         self._linked = True
 
     def _validate(self):
-        pass
+        self._validated = True
+        glValidateProgram(self._program)
+        if glGetProgramiv(self._program, GL_VALIDATE_STATUS) != GL_TRUE:
+            raise RuntimeError('Program validation error:\n{0}'
+                    .format(glGetProgramInfoLog(self._program).decode('utf-8')))
 
     def _get_error(self, code, errors, indentation=0):
         results = []
@@ -156,7 +160,8 @@ class Program(_GLObject_):
 
         n = np.zeros(1, dtype=np.int32)
         glGetProgramInterfaceiv(program, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, n)
-        # print('#attributes = {0}'.format(n[0]))
+        if debug._logOnShaderVariables_:
+            print('#attributes = {0}'.format(n[0]))
 
         types = list(self.vertexAttribHandler.keys())
         properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION ])
@@ -174,7 +179,8 @@ class Program(_GLObject_):
             if location == -1: continue
             name = bbuf[:length].decode('utf-8')
             typestr = types[types.index(info[1])].__repr__()
-            # print('attribute {0}:{1}@{2}'.format(name, typestr, location))
+            if debug._logOnShaderVariables_:
+                print('attribute {0}:{1}@{2}'.format(name, typestr, location))
             f = self.vertexAttribHandler[info[1]]
             a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
             a[name].name = name; a[name].loc = location
@@ -235,7 +241,8 @@ class Program(_GLObject_):
         types = list(self.uniformHandler.keys())
         properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
         u = self.u = defaultdict(lambda: lambda *args: None)
-        # print('#uniforms = {0}'.format(n))
+        if debug._logOnShaderVariables_:
+            print('#uniforms = {0}'.format(n))
         for i in range(n):
             glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
                     len(ibuf), ibuf[len(properties):], ibuf)
@@ -251,7 +258,8 @@ class Program(_GLObject_):
             glGetProgramResourceName(p, GL_UNIFORM, i, len(bbuf), ibuf[:1], bbuf)
             length = ibuf[0]
             name = bbuf[:length].decode('utf-8')
-            # print('uniform {0}:{1}@{2}'.format(name, t, loc))
+            if debug._logOnShaderVariables_:
+                print('uniform {0}:{1}@{2}'.format(name, t, loc))
             f = self.uniformHandler[_t]
             u[name] = (lambda *args, f=f, loc=loc, name=name: f(*([loc, name] + list(args))))
             u[name].name = name; u[name].loc = loc

@@ -10,7 +10,7 @@ debug.logOnSetUniform(True)
 from sn.gl.geometry.points import V as Points
 from sn.gl.geometry.volume import D as DemoWidget
 
-class KW8AWidget(DemoWidget):
+class KW1AWidget(DemoWidget):
     def points(self, S):
         vvals = np.array(range(S)) * 2. / (S - 1) - 1.
         return [ (x, y, z) for x in vvals for y in vvals for z in vvals ]
@@ -37,4 +37,4 @@ class KW8AWidget(DemoWidget):
         debug.logOnSetUniform(False)
         self.updateGL()
 
-KW8AWidget.start(KW8AWidget, fullscreen=True)
+KW1AWidget.start(KW1AWidget, fullscreen=True)

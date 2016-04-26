@@ -1,23 +1,20 @@
-==> kw2.vs <==
-#version 430
+# vertex shader
+# version 410
 
-layout (location=0) in vec4 VertexPosition;
-
-out vec4 c;
+in  vec3 position_vs;
 out float r_tcs;
 
 void main() {
-  c = vec4(VertexPosition);
-  gl_Position = c;
-  r_tcs = VertexPosition.w;
+  gl_Position = vec4(position_vs, 1.0);
+  r_tcs = position_vs.x * 0.001 + 1;
 }
 
-==> kw2.tcs <==
-#version 430
+# tessellation control shader
+# version 410
 
 layout (vertices = 3) out;
 
-in float[] r_tcs;
+in  float[] r_tcs;
 out float[] r_tes;
 
 const vec4 dummy = vec4(0);
@@ -34,15 +31,15 @@ void main() {
   r_tes[gl_InvocationID] = r_tcs[0];
 }
 
-==> kw2.tes <==
-#version 430
+# tessellation evaluation shader
+# version 410
 
 const float PI = 3.14159265359;
 
 layout (triangles, equal_spacing, cw) in;
 
-in float[] r_tes;
-out vec4 color_fs;
+in  float[] r_tes;
+out vec4    color_fs;
 
 void main() {
   vec3 T = gl_TessCoord;
@@ -63,13 +60,12 @@ void main() {
   }
 }
 
-==> kw2.fs <==
-#version 430
+# fragment shader
+# version 410
 
-layout (location=0) out vec4 FragColor;
-
-in vec4 color_fs;
+in  vec4 color_fs;
+out vec4 color_fb;
 
 void main() {
-  FragColor = color_fs;
+  color_fb = color_fs;
 }
