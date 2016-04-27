@@ -1,12 +1,9 @@
 # vertex shader
 # version 410
 
-in  vec3 position_vs;
-out float r_tcs;
-
 void main() {
-  gl_Position = vec4(position_vs, 1.0);
-  r_tcs = position_vs.x * 0.001 + 1;
+  gl_Position = vec4(0, 0, .5, 1);
+  gl_PointSize = 30;
 }
 
 # tessellation control shader
@@ -14,21 +11,14 @@ void main() {
 
 layout (vertices = 3) out;
 
-in  float[] r_tcs;
-out float[] r_tes;
-
-const vec4 dummy = vec4(0);
-
 void main() {
   if (gl_InvocationID == 0) {
     gl_TessLevelInner[0] = 0;
     gl_TessLevelOuter[0] = 12;
     gl_TessLevelOuter[1] = 6;
     gl_TessLevelOuter[2] = 3;
-    gl_out[gl_InvocationID].gl_Position = dummy;
   }
-
-  r_tes[gl_InvocationID] = r_tcs[0];
+  gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
 }
 
 # tessellation evaluation shader
@@ -38,7 +28,6 @@ const float PI = 3.14159265359;
 
 layout (triangles, equal_spacing, cw) in;
 
-in  float[] r_tes;
 out vec4    color_fs;
 
 void main() {
@@ -52,12 +41,12 @@ void main() {
 
   if (t >= 0) {
     float theta = PI * 2 * t / 3;
-    gl_Position = vec4(cos(theta), sin(theta), 0, 1);
-    color_fs    = vec4(cos(theta), sin(theta), 1, 1);
+    gl_Position = vec4(cos(theta), sin(theta), 1, 1);
   } else {
     gl_Position = vec4(0, 0, 0, 1);
-    color_fs = vec4(0, 0, 0, 1);
   }
+  gl_Position = gl_Position + gl_in[0].gl_Position;
+  color_fs    = gl_Position;
 }
 
 # fragment shader
