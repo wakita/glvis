@@ -75,7 +75,7 @@ class KW4(Demo):
         # Save the clicked location information
         ssb.clicked_x = pos.x(); ssb.clicked_y = pos.y()
         # Inifialize fields
-        ssb.pick_z    = -float('inf') # Initially -∞
+        ssb.pick_z    = -float('inf') # Initially -infty
         ssb.pick_lock = 0             # Initially unlocked (c.f., Unlocked@kw4.shader)
         ssb.pick_id   = -1            # Initially unknown
         if logging:
