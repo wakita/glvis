@@ -7,32 +7,40 @@ uniform float pointsize;
 
 layout (location=0) in vec3 position_vs;
 
-flat out int vertexID_fs;
+flat out int   vertexID_fs;
+flat out float vertexZ_fs;
 
 void main() {
-  vertexID_fs = gl_VertexID;
-
   vec4 p = vec4(position_vs, 1);
   vec4 p_mv = MV * p;
   gl_Position = P * p_mv;
 
   gl_PointSize = pointsize / (-p_mv.z);
+
+  vertexID_fs = gl_VertexID;
+  vertexZ_fs  = p_mv.z;
 }
 
 # fragment shader
 # version 430
 
-uniform ivec2 clickedPosition;
-
 layout (origin_upper_left) in vec4 gl_FragCoord;
-flat in int vertexID_fs;
+flat in int   vertexID_fs;
+flat in float vertexZ_fs;
 
 out vec4 color_fb;
 
 layout (std430, binding = 0) buffer SSB {
+  // Input fields
+  uint  clicked_x, clicked_y;
+  // Internal use
   float pick_z;
-  uint  pick_oid;
+  int   pick_lock;
+  // Output field
+  int   pick_id;
 };
+
+const int Unlocked = 0, Locked = 1;
 
 void main() {
   vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
@@ -41,8 +49,13 @@ void main() {
 
   color_fb = vec4(vec3(sqrt(normal.z)) * 0.6, 0.4) + vec4(1, 1, 1, 1) * 0.5;
 
-  if (/*gl_FragCoord.z < pick_z &&*/ distance(gl_FragCoord.xy, clickedPosition) < 1) {
-    // pick_z = gl_FragCoord.z;
-    pick_oid = vertexID_fs;
+  if (int(gl_FragCoord.x) == clicked_x && int(gl_FragCoord.y) == clicked_y) {
+    while (pick_z < vertexZ_fs) {
+      if (atomicCompSwap(pick_lock, Unlocked, Locked) == Unlocked) {
+        pick_z = vertexZ_fs;
+        pick_id = vertexID_fs;
+        pick_lock = Unlocked;
+      }
+    }
   }
 }
