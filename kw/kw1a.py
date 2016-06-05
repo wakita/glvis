@@ -2,7 +2,7 @@ import inspect, math, os.path
 
 from sn.qt import *
 from sn.gl import *
-import sn.gl.geometry.t3d as T
+import sn.gl.geometry.T3D as T
 
 import sn.gl.debug
 debug.logOnSetUniform(True)

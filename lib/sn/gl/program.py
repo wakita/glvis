@@ -77,6 +77,7 @@ class Program(_GLObject_):
         program = self._program
         shaderlist = []
         for t, code in self._shaderset:
+            print('Compiling a shader: {0}\n'.format(t))
             shader = glCreateShader(t)
             shaderlist.append(shader)
             glShaderSource(shader, code)
@@ -90,8 +91,10 @@ class Program(_GLObject_):
 
         glLinkProgram(program)
         if glGetProgramiv(program, GL_LINK_STATUS) != GL_TRUE:
-            raise RuntimeError('Program linking error:\n{0}'
-                    .format(glGetProgramInfoLog(program).decode('utf-8')))
+            errors = glGetProgramInfoLog(program)
+            if len(errors) > 0:
+                errors = errors.decode('utf-8')
+            raise RuntimeError('Program linking error:\n{0}'.format(errors))
         for shader in shaderlist:
             glDetachShader(program, shader)
             glDeleteShader(shader)
@@ -190,7 +193,7 @@ class Program(_GLObject_):
     def _glUniformv_(f, loc, name, v):
         if debug._logOnSetUniform_:
             print('Uniform[{0}]: {1}\n'.format(name, v))
-        f(loc, v)
+        f(loc, *v)
 
     def _glUniformfv_(f, loc, name, V):
         if debug._logOnSetUniform_:
@@ -201,10 +204,10 @@ class Program(_GLObject_):
     def _uniformfv_(f): return lambda loc, name, *V: Program._glUniformfv_(f, loc, name, V)
 
     uniformHandler[GL_INT]        = _uniformv_(glUniform1i)
-    uniformHandler[GL_INT_VEC2]   = _uniformfv_(glUniform2i)
-    uniformHandler[GL_INT_VEC3]   = _uniformfv_(glUniform3i)
-    uniformHandler[GL_INT_VEC4]   = _uniformfv_(glUniform4i)
-    uniformHandler[GL_FLOAT]      = _uniformv_(glUniform1f)
+    uniformHandler[GL_INT_VEC2]   = _uniformv_(glUniform2i)
+    uniformHandler[GL_INT_VEC3]   = _uniformv_(glUniform3i)
+    uniformHandler[GL_INT_VEC4]   = _uniformv_(glUniform4i)
+    uniformHandler[GL_FLOAT]      = _uniformfv_(glUniform1f)
     uniformHandler[GL_FLOAT_VEC2] = _uniformfv_(glUniform2f)
     uniformHandler[GL_FLOAT_VEC3] = _uniformfv_(glUniform3f)
     uniformHandler[GL_FLOAT_VEC4] = _uniformfv_(glUniform4f)

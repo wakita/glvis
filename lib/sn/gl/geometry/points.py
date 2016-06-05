@@ -2,7 +2,7 @@ import os.path
 from .. import *
 from .volume import V as Volume
 from .volume import D as Demo
-import sn.gl.geometry.t3d as T
+import sn.gl.geometry.T3D as T
 
 class V(Volume):
 
@@ -40,8 +40,10 @@ class D(Demo):
 
     def initializeGL(self):
         S = 5
+        vvals = np.array(range(S)) * 2. / (S - 1) - 1.
+        points = [ (x, y, 0) for x in vvals for y in vvals ]
         shaderpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pointgrid.shaders')
-        super().initializeGL(shaderpath, lambda program: V(program, S))
+        super().initializeGL(shaderpath, lambda program: V(program, points))
 
         eye, target, up = T.vec3(0, 0, 3), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
