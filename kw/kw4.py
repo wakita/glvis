@@ -13,12 +13,15 @@ import sn.gl.debug
 
 
 sn.gl.debug.logOnShaderVariables(True)
-#sn.gl.debug.logOnSetUniform(True)
+sn.gl.debug.logOnSetUniform(True)
 
 # points.D を継承して簡素化できないか？
 
 
 class SSB(Structure):
+    '''SSBの構造をctypesの構造体として抽象化したクラス．
+    シェーダ定義におけるバッファstd430形式に合せること．
+    '''
     _fields_ = [('pick_z', c_float), ('pick_oid', c_uint)]
 
 
@@ -48,10 +51,13 @@ class KW4(Demo):
         self.program.u['pointsize'](800 / S)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
+        # SSBの作成
         ssbo = glGenBuffers(1)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
+        # SSBの領域の確保
         ssb = SSB(pick_z = 1000, pick_oid = -1)
         glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
+        # なんでしたっけ，これ？
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo)
 
     def paintGL(self):
@@ -67,10 +73,14 @@ class KW4(Demo):
 
     def handleMouseClick(self):
         if self.should_handle_mouse_click:
+            # GPUのSSBをアプリケーション側にマップ
             buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY)
+            # マップされたSSB領域をPythonオブジェクトとして仮想化
             ssb = cast(buf, POINTER(SSB)).contents
             print('id:', ssb.pick_oid)
+            # SSB領域を開放
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
+            # Pick判定処理の終了
             self.should_handle_mouse_click = False
 
 if __name__ == '__main__':
