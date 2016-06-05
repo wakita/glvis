@@ -14,7 +14,7 @@ import sn.gl.debug
 
 
 sn.gl.debug.logOnShaderVariables(True)
-# sn.gl.debug.logOnSetUniform(True)
+#sn.gl.debug.logOnSetUniform(True)
 
 # points.D を継承して簡素化できないか？
 
@@ -54,6 +54,7 @@ class KW4(Demo):
         for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_CLIP_PLANE0, GL_BLEND]:
             glEnable(p)
         self.program.u['pointsize'](800 / self.S)
+        self.program.u['pick_color'](*T.vec4(1, 0, 0, 1))
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
         # SSBの作成
