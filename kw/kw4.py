@@ -1,5 +1,3 @@
-import locale
-
 from ctypes import *
 import sys
 
