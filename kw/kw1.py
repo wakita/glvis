@@ -2,13 +2,14 @@ import inspect, math, os.path
 
 from sn.qt import *
 from sn.gl import *
-import sn.gl.geometry.t3d as T
+import sn.gl.geometry.T3D as T
 
 import sn.gl.debug
 debug.logOnSetUniform(True)
 
 from sn.gl.geometry.pointgrid import V as PointGrid
 from sn.gl.geometry.volume import D as DemoWidget
+
 
 class KW8Widget(DemoWidget):
     def initializeGL(self):
