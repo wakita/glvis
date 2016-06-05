@@ -11,18 +11,12 @@ from sn.gl.geometry.points import V as Points
 import sn.gl.geometry.T3D as T
 
 import sn.gl.debug
-
-
 sn.gl.debug.logOnShaderVariables(True)
-#sn.gl.debug.logOnSetUniform(True)
-
-# points.D を継承して簡素化できないか？
+sn.gl.debug.logOnSetUniform(False)
+logging = True
 
 
 class SSB(Structure):
-    '''SSBの構造をctypesの構造体として抽象化したクラス．
-    シェーダ定義におけるバッファ(std430形式)に合せること．
-    '''
     _fields_ = [('clicked_x', c_uint), ('clicked_y', c_uint),
                 ('pick_z', c_float),   ('pick_lock', c_int),
                 ('pick_id', c_int)]
@@ -57,14 +51,14 @@ class KW4(Demo):
         self.program.u['pick_color'](*T.vec4(1, 0, 0, 1))
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-        # SSBの作成
+        # Prepare an application-side SSB region
         ssbo = glGenBuffers(1)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
-        # SSBのためのアプリケーション側メモリ領域の確保
+        # Allocate a storage area on the application
         ssb = SSB()
-        # ssboで参照しているSSBとそのためのメモリ領域(ssb)を関連づけ
+        # Create and initialize the application-side SSB area
         glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
-        # なんでしたっけ，これ？でも，これがないと動かない．．．
+        # Bind the 0'th binding point of the SSB to the application-side SSB area
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo)
 
     def paintGL(self):
@@ -74,28 +68,35 @@ class KW4(Demo):
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
         pos = ev.pos()
 
+        # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
         buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY)
+        # Virtualize the SSB as a Python ctypes object
         ssb = cast(buf, POINTER(SSB)).contents
+        # Save the clicked location information
         ssb.clicked_x = pos.x(); ssb.clicked_y = pos.y()
+        # Inifialize fields
         ssb.pick_z    = -float('inf') # Initially -∞
         ssb.pick_lock = 0             # Initially unlocked (c.f., Unlocked@kw4.shader)
         ssb.pick_id   = -1            # Initially unknown
-        # print('float.min: {0}'.format(sys.float_info.min))
-        # print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+        if logging:
+          print('float.min: {0}'.format(sys.float_info.min))
+          print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+        # Unmap the SSB
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
-
+        # Tell the next rendering cycle to perform pick-identification
         self.should_handle_mouse_click = True
 
     def handleMouseClick(self):
         if self.should_handle_mouse_click:
-            # GPUのSSBをアプリケーション側にマップ
+            # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY)
-            # マップされたSSB領域をPythonオブジェクトとして仮想化
+            # Virtualize the SSB as a Python ctype object
             ssb = cast(buf, POINTER(SSB)).contents
-            print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
-            # SSB領域を開放
+            if logging:
+              print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
+            # Unmap the SSB
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
-            # Pick判定処理の終了
+            # Pick-identification finished
             self.should_handle_mouse_click = False
 
 if __name__ == '__main__':
