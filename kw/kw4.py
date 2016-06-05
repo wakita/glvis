@@ -24,7 +24,7 @@ class KW4(Demo):
 
     def __init__(self, W):
         super().__init__(W)
-        self.should_handle_mouse_click = False
+        self.should_handle_pick = False
 
         s = self.S = 5
         vvals = np.array(range(s)) * 2. / (s - 1) - 1.
@@ -61,7 +61,7 @@ class KW4(Demo):
 
     def paintGL(self):
         super().paintGL()
-        self.handleMouseClick()
+        self.handlePick()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
         pos = ev.pos()
@@ -72,30 +72,30 @@ class KW4(Demo):
         ssb = cast(buf, POINTER(SSB)).contents
         # Save the clicked location information
         ssb.clicked_x = pos.x(); ssb.clicked_y = pos.y()
-        # Inifialize fields
+        # Initialize fields
         ssb.pick_z    = -float('inf') # Initially -infty
         ssb.pick_lock = 0             # Initially unlocked (c.f., Unlocked@kw4.shader)
         ssb.pick_id   = -1            # Initially unknown
         if logging:
-          print('float.min: {0}'.format(sys.float_info.min))
-          print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+            print('float.min: {0}'.format(sys.float_info.min))
+            print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
         # Unmap the SSB
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
         # Tell the next rendering cycle to perform pick-identification
-        self.should_handle_mouse_click = True
+        self.should_handle_pick = True
 
-    def handleMouseClick(self):
-        if self.should_handle_mouse_click:
+    def handlePick(self):
+        if self.should_handle_pick:
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY)
             # Virtualize the SSB as a Python ctype object
             ssb = cast(buf, POINTER(SSB)).contents
             if logging:
-              print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
+                print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
             # Unmap the SSB
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
             # Pick-identification finished
-            self.should_handle_mouse_click = False
+            self.should_handle_pick = False
 
 if __name__ == '__main__':
     KW4.start(KW4)
