@@ -17,9 +17,12 @@ class S(object):
     def enable(props):
         for p in props: glEnable(p)
 
-    def render(self):
+    def use(self):
         self.bind()
         self.program.use()
+
+    def render(self):
+        pass
 
 class D(GLWidget):
     program = None
@@ -29,6 +32,7 @@ class D(GLWidget):
         self.program = self.program or Program(shaderpath)
         self.program.use()
         self.geometry = Geometry(self.program)
+        self.geometry.use()
 
     def paintGL(self):
         super().paintGL()
