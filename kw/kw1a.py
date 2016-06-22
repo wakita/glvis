@@ -1,3 +1,5 @@
+# kw1.pyはPointGridでモデルを構成した。kw1a.pyはPointsを用いている。実質的には同じ。
+
 import inspect, math, os.path
 
 from sn.qt import *
