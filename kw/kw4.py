@@ -15,7 +15,7 @@ logging = True
 
 
 class SSB(Structure):
-    _fields_ = [('clicked_pos', c_uint), ('clicked_y', c_uint),
+    _fields_ = [('clicked_x', c_uint), ('clicked_y', c_uint),
                 ('pick_z', c_float),   ('pick_lock', c_int),
                 ('pick_id', c_int)]
 
@@ -30,6 +30,8 @@ class KW4(DEMO):
         vvals = np.array(range(s)) * 2. / (s - 1) - 1.
         self.points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
 
+        self.click_buffer = 0
+
     def minimumSizeHint(self): return QtCore.QSize(600, 600)
 
     def onTick(self): self.updateGL()
@@ -43,21 +45,21 @@ class KW4(DEMO):
         eye, target, up = T.vec3(0, 0, 3), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
 
-        for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_CLIP_PLANE0, GL_BLEND]:
+        for p in [GL_VERTEX_PROGRAM_POINT_SIZE]:
             glEnable(p)
         self.program.u['pointsize'](800 / self.S)
-        self.program.u['pick_color'](*T.vec4(1, 0, 0, 1))
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
         # Prepare an application-side SSB region
-        ssbo = glGenBuffers(1)
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
+        self.click_buffer = glGenBuffers(1)
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
+        # Bind the 0'th binding point of the SSB to the application-side SSB area
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, self.click_buffer)
         # Allocate a storage area on the application
         ssb = SSB()
+        ssb.clicked_x = 100
         # Create and initialize the application-side SSB area
         glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
-        # Bind the 0'th binding point of the SSB to the application-side SSB area
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo)
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
 
     def paintGL(self):
         super().paintGL()
@@ -66,10 +68,9 @@ class KW4(DEMO):
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
         pos = ev.pos()
 
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
         # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
-        buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY)
-        # Virtualize the SSB as a Python ctypes object
-        ssb = cast(buf, POINTER(SSB)).contents
+        ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
         # Save the clicked location information
         ssb.clicked_x, ssb.clicked_y = pos.x(), pos.y()
         # Initialize fields
@@ -81,19 +82,21 @@ class KW4(DEMO):
         # Unmap the SSB
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
         # Tell the next rendering cycle to perform pick-identification
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
         self.should_handle_pick = True
 
     def handle_pick(self):
         if self.should_handle_pick:
+            glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
-            buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY)
-            # Virtualize the SSB as a Python ctypes object
-            ssb = cast(buf, POINTER(SSB)).contents
+            ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
             if logging:
+                print('SSB: ({0}, {1})'.format(ssb.clicked_x, ssb.clicked_y))
                 print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
             # Unmap the SSB
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
             # Pick-identification finished
+            glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
             self.should_handle_pick = False
 
 if __name__ == '__main__':

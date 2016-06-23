@@ -26,8 +26,6 @@ void main() {
 
 const   vec4 WHITE = vec4(1, 1, 1, 1);
 const   vec4 RED   = vec4(1, 0, 0, 1);
-uniform vec4 pick_color;
-
 layout (origin_upper_left) in vec4 gl_FragCoord;
 flat in int   vertexID_fs;
 flat in float vertexZ_fs;
@@ -50,6 +48,8 @@ void main() {
   vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
   normal.z = 1.0 - dot(normal.xy, normal.xy);
   if (normal.z < 0) discard;
+
+  if (gl_FragCoord.x < clicked_x || gl_FragCoord.y < clicked_y) discard;
 
   color_fb = vec4(vec3(sqrt(normal.z)) * 0.5, 1) + ((pick_id == vertexID_fs) ? RED : WHITE) * 0.5;
 
