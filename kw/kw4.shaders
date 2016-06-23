@@ -24,6 +24,8 @@ void main() {
 # fragment shader
 # version 430
 
+const   vec4 WHITE = vec4(1, 1, 1, 1);
+const   vec4 RED   = vec4(1, 0, 0, 1);
 layout (origin_upper_left) in vec4 gl_FragCoord;
 flat in int   vertexID_fs;
 flat in float vertexZ_fs;
@@ -33,28 +35,30 @@ out vec4 color_fb;
 layout (std430, binding = 0) buffer SSB {
   // Input fields
   uint  clicked_x, clicked_y;
-  // Internal use
+  // Internally used fields
   float pick_z;
   int   pick_lock;
   // Output field
   int   pick_id;
 };
 
-const int Unlocked = 0, Locked = 1;
+const int UNLOCKED = 0, LOCKED = 1;
 
 void main() {
   vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
   normal.z = 1.0 - dot(normal.xy, normal.xy);
   if (normal.z < 0) discard;
 
-  color_fb = vec4(vec3(sqrt(normal.z)) * 0.6, 0.4) + vec4(1, 1, 1, 1) * 0.5;
+  if (gl_FragCoord.x < clicked_x || gl_FragCoord.y < clicked_y) discard;
+
+  color_fb = vec4(vec3(sqrt(normal.z)) * 0.5, 1) + ((pick_id == vertexID_fs) ? RED : WHITE) * 0.5;
 
   if (int(gl_FragCoord.x) == clicked_x && int(gl_FragCoord.y) == clicked_y) {
     while (pick_z < vertexZ_fs) {
-      if (atomicCompSwap(pick_lock, Unlocked, Locked) == Unlocked) {
+      if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
         pick_z = vertexZ_fs;
         pick_id = vertexID_fs;
-        pick_lock = Unlocked;
+        pick_lock = UNLOCKED;
       }
     }
   }
