@@ -4,8 +4,8 @@ import sys
 from PyQt5 import QtCore, QtGui
 from sn.gl import *
 from sn.qt import *
-from sn.gl.geometry.volume import D as Demo
-from sn.gl.geometry.points import V as Points
+from sn.gl.geometry.volume import D as DEMO
+from sn.gl.geometry.points import V as POINTS
 import sn.gl.geometry.T3D as T
 
 import sn.gl.debug
@@ -15,20 +15,20 @@ logging = True
 
 
 class SSB(Structure):
-    _fields_ = [('clicked_x', c_uint), ('clicked_y', c_uint),
+    _fields_ = [('clicked_pos', c_uint), ('clicked_y', c_uint),
                 ('pick_z', c_float),   ('pick_lock', c_int),
                 ('pick_id', c_int)]
 
 
-class KW4(Demo):
+class KW4(DEMO):
 
-    def __init__(self, W):
-        super().__init__(W)
+    def __init__(self, widget):
+        super().__init__(widget)
         self.should_handle_pick = False
 
         s = self.S = 5
         vvals = np.array(range(s)) * 2. / (s - 1) - 1.
-        self.points = points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
+        self.points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
 
     def minimumSizeHint(self): return QtCore.QSize(600, 600)
 
@@ -38,7 +38,7 @@ class KW4(Demo):
 
     def initializeGL(self):
         points = self.points
-        super().initializeGL('kw4.shaders', lambda program: Points(program, points))
+        super().initializeGL('kw4.shaders', lambda _program: POINTS(_program, points))
 
         eye, target, up = T.vec3(0, 0, 3), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
@@ -61,7 +61,7 @@ class KW4(Demo):
 
     def paintGL(self):
         super().paintGL()
-        self.handlePick()
+        self.handle_pick()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
         pos = ev.pos()
@@ -71,11 +71,10 @@ class KW4(Demo):
         # Virtualize the SSB as a Python ctypes object
         ssb = cast(buf, POINTER(SSB)).contents
         # Save the clicked location information
-        ssb.clicked_x = pos.x(); ssb.clicked_y = pos.y()
+        ssb.clicked_x, ssb.clicked_y = pos.x(), pos.y()
         # Initialize fields
-        ssb.pick_z    = -float('inf') # Initially -infty
-        ssb.pick_lock = 0             # Initially unlocked (c.f., Unlocked@kw4.shader)
-        ssb.pick_id   = -1            # Initially unknown
+        ssb.pick_z = float('-inf')         # Initially -infty
+        ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
         if logging:
             print('float.min: {0}'.format(sys.float_info.min))
             print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
@@ -84,11 +83,11 @@ class KW4(Demo):
         # Tell the next rendering cycle to perform pick-identification
         self.should_handle_pick = True
 
-    def handlePick(self):
+    def handle_pick(self):
         if self.should_handle_pick:
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             buf = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY)
-            # Virtualize the SSB as a Python ctype object
+            # Virtualize the SSB as a Python ctypes object
             ssb = cast(buf, POINTER(SSB)).contents
             if logging:
                 print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
