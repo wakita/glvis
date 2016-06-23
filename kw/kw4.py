@@ -63,6 +63,7 @@ class KW4(DEMO):
 
     def paintGL(self):
         super().paintGL()
+        self.geometry.use()
         self.handle_pick()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
