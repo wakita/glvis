@@ -1,0 +1,65 @@
+# vertex shader
+# version 430
+
+uniform mat4 MV;
+uniform mat4 P;
+uniform float pointsize;
+
+in  vec3 position_vs;
+out vec4 color_fs;
+
+const int P1 = 15485863, P2 = 32452843;
+const int N_COLORS = 6;
+const vec4 colors[] = vec4[](
+    vec4(0, 0, 1, 1), vec4(0, 1, 0, 1), vec4(0, 1, 1, 1),
+    vec4(1, 0, 0, 1), vec4(1, 0, 1, 1), vec4(1, 1, 0, 1));
+
+void main() {
+  vec4 p = vec4(position_vs, 1);
+  vec4 p_mv = MV * p;
+  gl_Position = P * p_mv;
+
+  gl_PointSize = pointsize / (-p_mv.z);
+
+  color_fs = colors[(gl_VertexID + P1) * P2 % N_COLORS];
+}
+
+# fragment shader
+# version 430
+
+uniform  vec3 worldlight;
+
+ in vec2 gl_PointCoord;
+ in vec4 color_fs;
+out vec4 color_fb;
+
+subroutine void PaintType();
+subroutine uniform PaintType doPaint;
+
+//layout (index = 1)
+subroutine (PaintType)
+void paintGray() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+
+  vec4 color = vec4(vec3(sqrt(normal.z)) * 0.6, 0.4) + color_fs * 0.5;
+  float c = (color.r + color.g + color.b) / 3;
+  color_fb = vec4(c, c, c, 1);
+}
+
+//layout (index = 2)
+subroutine (PaintType)
+void paintColor() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+
+  color_fb = vec4(vec3(sqrt(normal.z)) * 0.6, 0.4) + color_fs * 0.5;
+}
+
+void main() {
+    //paintColor();
+    //paintGray();
+    doPaint();
+}
