@@ -56,7 +56,6 @@ class KW4(DEMO):
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, self.click_buffer)
         # Allocate a storage area on the application
         ssb = SSB()
-        ssb.clicked_x = 100
         # Create and initialize the application-side SSB area
         glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
