@@ -171,16 +171,16 @@ class Program(_GLObject_):
 
         bbuf = bytes(256)
         info = np.zeros(3, dtype=np.int32)
-        length = np.zeros(1, dtype=np.int32)
+        lengths = np.zeros(1, dtype=np.int32)
         a = self.a = dict()
         for attr in range(n[0]):
             glGetProgramResourceiv(program, GL_PROGRAM_INPUT, attr,
-                    3, properties, 3, length, info)
+                    3, properties, 3, lengths, info)
             # print('length = {0}, info = {1}'.format(length, info))
-            glGetProgramResourceName(program, GL_PROGRAM_INPUT, attr, len(bbuf), length, bbuf)
+            glGetProgramResourceName(program, GL_PROGRAM_INPUT, attr, len(bbuf), lengths, bbuf)
             location = info[2]
             if location == -1: continue
-            name = bbuf[:length].decode('utf-8')
+            name = bbuf[:lengths[0]].decode('utf-8')
             typestr = types[types.index(info[1])].__repr__()
             if debug._logOnShaderVariables_:
                 print('attribute {0}:{1}@{2}'.format(name, typestr, location))

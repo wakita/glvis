@@ -7,7 +7,7 @@ from PyQt5.QtGui import QWindow
 #OpenGL.FULL_LOGGING = True
 from OpenGL.GL import *
 from . import *
-from ..gl.geometry import T3D as T
+from ..gl.geometry import t3d as T
 from .application import Application
 from .window import Window
 

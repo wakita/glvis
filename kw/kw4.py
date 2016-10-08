@@ -67,12 +67,9 @@ class KW4(DEMO):
         print(self.fragment)
 
     def paintGL(self):
-        if self.should_handle_pick:
-            glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['pick'])
-            super().paintGL()
-
         self.geometry.use()
-        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['paint'])
+        pick_or_paint = self.fragment['pick' if self.should_handle_pick else 'paint']
+        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, pick_or_paint)
         super().paintGL()
         self.handle_pick()
 
