@@ -6,7 +6,7 @@ from sn.gl import *
 from sn.qt import *
 from sn.gl.geometry.volume import D as DEMO
 from sn.gl.geometry.points import V as POINTS
-import sn.gl.geometry.T3D as T
+import sn.gl.geometry.t3d as T
 
 import sn.gl.debug
 sn.gl.debug.logOnShaderVariables(True)
@@ -31,6 +31,8 @@ class KW4(DEMO):
         self.points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
 
         self.click_buffer = 0
+
+        self.fragment = dict()
 
     def minimumSizeHint(self): return QtCore.QSize(600, 600)
 
@@ -60,9 +62,18 @@ class KW4(DEMO):
         glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
 
+        for f in 'paint pick'.split():
+            self.fragment[f] = glGetSubroutineIndex(self.program._program, GL_FRAGMENT_SHADER, f)
+        print(self.fragment)
+
     def paintGL(self):
-        super().paintGL()
+        if self.should_handle_pick:
+            glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['pick'])
+            super().paintGL()
+
         self.geometry.use()
+        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['paint'])
+        super().paintGL()
         self.handle_pick()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):

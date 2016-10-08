@@ -2,7 +2,7 @@ import os.path
 from .. import *
 from .volume import V as Volume
 from .volume import D as Demo
-import sn.gl.geometry.T3D as T
+import sn.gl.geometry.t3d as T
 
 class V(Volume):
 

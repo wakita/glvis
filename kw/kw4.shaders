@@ -44,15 +44,11 @@ layout (std430, binding = 0) buffer SSB {
 
 const int UNLOCKED = 0, LOCKED = 1;
 
-void main() {
-  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
-  normal.z = 1.0 - dot(normal.xy, normal.xy);
-  if (normal.z < 0) discard;
+subroutine void Fragment();
+subroutine uniform Fragment fragment;
 
-  if ((gl_FragCoord.x - clicked_x) * (gl_FragCoord.y - clicked_y) < 0) discard;
-
-  color_fb = vec4(vec3(sqrt(normal.z)) * 0.5, 1) + ((pick_id == vertexID_fs) ? RED : WHITE) * 0.5;
-
+subroutine (Fragment)
+void pick() {
   if (int(gl_FragCoord.x) == clicked_x && int(gl_FragCoord.y) == clicked_y) {
     while (pick_z < vertexZ_fs) {
       if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
@@ -62,4 +58,19 @@ void main() {
       }
     }
   }
+}
+
+subroutine (Fragment)
+void paint() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+
+  if ((gl_FragCoord.x - clicked_x) * (gl_FragCoord.y - clicked_y) < 0) discard;
+
+  color_fb = vec4(vec3(sqrt(normal.z)) * 0.5, 1) + ((pick_id == vertexID_fs) ? RED : WHITE) * 0.5;
+}
+
+void main() {
+  fragment();
 }

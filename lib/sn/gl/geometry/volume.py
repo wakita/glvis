@@ -2,7 +2,7 @@ from .. import *
 from sn.qt.glwidget import GLWidget3D
 from .shape import S as Shape
 from .shape import D as Demo
-import sn.gl.geometry.T3D as T
+import sn.gl.geometry.t3d as T
 
 class V(Shape): pass
 

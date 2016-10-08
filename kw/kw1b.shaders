@@ -27,16 +27,15 @@ void main() {
 # fragment shader
 # version 430
 
-uniform  vec3 worldlight;
-
  in vec2 gl_PointCoord;
  in vec4 color_fs;
 out vec4 color_fb;
 
+uniform  vec3 worldlight;
+
 subroutine void PaintType();
 subroutine uniform PaintType doPaint;
 
-//layout (index = 1)
 subroutine (PaintType)
 void paintGray() {
   vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
@@ -48,7 +47,6 @@ void paintGray() {
   color_fb = vec4(c, c, c, 1);
 }
 
-//layout (index = 2)
 subroutine (PaintType)
 void paintColor() {
   vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
@@ -59,7 +57,5 @@ void paintColor() {
 }
 
 void main() {
-    //paintColor();
-    //paintGray();
     doPaint();
 }

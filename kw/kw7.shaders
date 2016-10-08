@@ -1,0 +1,54 @@
+==> kw7.vs <==
+#version 430
+#extension GL_ARB_shader_storage_buffer_object: enable
+
+layout (location = 0) in vec3 VertexPosition;
+
+uniform float t;
+uniform mat4 MVP;
+
+// 注意：glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
+uniform float pointSize;
+
+const float T_WAIT = 3;
+
+void main() {
+  gl_Position = MVP * vec4(VertexPosition, 0.6);
+  gl_PointSize = pointSize / gl_Position.w;
+  gl_ClipDistance[0] = - distance(VertexPosition, vec3(0.6, 0.3, 0.4)) + (t - T_WAIT)/6;
+}
+
+==> kw7.fs <==
+#version 430
+
+// subroutine void paintType();
+// subroutine uniform paintType paint;
+
+layout (location = 0) out vec4 FragColor;
+
+uniform vec3 Light;
+uniform float t;
+
+/*
+ * 参考： 床井先生「シェーダで Point Sprite」
+ * http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20110324
+ *
+ * 注意: glEnable(GL_POINT_SPRITE)
+ */
+
+// subroutine(paintType)
+void paintForPick() {
+}
+
+void paintNormal() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+  normal.z = sqrt(normal.z);
+  float luminance = dot(Light, normalize(normal));
+  FragColor = vec4(vec3(luminance) * 0.8 + vec3(0.2, 0.2, 0.5), 1 / max(1, (t - 10) / 5));
+}
+
+void main() {
+  paintNormal();
+}
