@@ -1,0 +1,23 @@
+[データ名]
+	sengoku
+[概要]
+        Wikipedia 「戦国大名」カテゴリに属する記事のネットワーク。
+	ノードは各記事、リンクは記事間に張られたリンクを表す。
+[ソース]
+        Wikipedia Data dumps (2010-09-10) より作成。
+[サイズ]
+	ページ数: 626
+	リンク数: 5,326（処理前リンク数: 7,518）
+[ファイル]
+- sengoku.graphml
+	GraphML形式のデータ（page.csv, pagelinks.csvから生成）
+- page.csv
+        ページIDとページタイトルの対応リスト
+- pagelinks.csv
+        リンクしているページペアのリスト
+        （リダイレクト解消・無向グラフ化・重複削除処理済み）
+- pagelinks_original.csv
+        Wikipediaオリジナルのリンクのリスト
+- in-degree.freq.csv
+- out-degree.freq.csv
+        被リンク数/リンク数の頻度

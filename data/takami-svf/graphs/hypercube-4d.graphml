@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE graphml SYSTEM "file:./graphml.dtd">
+<graphml>
+<graph id="hypercube-4d" edgedefault="undirected">
+<node id="n0000"/>
+<node id="n0001"/>
+<node id="n0010"/>
+<node id="n0011"/>
+<node id="n0100"/>
+<node id="n0101"/>
+<node id="n0110"/>
+<node id="n0111"/>
+<node id="n1000"/>
+<node id="n1001"/>
+<node id="n1010"/>
+<node id="n1011"/>
+<node id="n1100"/>
+<node id="n1101"/>
+<node id="n1110"/>
+<node id="n1111"/>
+<edge source="n0000" target="n0001"/>
+<edge source="n0000" target="n0010"/>
+<edge source="n0000" target="n0100"/>
+<edge source="n0000" target="n1000"/>
+<edge source="n0001" target="n0011"/>
+<edge source="n0001" target="n0101"/>
+<edge source="n0001" target="n1001"/>
+<edge source="n0010" target="n0011"/>
+<edge source="n0010" target="n0110"/>
+<edge source="n0010" target="n1010"/>
+<edge source="n0011" target="n0111"/>
+<edge source="n0011" target="n1011"/>
+<edge source="n0100" target="n0101"/>
+<edge source="n0100" target="n0110"/>
+<edge source="n0100" target="n1100"/>
+<edge source="n0101" target="n0111"/>
+<edge source="n0101" target="n1101"/>
+<edge source="n0110" target="n0111"/>
+<edge source="n0110" target="n1110"/>
+<edge source="n0111" target="n1111"/>
+<edge source="n1000" target="n1001"/>
+<edge source="n1000" target="n1010"/>
+<edge source="n1000" target="n1100"/>
+<edge source="n1001" target="n1011"/>
+<edge source="n1001" target="n1101"/>
+<edge source="n1010" target="n1011"/>
+<edge source="n1010" target="n1110"/>
+<edge source="n1011" target="n1111"/>
+<edge source="n1100" target="n1101"/>
+<edge source="n1100" target="n1110"/>
+<edge source="n1101" target="n1111"/>
+<edge source="n1110" target="n1111"/>
+</graph>
+</graphml>

@@ -1,0 +1,24 @@
+[データ名]
+	math
+[概要]
+        Wikipedia 「数学に関する記事の一覧」からリンクされている記事のネットワーク。
+	ノードは各記事、リンクは記事間に張られたリンクを表す。
+[出典]
+        Wikipedia Data dumps (2010-09-10) より作成。
+[サイズ]
+	ページ数: 3,630
+	リンク数: 51,832（処理前リンク数: 68,504）
+[データ]
+- math.graphml
+	GraphML形式のデータ（page.csv, pagelinks.csvから生成）
+- math.no1.graphml
+	math.graphmlから「数学に関する記事の一覧」を含むリンクを削除したもの
+- page.csv
+        ページIDとページタイトルの対応リスト
+- pagelinks.csv
+        リンクしているページペアのリスト
+        （リダイレクト解消・無向グラフ化・重複削除処理済み）
+- pagelinks_original.csv
+        Wikipediaオリジナルのリンクのリスト
+- math.png
+	Gephiで視覚化した図

@@ -1,0 +1,2016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE graphml SYSTEM "file:./graphml.dtd">
+<graphml>
+<graph id="erdos1graph-reduced" edgedefault="undirected">
+<node id="ABBOTT, HARVEY L."/>
+<node id="ACZEL, JANOS D."/>
+<node id="AGOH, TAKASHI"/>
+<node id="AHARONI, RON"/>
+<node id="AIGNER, MARTIN S."/>
+<node id="AJTAI, MIKLOS"/>
+<node id="ALAVI, YOUSEF"/>
+<node id="ALLADI, KRISHNASWAMI"/>
+<node id="ALON, NOGA"/>
+<node id="ANDERSON, JAMES MILNE"/>
+<node id="ANDRASFAI, BELA"/>
+<node id="ANKENY, NESMITH C.*"/>
+<node id="ARKIN, JOSEPH*"/>
+<node id="ARNEY, DAVID CHRISTOPHER"/>
+<node id="ARONOV, BORIS"/>
+<node id="ASH, J. MARSHALL"/>
+<node id="AVIS, DAVID M."/>
+<node id="BABAI, LASZLO"/>
+<node id="BABU, GUTTI JOGESH"/>
+<node id="BAGEMIHL, FREDERICK"/>
+<node id="BALOG, ANTAL"/>
+<node id="BANKOFF, LEON*"/>
+<node id="BARAK, AMNON B."/>
+<node id="BATEMAN, PAUL T."/>
+<node id="BAUMGARTNER, JAMES E."/>
+<node id="BEASLEY, LEROY B."/>
+<node id="BECK, ISTVAN"/>
+<node id="BEHZAD, MEHDI"/>
+<node id="BEJLEGAARD, NIELS"/>
+<node id="BERGELSON, VITALY"/>
+<node id="BERGER, MARC ARON"/>
+<node id="BERTRAM, EDWARD A."/>
+<node id="BIALOSTOCKI, ARIE"/>
+<node id="BLASS, ANDREAS R."/>
+<node id="BLECKSMITH, RICHARD"/>
+<node id="BLEICHER, MICHAEL N."/>
+<node id="BOALS, ALFRED J."/>
+<node id="BOAS, RALPH PHILIP, JR.*"/>
+<node id="BOES, DUANE C."/>
+<node id="BOLLOBAS, BELA"/>
+<node id="BONAR, DANIEL D."/>
+<node id="BONDY, JOHN ADRIAN"/>
+<node id="BONNET, ROBERT"/>
+<node id="BOROSH, ITSHAK"/>
+<node id="BOSAK, JURAJ"/>
+<node id="BOVEY, JOHN D."/>
+<node id="BRENNER, JOEL LEE*"/>
+<node id="BRILLHART, JOHN D."/>
+<node id="BRINDZA, BELA"/>
+<node id="BROWN, THOMAS CRAIG"/>
+<node id="BROWN, WILLIAM G."/>
+<node id="BUCK, R. CREIGHTON*"/>
+<node id="BUKOR, JOZEF"/>
+<node id="BURR, STEFAN ANDRUS"/>
+<node id="CACCETTA, LOUIS"/>
+<node id="CALKIN, NEIL J."/>
+<node id="CAMERON, PETER J."/>
+<node id="CANFIELD, E. RODNEY"/>
+<node id="CARROLL, FRANCIS W."/>
+<node id="CATER, FRANK S."/>
+<node id="CATES, MARSHALL L."/>
+<node id="CATLIN, PAUL A.*"/>
+<node id="CHALK, JOHN H. H."/>
+<node id="CHARTRAND, GARY"/>
+<node id="CHEN, CHUAN CHONG"/>
+<node id="CHEN, GUANTAO"/>
+<node id="CHEN, HANG"/>
+<node id="CHEN, ROBERT W."/>
+<node id="CHINN, PHYLLIS ZWEIG"/>
+<node id="CHOI, SHIU LUN GODFREY"/>
+<node id="CHOWLA, SARVADAMAN*"/>
+<node id="CHUI, CHARLES KAM-TAI"/>
+<node id="CHUNG, FAN RONG K."/>
+<node id="CHUNG, KAI-LAI"/>
+<node id="CHVATAL, VACLAV"/>
+<node id="CLARK, BRENT N."/>
+<node id="CLARK, LANE HENRY"/>
+<node id="CLUNIE, JAMES G."/>
+<node id="COHEN, STEPHEN D."/>
+<node id="COLBOURN, CHARLES J."/>
+<node id="CONWAY, JOHN HORTON"/>
+<node id="COPELAND, ARTHUR H., SR.*"/>
+<node id="CROFT, HALLARD T."/>
+<node id="CSAKI, ENDRE"/>
+<node id="CSISZAR, IMRE"/>
+<node id="CZIPSZER, JANOS"/>
+<node id="DARLING, DONALD A."/>
+<node id="DARST, RICHARD B."/>
+<node id="DAVENPORT, HAROLD*"/>
+<node id="DAVIES, ROY O."/>
+<node id="DAYKIN, DAVID E."/>
+<node id="DE BRUIJN, NICOLAAS GOVERT"/>
+<node id="DE CAEN, DOMINIQUE*"/>
+<node id="DE KONINCK, JEAN-MARIE"/>
+<node id="DEBOSE, YOLANDA"/>
+<node id="DEHEUVELS, PAUL"/>
+<node id="DELEGLISE, MARC"/>
+<node id="DENES, JOZSEF"/>
+<node id="DESHOUILLERS, JEAN-MARC"/>
+<node id="DEUBER, WALTER A.*"/>
+<node id="DEZA, MICHEL-MARIE"/>
+<node id="DIAMOND, HAROLD GEORGE"/>
+<node id="DIRAC, GABRIEL ANDREW*"/>
+<node id="DIXMIER, JACQUES"/>
+<node id="DRAKE, DAVID A."/>
+<node id="DUKE, RICHARD A."/>
+<node id="DVORETZKY, ARYEH"/>
+<node id="ECKLUND, EARL F., JR."/>
+<node id="EDREI, ALBERT*"/>
+<node id="EGGLETON, ROGER B."/>
+<node id="EL-ZAHAR, MOHAMED H."/>
+<node id="ELEKES, GYORGY"/>
+<node id="ELLIOTT, PETER D. T. A."/>
+<node id="ENTRINGER, ROGER C."/>
+<node id="FABER, VANCE"/>
+<node id="FAJTLOWICZ, SIEMION"/>
+<node id="FAUDREE, RALPH J."/>
+<node id="FEJES TOTH, LASZLO"/>
+<node id="FELLER, WILLIAM*"/>
+<node id="FELZENBAUM, ALEXANDER GERSH"/>
+<node id="FEW, LEONARD"/>
+<node id="FISHBURN, PETER C."/>
+<node id="FODOR, GEZA*"/>
+<node id="FON-DER-FLAASS, DMITRI G."/>
+<node id="FOWLER, JOEL C."/>
+<node id="FRAENKEL, AVIEZRI S."/>
+<node id="FRANKL, PETER"/>
+<node id="FREEDMAN, ALLEN R."/>
+<node id="FREIMAN, GREGORY A."/>
+<node id="FREUD, GEZA*"/>
+<node id="FREUD, ROBERT"/>
+<node id="FRIED, ERVIN"/>
+<node id="FUCHS, WOLFGANG HEINRICH JOHANNES*"/>
+<node id="FUREDI, ZOLTAN"/>
+<node id="GAAL, STEVEN A. (= GAL, ISTVAN SANDOR)"/>
+<node id="GALAMBOS, JANOS"/>
+<node id="GALLAI, TIBOR* (GRUNWALD, TIBOR)"/>
+<node id="GALVIN, FRED"/>
+<node id="GERENCSER, LASZLO"/>
+<node id="GILLIS, JOSEPH E.*"/>
+<node id="GILLMAN, LEONARD"/>
+<node id="GIMBEL, JOHN GORDON"/>
+<node id="GODDARD, WAYNE D."/>
+<node id="GODSIL, CHRISTOPHER DAVID"/>
+<node id="GOLDBERG, MARK K."/>
+<node id="GOODMAN, ADOLPH W."/>
+<node id="GORDON, BASIL"/>
+<node id="GOULD, RONALD J."/>
+<node id="GRAHAM, RONALD L."/>
+<node id="GRAHAM, SIDNEY W."/>
+<node id="GRANVILLE, ANDREW J."/>
+<node id="GRIESER, DANIEL"/>
+<node id="GRILL, KARL"/>
+<node id="GRUNBAUM, BRANKO"/>
+<node id="GRUNWALD, GEZA*"/>
+<node id="GUNDERSON, DAVID S."/>
+<node id="GUPTA, HANSRAJ*"/>
+<node id="GUY, MICHAEL J. T."/>
+<node id="GUY, RICHARD K."/>
+<node id="GYARFAS, ANDRAS"/>
+<node id="GYORI, ERVIN"/>
+<node id="GYORY, KALMAN"/>
+<node id="HAJNAL, ANDRAS"/>
+<node id="HALASZ, GABOR"/>
+<node id="HALL, RICHARD ROXBY"/>
+<node id="HAMBURGER, PETER"/>
+<node id="HANANI, HAIM*"/>
+<node id="HANSON, DENIS"/>
+<node id="HARARY, FRANK"/>
+<node id="HARCOS, GERGELY"/>
+<node id="HARDY, GEORGE EUGENE"/>
+<node id="HARE, WILLIAM R."/>
+<node id="HARNER, CHARLES C."/>
+<node id="HARTMAN, STANISLAW*"/>
+<node id="HARZHEIM, EGBERT"/>
+<node id="HATTINGH, JOHANNES H."/>
+<node id="HECHLER, STEPHEN H."/>
+<node id="HEDETNIEMI, STEPHEN T."/>
+<node id="HEDRLIN, ZDENEK"/>
+<node id="HEGYVARI, NORBERT"/>
+<node id="HEILBRONN, HANS ARNOLD*"/>
+<node id="HELL, PAVOL"/>
+<node id="HEMMINGER, ROBERT L."/>
+<node id="HENNING, MICHAEL A."/>
+<node id="HENRIKSEN, MELVIN"/>
+<node id="HERZOG, FRITZ*"/>
+<node id="HERZOG, MARCEL"/>
+<node id="HICKERSON, DEAN R."/>
+<node id="HIGGS, DENIS A."/>
+<node id="HILDEBRAND, ADOLF J."/>
+<node id="HINDMAN, NEIL"/>
+<node id="HOBBS, ARTHUR M."/>
+<node id="HOFFMAN, ALAN J."/>
+<node id="HOGGATT, VERNER E., JR.*"/>
+<node id="HOLTON, DEREK ALLAN"/>
+<node id="HOLZMAN, RON"/>
+<node id="HORAK, PETER"/>
+<node id="HORVATH, MIKLOS"/>
+<node id="HSU, DERBIAU FRANK"/>
+<node id="HUNT, GILBERT AGNEW"/>
+<node id="HWANG, JUN SHUNG"/>
+<node id="INDLEKOFER, KARL-HEINZ"/>
+<node id="IVIC, ALEKSANDAR"/>
+<node id="JACKSON, STEPHEN CRAIG"/>
+<node id="JACOBSON, MICHAEL S."/>
+<node id="JAGOTA, ARUN KUMAR"/>
+<node id="JANSON, SVANTE"/>
+<node id="JIN, GUO PING"/>
+<node id="JONES, FRED B."/>
+<node id="JOO, ISTVAN*"/>
+<node id="JOO, MIKLOS"/>
+<node id="KAC, MARK*"/>
+<node id="KAINEN, PAUL C."/>
+<node id="KAKUTANI, SHIZUO"/>
+<node id="KAPLANSKY, IRVING"/>
+<node id="KATAI, IMRE"/>
+<node id="KELLY, PAUL JOSEPH*"/>
+<node id="KENNEDY, JOHN W."/>
+<node id="KESTELMAN, HYMAN*"/>
+<node id="KHARE, SATGUR PRASAD"/>
+<node id="KIERSTEAD, HENRY A."/>
+<node id="KISS, PETER"/>
+<node id="KLAMKIN, MURRAY S."/>
+<node id="KLAWE, MARIA MARGARET"/>
+<node id="KLEITMAN, DANIEL J."/>
+<node id="KLUGERMAN, MICHAEL"/>
+<node id="KNAPPENBERGER, J."/>
+<node id="KO, CHAO (KE, ZHAO)"/>
+<node id="KOCZY, LASZLO A."/>
+<node id="KOHAYAKAWA, YOSHIHARU"/>
+<node id="KOKSMA, JURJEN FERDINAND*"/>
+<node id="KOLESNIK, GRIGORI A."/>
+<node id="KOMJATH, PETER"/>
+<node id="KOMLOS, JANOS"/>
+<node id="KOMORNIK, VILMOS"/>
+<node id="KOREN, ISRAEL"/>
+<node id="KOSTOCHKA, ALEXANDR V."/>
+<node id="KOVARI, TAMAS"/>
+<node id="KRANTZ, STEVEN GEORGE"/>
+<node id="KRATSCH, DIETER"/>
+<node id="KRIVELEVICH, MICHAEL"/>
+<node id="KROO, ANDRAS V."/>
+<node id="KUBICKA, EWA MARIE"/>
+<node id="KUBICKI, GRZEGORZ"/>
+<node id="KUNEN, KENNETH"/>
+<node id="LACAMPAGNE, CAROLE B."/>
+<node id="LAM, PETER CHE BOR"/>
+<node id="LARSON, JEAN A."/>
+<node id="LASKAR, RENU C."/>
+<node id="LEFMANN, HANNO"/>
+<node id="LEHEL, JENO"/>
+<node id="LEV, VSEVOLOD F."/>
+<node id="LEVEQUE, WILLIAM JUDSON"/>
+<node id="LEWIN, MORDECHAI"/>
+<node id="LI, WEN-CH'ING WINNIE"/>
+<node id="LICK, DON R."/>
+<node id="LINIAL, NATHAN"/>
+<node id="LIU, JIUQIANG"/>
+<node id="LOEBL, MARTIN"/>
+<node id="LORENTZ, GEORGE GUNTHER"/>
+<node id="LOVASZ, LASZLO"/>
+<node id="LOXTON, JOHN H."/>
+<node id="LUCZAK, TOMASZ"/>
+<node id="MACINTYRE, ARCHIBALD JAMES*"/>
+<node id="MAGIDOR, MENACHEM"/>
+<node id="MAHLER, KURT*"/>
+<node id="MAIER, HELMUT"/>
+<node id="MAKAI, ENDRE, JR."/>
+<node id="MAKKAI, MICHAEL"/>
+<node id="MALDE, PARESH J."/>
+<node id="MALOUF, JANICE L."/>
+<node id="MATE, ATTILA"/>
+<node id="MAUDUIT, CHRISTIAN"/>
+<node id="MAULDIN, R. DANIEL"/>
+<node id="MAYS, MICHAEL E."/>
+<node id="MCCANNA, JOSEPH E."/>
+<node id="MCELIECE, ROBERT J."/>
+<node id="MCKAY, BRENDAN D."/>
+<node id="MEIR, AMRAM"/>
+<node id="MELFI, GIUSEPPE"/>
+<node id="MEYER, ANJA GABRIELE"/>
+<node id="MILNER, ERIC CHARLES*"/>
+<node id="MINC, HENRYK"/>
+<node id="MIRSKY, LEONID*"/>
+<node id="MOLLOY, MICHAEL SEAN O'BRIEN"/>
+<node id="MONTGOMERY, HUGH L."/>
+<node id="MONTGOMERY, PETER L."/>
+<node id="MOON, JOHN W."/>
+<node id="MORAN, SHLOMO"/>
+<node id="MORTON, PATRICK"/>
+<node id="MOSER, LEO*"/>
+<node id="MULLIN, RONALD C."/>
+<node id="MURTY, MARUTI RAM"/>
+<node id="MURTY, VIJAYA KUMAR"/>
+<node id="NATHANSON, MELVYN B."/>
+<node id="NESETRIL, JAROSLAV"/>
+<node id="NETANYAHU, ELISHA*"/>
+<node id="NEVEU, JACQUES"/>
+<node id="NEWMAN, DONALD J."/>
+<node id="NICOLAS, JEAN-LOUIS"/>
+<node id="NIVEN, IVAN*"/>
+<node id="NORTON, DONALD A."/>
+<node id="O'NEIL, PATRICK EUGENE"/>
+<node id="ODLYZKO, ANDREW M."/>
+<node id="OELLERMANN, ORTRUD R."/>
+<node id="ORDMAN, EDWARD T."/>
+<node id="OXTOBY, JOHN C.*"/>
+<node id="PACH, JANOS"/>
+<node id="PALFY, PETER PAL"/>
+<node id="PALKA, ZBIGNIEW J."/>
+<node id="PALMER, EDGAR M."/>
+<node id="PAPP, ZOLTAN Z."/>
+<node id="PARSONS, TORRENCE DOUGLAS*"/>
+<node id="PAYAN, CHARLES"/>
+<node id="PENNEY, DAVID E."/>
+<node id="PHELPS, KEVIN T."/>
+<node id="PINKUS, ALLAN M."/>
+<node id="PIPPERT, RAYMOND E."/>
+<node id="PIRANIAN, GEORGE"/>
+<node id="POLLACK, RICHARD M."/>
+<node id="POLLARD, HARRY*"/>
+<node id="POMERANCE, CARL"/>
+<node id="POSA, LAJOS"/>
+<node id="PREISS, DAVID"/>
+<node id="PRINS, GEERT CALEB ERNST*"/>
+<node id="PUDAITE, PAUL"/>
+<node id="PULLMAN, NORMAN J.*"/>
+<node id="PURDY, GEORGE B."/>
+<node id="PYBER, LASZLO"/>
+<node id="RADO, RICHARD*"/>
+<node id="RAMACHANDRA, KANAKANAHALLI"/>
+<node id="RAO, SIDDANI BHASKARA"/>
+<node id="RAUZY, GERARD"/>
+<node id="REDDY, A. R."/>
+<node id="REID, TALMAGE JAMES"/>
+<node id="RENYI, ALFRED A.*"/>
+<node id="REVESZ, PAL"/>
+<node id="REZNICK, BRUCE A."/>
+<node id="RICHARDS, J. IAN"/>
+<node id="RICHMOND, LAWRENCE BRUCE"/>
+<node id="RIESEL, HANS"/>
+<node id="ROBINSON, ROBERT W."/>
+<node id="RODL, VOJTECH"/>
+<node id="ROGERS, CLAUDE AMBROSE"/>
+<node id="ROSA, ALEXANDER"/>
+<node id="ROSENFELD, MOSHE-1"/>
+<node id="ROTHSCHILD, BRUCE L."/>
+<node id="ROUSSEAU, CECIL CLYDE"/>
+<node id="RUBEL, LEE A.*"/>
+<node id="RUBIN, ARTHUR L."/>
+<node id="RUDIN, MARY ELLEN"/>
+<node id="RUSZINKO, MIKLOS"/>
+<node id="RUZSA, IMRE Z."/>
+<node id="RYAVEC, CHARLES A."/>
+<node id="SACHS, HORST"/>
+<node id="SAFFARI, BAHMAN"/>
+<node id="SAKS, MICHAEL E."/>
+<node id="SALAT, TIBOR"/>
+<node id="SANDOR, CSABA"/>
+<node id="SARKAR, AMITES"/>
+<node id="SARKOZY, ANDRAS"/>
+<node id="SARKOZY, GABOR N."/>
+<node id="SAUER, NORBERT W."/>
+<node id="SCHAER, JONATHAN"/>
+<node id="SCHELP, RICHARD H."/>
+<node id="SCHERK, PETER*"/>
+<node id="SCHINZEL, ANDRZEJ"/>
+<node id="SCHMUTZ, ERIC"/>
+<node id="SCHNITZER, FRANZ JOSEF"/>
+<node id="SCHONHEIM, JOHANAN"/>
+<node id="SCHULMAN, LEONARD J."/>
+<node id="SCHUSTER, SEYMOUR"/>
+<node id="SCHWENK, ALLEN JOHN"/>
+<node id="SEIDEL, WLADIMIR P.*"/>
+<node id="SELFRIDGE, JOHN L."/>
+<node id="SELKOW, STANLEY M."/>
+<node id="SERESS, AKOS"/>
+<node id="SHALLIT, JEFFREY OUTLAW"/>
+<node id="SHAPIRO, HAROLD N."/>
+<node id="SHAPIRO, HAROLD S."/>
+<node id="SHARMA, AMBIKESHWAR"/>
+<node id="SHELAH, SAHARON"/>
+<node id="SHENG, TSENG KUO"/>
+<node id="SHIELDS, ALLEN LOWELL*"/>
+<node id="SHISHA, OVED*"/>
+<node id="SHOREY, TARLOK N."/>
+<node id="SHREVE, WARREN E."/>
+<node id="SILBERMAN, GABRIEL M."/>
+<node id="SIMMONS, GUSTAVUS J."/>
+<node id="SIMONOVITS, MIKLOS"/>
+<node id="SINGHI, NAVIN MADHAVPRASAD"/>
+<node id="SIRAN, JOZEF"/>
+<node id="SIRAO, TUNEKITI"/>
+<node id="SKILTON, DONALD K."/>
+<node id="SMITH, BRENT PENDLETON"/>
+<node id="SOIFER, ALEXANDER"/>
+<node id="SOS, VERA T."/>
+<node id="SPENCER, JOEL H."/>
+<node id="SPIRO-SILVERMAN, CLAUDIA A."/>
+<node id="STATON, WILLIAM A., III"/>
+<node id="STEIN, SHERMAN K."/>
+<node id="STEWART, CAMERON L."/>
+<node id="STINSON, DOUGLAS ROBERT"/>
+<node id="STONE, ARTHUR HAROLD*"/>
+<node id="STRAIGHT, H. JOSEPH"/>
+<node id="STRAUS, ERNST GABOR*"/>
+<node id="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<node id="SUEN, W.-C. STEPHEN"/>
+<node id="SUN, HUI CHENG"/>
+<node id="SURANYI, JANOS"/>
+<node id="SWART, HENDA C."/>
+<node id="SZABADOS, JOZSEF"/>
+<node id="SZALAY, MIHALY"/>
+<node id="SZEGEDY, MARIO"/>
+<node id="SZEGO, GABOR*"/>
+<node id="SZEKELY, LASZLO A."/>
+<node id="SZEKERES, ESTHER KLEIN"/>
+<node id="SZEKERES, GEORGE"/>
+<node id="SZEMEREDI, ENDRE"/>
+<node id="SZUSZ, PETER"/>
+<node id="TAYLOR, ALAN D."/>
+<node id="TAYLOR, HERBERT"/>
+<node id="TAYLOR, SAMUEL JAMES"/>
+<node id="TENENBAUM, GERALD"/>
+<node id="TETALI, PRASAD"/>
+<node id="THOMASSEN, CARSTEN"/>
+<node id="TIJDEMAN, ROBERT"/>
+<node id="TOTH, JANOS T."/>
+<node id="TOTIK, VILMOS"/>
+<node id="TOVEY, CRAIG A."/>
+<node id="TROTTER, WILLIAM T., JR."/>
+<node id="TURAN, PAL*"/>
+<node id="TUTTE, WILLIAM THOMAS*"/>
+<node id="TUZA, ZSOLT"/>
+<node id="ULAM, STANISLAW MARCIN*"/>
+<node id="URBANIK, KAZIMIERZ"/>
+<node id="VAALER, JEFFREY D."/>
+<node id="VALTR, PAVEL"/>
+<node id="VAN KAMPEN, EGBERTUS RUDOLF*"/>
+<node id="VAN LINT, JACOBUS HENDRICUS"/>
+<node id="VARMA, ARUN KUMAR*"/>
+<node id="VAUGHAN, ROBERT C."/>
+<node id="VAZSONYI, ANDREW* (WEISZFELD, ENDRE)"/>
+<node id="VERTESI, PETER O. H."/>
+<node id="VESZTERGOMBI, KATALIN L."/>
+<node id="VIJAYAN, KAIPILLIL"/>
+<node id="VINCZE, ISTVAN"/>
+<node id="VOLKMANN, BODO"/>
+<node id="WAGSTAFF, SAMUEL S., JR."/>
+<node id="WANG, JIAN FANG"/>
+<node id="WEAKLEY, WILLIAM DOUGLAS"/>
+<node id="WEISS, GARY"/>
+<node id="WEST, DOUGLAS B."/>
+<node id="WILLIAMSON, ALAN GLYNNE"/>
+<node id="WILSON, RICHARD M."/>
+<node id="WILSON, ROBIN JAMES"/>
+<node id="WINKLER, PETER M."/>
+<node id="WINTNER, AUREL*"/>
+<node id="WORMALD, NICHOLAS C."/>
+<node id="YAO, FOONG FRANCES"/>
+<node id="ZAKS, SHMUEL"/>
+<node id="ZALCSTEIN, YECHEZKEL"/>
+<node id="ZAREMBA, STANISLAW KRYSTYN"/>
+<edge source="ABBOTT, HARVEY L." target="HANSON, DENIS"/>
+<edge source="ABBOTT, HARVEY L." target="MEIR, AMRAM"/>
+<edge source="ABBOTT, HARVEY L." target="MOON, JOHN W."/>
+<edge source="ABBOTT, HARVEY L." target="MOSER, LEO*"/>
+<edge source="ABBOTT, HARVEY L." target="SAUER, NORBERT W."/>
+<edge source="ABBOTT, HARVEY L." target="SIMMONS, GUSTAVUS J."/>
+<edge source="ABBOTT, HARVEY L." target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="ACZEL, JANOS D." target="RENYI, ALFRED A.*"/>
+<edge source="ACZEL, JANOS D." target="STRAUS, ERNST GABOR*"/>
+<edge source="AGOH, TAKASHI" target="GRANVILLE, ANDREW J."/>
+<edge source="AHARONI, RON" target="HAJNAL, ANDRAS"/>
+<edge source="AHARONI, RON" target="HOFFMAN, ALAN J."/>
+<edge source="AHARONI, RON" target="HOLZMAN, RON"/>
+<edge source="AHARONI, RON" target="KOMJATH, PETER"/>
+<edge source="AHARONI, RON" target="KRIVELEVICH, MICHAEL"/>
+<edge source="AHARONI, RON" target="LINIAL, NATHAN"/>
+<edge source="AHARONI, RON" target="LOEBL, MARTIN"/>
+<edge source="AHARONI, RON" target="MAGIDOR, MENACHEM"/>
+<edge source="AHARONI, RON" target="MILNER, ERIC CHARLES*"/>
+<edge source="AHARONI, RON" target="SHELAH, SAHARON"/>
+<edge source="AHARONI, RON" target="THOMASSEN, CARSTEN"/>
+<edge source="AIGNER, MARTIN S." target="GRIESER, DANIEL"/>
+<edge source="AIGNER, MARTIN S." target="KLEITMAN, DANIEL J."/>
+<edge source="AIGNER, MARTIN S." target="PRINS, GEERT CALEB ERNST*"/>
+<edge source="AIGNER, MARTIN S." target="TUZA, ZSOLT"/>
+<edge source="AIGNER, MARTIN S." target="WEST, DOUGLAS B."/>
+<edge source="AJTAI, MIKLOS" target="ALON, NOGA"/>
+<edge source="AJTAI, MIKLOS" target="BABAI, LASZLO"/>
+<edge source="AJTAI, MIKLOS" target="CHVATAL, VACLAV"/>
+<edge source="AJTAI, MIKLOS" target="KOMLOS, JANOS"/>
+<edge source="AJTAI, MIKLOS" target="LINIAL, NATHAN"/>
+<edge source="AJTAI, MIKLOS" target="RODL, VOJTECH"/>
+<edge source="AJTAI, MIKLOS" target="SCHULMAN, LEONARD J."/>
+<edge source="AJTAI, MIKLOS" target="SPENCER, JOEL H."/>
+<edge source="AJTAI, MIKLOS" target="SZEMEREDI, ENDRE"/>
+<edge source="ALAVI, YOUSEF" target="BEHZAD, MEHDI"/>
+<edge source="ALAVI, YOUSEF" target="BOALS, ALFRED J."/>
+<edge source="ALAVI, YOUSEF" target="CHARTRAND, GARY"/>
+<edge source="ALAVI, YOUSEF" target="CHUNG, FAN RONG K."/>
+<edge source="ALAVI, YOUSEF" target="GRAHAM, RONALD L."/>
+<edge source="ALAVI, YOUSEF" target="LAM, PETER CHE BOR"/>
+<edge source="ALAVI, YOUSEF" target="LICK, DON R."/>
+<edge source="ALAVI, YOUSEF" target="LIU, JIUQIANG"/>
+<edge source="ALAVI, YOUSEF" target="MALDE, PARESH J."/>
+<edge source="ALAVI, YOUSEF" target="MCCANNA, JOSEPH E."/>
+<edge source="ALAVI, YOUSEF" target="OELLERMANN, ORTRUD R."/>
+<edge source="ALAVI, YOUSEF" target="SCHWENK, ALLEN JOHN"/>
+<edge source="ALAVI, YOUSEF" target="SWART, HENDA C."/>
+<edge source="ALAVI, YOUSEF" target="THOMASSEN, CARSTEN"/>
+<edge source="ALAVI, YOUSEF" target="WANG, JIAN FANG"/>
+<edge source="ALLADI, KRISHNASWAMI" target="GORDON, BASIL"/>
+<edge source="ALLADI, KRISHNASWAMI" target="HOGGATT, VERNER E., JR.*"/>
+<edge source="ALLADI, KRISHNASWAMI" target="VAALER, JEFFREY D."/>
+<edge source="ALON, NOGA" target="ARONOV, BORIS"/>
+<edge source="ALON, NOGA" target="BABAI, LASZLO"/>
+<edge source="ALON, NOGA" target="BARAK, AMNON B."/>
+<edge source="ALON, NOGA" target="BOLLOBAS, BELA"/>
+<edge source="ALON, NOGA" target="CHUNG, FAN RONG K."/>
+<edge source="ALON, NOGA" target="COLBOURN, CHARLES J."/>
+<edge source="ALON, NOGA" target="DUKE, RICHARD A."/>
+<edge source="ALON, NOGA" target="FAUDREE, RALPH J."/>
+<edge source="ALON, NOGA" target="FRANKL, PETER"/>
+<edge source="ALON, NOGA" target="FREIMAN, GREGORY A."/>
+<edge source="ALON, NOGA" target="FUREDI, ZOLTAN"/>
+<edge source="ALON, NOGA" target="GRAHAM, RONALD L."/>
+<edge source="ALON, NOGA" target="GUNDERSON, DAVID S."/>
+<edge source="ALON, NOGA" target="GYARFAS, ANDRAS"/>
+<edge source="ALON, NOGA" target="GYORI, ERVIN"/>
+<edge source="ALON, NOGA" target="HAJNAL, ANDRAS"/>
+<edge source="ALON, NOGA" target="HAMBURGER, PETER"/>
+<edge source="ALON, NOGA" target="HOLZMAN, RON"/>
+<edge source="ALON, NOGA" target="JANSON, SVANTE"/>
+<edge source="ALON, NOGA" target="KLEITMAN, DANIEL J."/>
+<edge source="ALON, NOGA" target="KOHAYAKAWA, YOSHIHARU"/>
+<edge source="ALON, NOGA" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="ALON, NOGA" target="KRIVELEVICH, MICHAEL"/>
+<edge source="ALON, NOGA" target="LEFMANN, HANNO"/>
+<edge source="ALON, NOGA" target="LINIAL, NATHAN"/>
+<edge source="ALON, NOGA" target="LOVASZ, LASZLO"/>
+<edge source="ALON, NOGA" target="LUCZAK, TOMASZ"/>
+<edge source="ALON, NOGA" target="MOLLOY, MICHAEL SEAN O'BRIEN"/>
+<edge source="ALON, NOGA" target="NATHANSON, MELVYN B."/>
+<edge source="ALON, NOGA" target="NESETRIL, JAROSLAV"/>
+<edge source="ALON, NOGA" target="ODLYZKO, ANDREW M."/>
+<edge source="ALON, NOGA" target="PACH, JANOS"/>
+<edge source="ALON, NOGA" target="POMERANCE, CARL"/>
+<edge source="ALON, NOGA" target="RODL, VOJTECH"/>
+<edge source="ALON, NOGA" target="RUSZINKO, MIKLOS"/>
+<edge source="ALON, NOGA" target="RUZSA, IMRE Z."/>
+<edge source="ALON, NOGA" target="SAKS, MICHAEL E."/>
+<edge source="ALON, NOGA" target="SPENCER, JOEL H."/>
+<edge source="ALON, NOGA" target="SZEGEDY, MARIO"/>
+<edge source="ALON, NOGA" target="SZEKELY, LASZLO A."/>
+<edge source="ALON, NOGA" target="SZEMEREDI, ENDRE"/>
+<edge source="ALON, NOGA" target="TETALI, PRASAD"/>
+<edge source="ALON, NOGA" target="THOMASSEN, CARSTEN"/>
+<edge source="ALON, NOGA" target="TROTTER, WILLIAM T., JR."/>
+<edge source="ALON, NOGA" target="TUZA, ZSOLT"/>
+<edge source="ALON, NOGA" target="WEST, DOUGLAS B."/>
+<edge source="ALON, NOGA" target="WORMALD, NICHOLAS C."/>
+<edge source="ANDERSON, JAMES MILNE" target="CLUNIE, JAMES G."/>
+<edge source="ANDERSON, JAMES MILNE" target="FUCHS, WOLFGANG HEINRICH JOHANNES*"/>
+<edge source="ANDERSON, JAMES MILNE" target="NEWMAN, DONALD J."/>
+<edge source="ANDERSON, JAMES MILNE" target="PINKUS, ALLAN M."/>
+<edge source="ANDERSON, JAMES MILNE" target="RUBEL, LEE A.*"/>
+<edge source="ANDERSON, JAMES MILNE" target="SHAPIRO, HAROLD S."/>
+<edge source="ANDERSON, JAMES MILNE" target="SHIELDS, ALLEN LOWELL*"/>
+<edge source="ANDERSON, JAMES MILNE" target="SHISHA, OVED*"/>
+<edge source="ANDRASFAI, BELA" target="SOS, VERA T."/>
+<edge source="ANKENY, NESMITH C.*" target="CHOWLA, SARVADAMAN*"/>
+<edge source="ANKENY, NESMITH C.*" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="ARKIN, JOSEPH*" target="ARNEY, DAVID CHRISTOPHER"/>
+<edge source="ARKIN, JOSEPH*" target="BURR, STEFAN ANDRUS"/>
+<edge source="ARKIN, JOSEPH*" target="HOGGATT, VERNER E., JR.*"/>
+<edge source="ARKIN, JOSEPH*" target="POLLACK, RICHARD M."/>
+<edge source="ARKIN, JOSEPH*" target="STRAUS, ERNST GABOR*"/>
+<edge source="ARNEY, DAVID CHRISTOPHER" target="BURR, STEFAN ANDRUS"/>
+<edge source="ARNEY, DAVID CHRISTOPHER" target="JACOBSON, MICHAEL S."/>
+<edge source="ARONOV, BORIS" target="GODDARD, WAYNE D."/>
+<edge source="ARONOV, BORIS" target="KLEITMAN, DANIEL J."/>
+<edge source="ARONOV, BORIS" target="KLUGERMAN, MICHAEL"/>
+<edge source="ARONOV, BORIS" target="PACH, JANOS"/>
+<edge source="ARONOV, BORIS" target="POLLACK, RICHARD M."/>
+<edge source="ARONOV, BORIS" target="SCHULMAN, LEONARD J."/>
+<edge source="ASH, J. MARSHALL" target="JANSON, SVANTE"/>
+<edge source="ASH, J. MARSHALL" target="RUBEL, LEE A.*"/>
+<edge source="ASH, J. MARSHALL" target="SAFFARI, BAHMAN"/>
+<edge source="AVIS, DAVID M." target="CHVATAL, VACLAV"/>
+<edge source="AVIS, DAVID M." target="DEZA, MICHEL-MARIE"/>
+<edge source="AVIS, DAVID M." target="PACH, JANOS"/>
+<edge source="BABAI, LASZLO" target="CAMERON, PETER J."/>
+<edge source="BABAI, LASZLO" target="CHUNG, FAN RONG K."/>
+<edge source="BABAI, LASZLO" target="DEZA, MICHEL-MARIE"/>
+<edge source="BABAI, LASZLO" target="FRANKL, PETER"/>
+<edge source="BABAI, LASZLO" target="GODSIL, CHRISTOPHER DAVID"/>
+<edge source="BABAI, LASZLO" target="GRAHAM, RONALD L."/>
+<edge source="BABAI, LASZLO" target="KOMLOS, JANOS"/>
+<edge source="BABAI, LASZLO" target="LOVASZ, LASZLO"/>
+<edge source="BABAI, LASZLO" target="MATE, ATTILA"/>
+<edge source="BABAI, LASZLO" target="MORAN, SHLOMO"/>
+<edge source="BABAI, LASZLO" target="NESETRIL, JAROSLAV"/>
+<edge source="BABAI, LASZLO" target="PALFY, PETER PAL"/>
+<edge source="BABAI, LASZLO" target="PHELPS, KEVIN T."/>
+<edge source="BABAI, LASZLO" target="PYBER, LASZLO"/>
+<edge source="BABAI, LASZLO" target="RODL, VOJTECH"/>
+<edge source="BABAI, LASZLO" target="SELKOW, STANLEY M."/>
+<edge source="BABAI, LASZLO" target="SERESS, AKOS"/>
+<edge source="BABAI, LASZLO" target="SIMONOVITS, MIKLOS"/>
+<edge source="BABAI, LASZLO" target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="BABAI, LASZLO" target="SOS, VERA T."/>
+<edge source="BABAI, LASZLO" target="SPENCER, JOEL H."/>
+<edge source="BABAI, LASZLO" target="SZEGEDY, MARIO"/>
+<edge source="BABAI, LASZLO" target="SZEMEREDI, ENDRE"/>
+<edge source="BABAI, LASZLO" target="WILSON, RICHARD M."/>
+<edge source="BABU, GUTTI JOGESH" target="RAMACHANDRA, KANAKANAHALLI"/>
+<edge source="BAGEMIHL, FREDERICK" target="GILLMAN, LEONARD"/>
+<edge source="BAGEMIHL, FREDERICK" target="PIRANIAN, GEORGE"/>
+<edge source="BAGEMIHL, FREDERICK" target="SEIDEL, WLADIMIR P.*"/>
+<edge source="BALOG, ANTAL" target="DESHOUILLERS, JEAN-MARC"/>
+<edge source="BALOG, ANTAL" target="POMERANCE, CARL"/>
+<edge source="BALOG, ANTAL" target="PYBER, LASZLO"/>
+<edge source="BALOG, ANTAL" target="RUZSA, IMRE Z."/>
+<edge source="BALOG, ANTAL" target="SARKOZY, ANDRAS"/>
+<edge source="BALOG, ANTAL" target="SZEMEREDI, ENDRE"/>
+<edge source="BALOG, ANTAL" target="TENENBAUM, GERALD"/>
+<edge source="BANKOFF, LEON*" target="KLAMKIN, MURRAY S."/>
+<edge source="BATEMAN, PAUL T." target="CHOWLA, SARVADAMAN*"/>
+<edge source="BATEMAN, PAUL T." target="DIAMOND, HAROLD GEORGE"/>
+<edge source="BATEMAN, PAUL T." target="HILDEBRAND, ADOLF J."/>
+<edge source="BATEMAN, PAUL T." target="POMERANCE, CARL"/>
+<edge source="BATEMAN, PAUL T." target="PURDY, GEORGE B."/>
+<edge source="BATEMAN, PAUL T." target="SELFRIDGE, JOHN L."/>
+<edge source="BATEMAN, PAUL T." target="STRAUS, ERNST GABOR*"/>
+<edge source="BATEMAN, PAUL T." target="VAUGHAN, ROBERT C."/>
+<edge source="BATEMAN, PAUL T." target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="BAUMGARTNER, JAMES E." target="GALVIN, FRED"/>
+<edge source="BAUMGARTNER, JAMES E." target="HAJNAL, ANDRAS"/>
+<edge source="BAUMGARTNER, JAMES E." target="HIGGS, DENIS A."/>
+<edge source="BAUMGARTNER, JAMES E." target="KOMJATH, PETER"/>
+<edge source="BAUMGARTNER, JAMES E." target="LARSON, JEAN A."/>
+<edge source="BAUMGARTNER, JAMES E." target="MATE, ATTILA"/>
+<edge source="BAUMGARTNER, JAMES E." target="SHELAH, SAHARON"/>
+<edge source="BAUMGARTNER, JAMES E." target="TAYLOR, ALAN D."/>
+<edge source="BEASLEY, LEROY B." target="BRENNER, JOEL LEE*"/>
+<edge source="BEASLEY, LEROY B." target="PULLMAN, NORMAN J.*"/>
+<edge source="BEASLEY, LEROY B." target="SZALAY, MIHALY"/>
+<edge source="BEASLEY, LEROY B." target="WILLIAMSON, ALAN GLYNNE"/>
+<edge source="BECK, ISTVAN" target="BEJLEGAARD, NIELS"/>
+<edge source="BECK, ISTVAN" target="FISHBURN, PETER C."/>
+<edge source="BEHZAD, MEHDI" target="CHARTRAND, GARY"/>
+<edge source="BEHZAD, MEHDI" target="HARARY, FRANK"/>
+<edge source="BEHZAD, MEHDI" target="LICK, DON R."/>
+<edge source="BEHZAD, MEHDI" target="LIU, JIUQIANG"/>
+<edge source="BEJLEGAARD, NIELS" target="FISHBURN, PETER C."/>
+<edge source="BERGELSON, VITALY" target="BLASS, ANDREAS R."/>
+<edge source="BERGELSON, VITALY" target="DEUBER, WALTER A.*"/>
+<edge source="BERGELSON, VITALY" target="HINDMAN, NEIL"/>
+<edge source="BERGELSON, VITALY" target="LEFMANN, HANNO"/>
+<edge source="BERGELSON, VITALY" target="LUCZAK, TOMASZ"/>
+<edge source="BERGELSON, VITALY" target="RUZSA, IMRE Z."/>
+<edge source="BERGER, MARC ARON" target="FELZENBAUM, ALEXANDER GERSH"/>
+<edge source="BERGER, MARC ARON" target="FRAENKEL, AVIEZRI S."/>
+<edge source="BERGER, MARC ARON" target="HOLZMAN, RON"/>
+<edge source="BERTRAM, EDWARD A." target="GORDON, BASIL"/>
+<edge source="BERTRAM, EDWARD A." target="HERZOG, MARCEL"/>
+<edge source="BERTRAM, EDWARD A." target="HORAK, PETER"/>
+<edge source="BERTRAM, EDWARD A." target="SIRAN, JOZEF"/>
+<edge source="BERTRAM, EDWARD A." target="TUZA, ZSOLT"/>
+<edge source="BIALOSTOCKI, ARIE" target="LEFMANN, HANNO"/>
+<edge source="BIALOSTOCKI, ARIE" target="SAUER, NORBERT W."/>
+<edge source="BIALOSTOCKI, ARIE" target="SCHONHEIM, JOHANAN"/>
+<edge source="BLASS, ANDREAS R." target="HARARY, FRANK"/>
+<edge source="BLASS, ANDREAS R." target="HINDMAN, NEIL"/>
+<edge source="BLASS, ANDREAS R." target="SHELAH, SAHARON"/>
+<edge source="BLASS, ANDREAS R." target="TAYLOR, ALAN D."/>
+<edge source="BLASS, ANDREAS R." target="WEISS, GARY"/>
+<edge source="BLECKSMITH, RICHARD" target="BRILLHART, JOHN D."/>
+<edge source="BLECKSMITH, RICHARD" target="SELFRIDGE, JOHN L."/>
+<edge source="BLEICHER, MICHAEL N." target="FEJES TOTH, LASZLO"/>
+<edge source="BOALS, ALFRED J." target="CHARTRAND, GARY"/>
+<edge source="BOALS, ALFRED J." target="OELLERMANN, ORTRUD R."/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="BRENNER, JOEL LEE*"/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="BUCK, R. CREIGHTON*"/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="KAC, MARK*"/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="KLAMKIN, MURRAY S."/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="POLLARD, HARRY*"/>
+<edge source="BOAS, RALPH PHILIP, JR.*" target="REDDY, A. R."/>
+<edge source="BOES, DUANE C." target="DARST, RICHARD B."/>
+<edge source="BOLLOBAS, BELA" target="CATLIN, PAUL A.*"/>
+<edge source="BOLLOBAS, BELA" target="CHUNG, FAN RONG K."/>
+<edge source="BOLLOBAS, BELA" target="CLARK, LANE HENRY"/>
+<edge source="BOLLOBAS, BELA" target="DAYKIN, DAVID E."/>
+<edge source="BOLLOBAS, BELA" target="FAUDREE, RALPH J."/>
+<edge source="BOLLOBAS, BELA" target="GRAHAM, RONALD L."/>
+<edge source="BOLLOBAS, BELA" target="GUY, RICHARD K."/>
+<edge source="BOLLOBAS, BELA" target="HARARY, FRANK"/>
+<edge source="BOLLOBAS, BELA" target="HEGYVARI, NORBERT"/>
+<edge source="BOLLOBAS, BELA" target="HELL, PAVOL"/>
+<edge source="BOLLOBAS, BELA" target="HOBBS, ARTHUR M."/>
+<edge source="BOLLOBAS, BELA" target="JANSON, SVANTE"/>
+<edge source="BOLLOBAS, BELA" target="JIN, GUO PING"/>
+<edge source="BOLLOBAS, BELA" target="KOHAYAKAWA, YOSHIHARU"/>
+<edge source="BOLLOBAS, BELA" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="BOLLOBAS, BELA" target="KRIVELEVICH, MICHAEL"/>
+<edge source="BOLLOBAS, BELA" target="LOVASZ, LASZLO"/>
+<edge source="BOLLOBAS, BELA" target="LUCZAK, TOMASZ"/>
+<edge source="BOLLOBAS, BELA" target="MCKAY, BRENDAN D."/>
+<edge source="BOLLOBAS, BELA" target="MEIR, AMRAM"/>
+<edge source="BOLLOBAS, BELA" target="MILNER, ERIC CHARLES*"/>
+<edge source="BOLLOBAS, BELA" target="NESETRIL, JAROSLAV"/>
+<edge source="BOLLOBAS, BELA" target="PALMER, EDGAR M."/>
+<edge source="BOLLOBAS, BELA" target="ROSENFELD, MOSHE-1"/>
+<edge source="BOLLOBAS, BELA" target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="BOLLOBAS, BELA" target="SARKAR, AMITES"/>
+<edge source="BOLLOBAS, BELA" target="SAUER, NORBERT W."/>
+<edge source="BOLLOBAS, BELA" target="SCHELP, RICHARD H."/>
+<edge source="BOLLOBAS, BELA" target="SIMONOVITS, MIKLOS"/>
+<edge source="BOLLOBAS, BELA" target="SPENCER, JOEL H."/>
+<edge source="BOLLOBAS, BELA" target="STRAUS, ERNST GABOR*"/>
+<edge source="BOLLOBAS, BELA" target="SZEMEREDI, ENDRE"/>
+<edge source="BOLLOBAS, BELA" target="THOMASSEN, CARSTEN"/>
+<edge source="BOLLOBAS, BELA" target="WEST, DOUGLAS B."/>
+<edge source="BOLLOBAS, BELA" target="WINKLER, PETER M."/>
+<edge source="BOLLOBAS, BELA" target="WORMALD, NICHOLAS C."/>
+<edge source="BONAR, DANIEL D." target="CARROLL, FRANCIS W."/>
+<edge source="BONAR, DANIEL D." target="PIRANIAN, GEORGE"/>
+<edge source="BONDY, JOHN ADRIAN" target="CHVATAL, VACLAV"/>
+<edge source="BONDY, JOHN ADRIAN" target="ENTRINGER, ROGER C."/>
+<edge source="BONDY, JOHN ADRIAN" target="FAJTLOWICZ, SIEMION"/>
+<edge source="BONDY, JOHN ADRIAN" target="HELL, PAVOL"/>
+<edge source="BONDY, JOHN ADRIAN" target="HEMMINGER, ROBERT L."/>
+<edge source="BONDY, JOHN ADRIAN" target="LOVASZ, LASZLO"/>
+<edge source="BONDY, JOHN ADRIAN" target="SIMONOVITS, MIKLOS"/>
+<edge source="BONDY, JOHN ADRIAN" target="STATON, WILLIAM A., III"/>
+<edge source="BONDY, JOHN ADRIAN" target="THOMASSEN, CARSTEN"/>
+<edge source="BONDY, JOHN ADRIAN" target="TUZA, ZSOLT"/>
+<edge source="BONNET, ROBERT" target="SHELAH, SAHARON"/>
+<edge source="BOROSH, ITSHAK" target="CHUI, CHARLES KAM-TAI"/>
+<edge source="BOROSH, ITSHAK" target="FRAENKEL, AVIEZRI S."/>
+<edge source="BOROSH, ITSHAK" target="HOBBS, ARTHUR M."/>
+<edge source="BOSAK, JURAJ" target="NESETRIL, JAROSLAV"/>
+<edge source="BOSAK, JURAJ" target="ROSA, ALEXANDER"/>
+<edge source="BOVEY, JOHN D." target="NIVEN, IVAN*"/>
+<edge source="BOVEY, JOHN D." target="WILLIAMSON, ALAN GLYNNE"/>
+<edge source="BRENNER, JOEL LEE*" target="BROWN, WILLIAM G."/>
+<edge source="BRENNER, JOEL LEE*" target="MAYS, MICHAEL E."/>
+<edge source="BRENNER, JOEL LEE*" target="SZALAY, MIHALY"/>
+<edge source="BRENNER, JOEL LEE*" target="WILLIAMSON, ALAN GLYNNE"/>
+<edge source="BRILLHART, JOHN D." target="MONTGOMERY, PETER L."/>
+<edge source="BRILLHART, JOHN D." target="MORTON, PATRICK"/>
+<edge source="BRILLHART, JOHN D." target="ODLYZKO, ANDREW M."/>
+<edge source="BRILLHART, JOHN D." target="SELFRIDGE, JOHN L."/>
+<edge source="BRILLHART, JOHN D." target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="BRINDZA, BELA" target="GYORY, KALMAN"/>
+<edge source="BRINDZA, BELA" target="RUZSA, IMRE Z."/>
+<edge source="BRINDZA, BELA" target="TIJDEMAN, ROBERT"/>
+<edge source="BROWN, THOMAS CRAIG" target="CHUNG, FAN RONG K."/>
+<edge source="BROWN, THOMAS CRAIG" target="FREEDMAN, ALLEN R."/>
+<edge source="BROWN, THOMAS CRAIG" target="GRAHAM, RONALD L."/>
+<edge source="BROWN, THOMAS CRAIG" target="HELL, PAVOL"/>
+<edge source="BROWN, THOMAS CRAIG" target="RODL, VOJTECH"/>
+<edge source="BROWN, WILLIAM G." target="HARARY, FRANK"/>
+<edge source="BROWN, WILLIAM G." target="MOON, JOHN W."/>
+<edge source="BROWN, WILLIAM G." target="SIMONOVITS, MIKLOS"/>
+<edge source="BROWN, WILLIAM G." target="SOS, VERA T."/>
+<edge source="BROWN, WILLIAM G." target="TUTTE, WILLIAM THOMAS*"/>
+<edge source="BUCK, R. CREIGHTON*" target="POLLARD, HARRY*"/>
+<edge source="BUKOR, JOZEF" target="SALAT, TIBOR"/>
+<edge source="BUKOR, JOZEF" target="TOTH, JANOS T."/>
+<edge source="BURR, STEFAN ANDRUS" target="DUKE, RICHARD A."/>
+<edge source="BURR, STEFAN ANDRUS" target="FAUDREE, RALPH J."/>
+<edge source="BURR, STEFAN ANDRUS" target="FRANKL, PETER"/>
+<edge source="BURR, STEFAN ANDRUS" target="GOULD, RONALD J."/>
+<edge source="BURR, STEFAN ANDRUS" target="GRAHAM, RONALD L."/>
+<edge source="BURR, STEFAN ANDRUS" target="GRUNBAUM, BRANKO"/>
+<edge source="BURR, STEFAN ANDRUS" target="GYARFAS, ANDRAS"/>
+<edge source="BURR, STEFAN ANDRUS" target="HARARY, FRANK"/>
+<edge source="BURR, STEFAN ANDRUS" target="JACOBSON, MICHAEL S."/>
+<edge source="BURR, STEFAN ANDRUS" target="LI, WEN-CH'ING WINNIE"/>
+<edge source="BURR, STEFAN ANDRUS" target="LOVASZ, LASZLO"/>
+<edge source="BURR, STEFAN ANDRUS" target="NESETRIL, JAROSLAV"/>
+<edge source="BURR, STEFAN ANDRUS" target="RODL, VOJTECH"/>
+<edge source="BURR, STEFAN ANDRUS" target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="BURR, STEFAN ANDRUS" target="SCHELP, RICHARD H."/>
+<edge source="BURR, STEFAN ANDRUS" target="SOS, VERA T."/>
+<edge source="BURR, STEFAN ANDRUS" target="SPENCER, JOEL H."/>
+<edge source="CACCETTA, LOUIS" target="ORDMAN, EDWARD T."/>
+<edge source="CACCETTA, LOUIS" target="PULLMAN, NORMAN J.*"/>
+<edge source="CACCETTA, LOUIS" target="VIJAYAN, KAIPILLIL"/>
+<edge source="CALKIN, NEIL J." target="CAMERON, PETER J."/>
+<edge source="CALKIN, NEIL J." target="CANFIELD, E. RODNEY"/>
+<edge source="CALKIN, NEIL J." target="GRANVILLE, ANDREW J."/>
+<edge source="CALKIN, NEIL J." target="MCKAY, BRENDAN D."/>
+<edge source="CALKIN, NEIL J." target="TOVEY, CRAIG A."/>
+<edge source="CAMERON, PETER J." target="DAYKIN, DAVID E."/>
+<edge source="CAMERON, PETER J." target="DEZA, MICHEL-MARIE"/>
+<edge source="CAMERON, PETER J." target="DRAKE, DAVID A."/>
+<edge source="CAMERON, PETER J." target="FON-DER-FLAASS, DMITRI G."/>
+<edge source="CAMERON, PETER J." target="FRANKL, PETER"/>
+<edge source="CAMERON, PETER J." target="ODLYZKO, ANDREW M."/>
+<edge source="CAMERON, PETER J." target="PALFY, PETER PAL"/>
+<edge source="CAMERON, PETER J." target="RICHMOND, LAWRENCE BRUCE"/>
+<edge source="CAMERON, PETER J." target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="CAMERON, PETER J." target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="CAMERON, PETER J." target="WORMALD, NICHOLAS C."/>
+<edge source="CANFIELD, E. RODNEY" target="MCKAY, BRENDAN D."/>
+<edge source="CANFIELD, E. RODNEY" target="POMERANCE, CARL"/>
+<edge source="CANFIELD, E. RODNEY" target="RICHMOND, LAWRENCE BRUCE"/>
+<edge source="CANFIELD, E. RODNEY" target="ROBINSON, ROBERT W."/>
+<edge source="CANFIELD, E. RODNEY" target="WORMALD, NICHOLAS C."/>
+<edge source="CARROLL, FRANCIS W." target="PIRANIAN, GEORGE"/>
+<edge source="CATER, FRANK S." target="GALVIN, FRED"/>
+<edge source="CATES, MARSHALL L." target="HINDMAN, NEIL"/>
+<edge source="CATES, MARSHALL L." target="ROTHSCHILD, BRUCE L."/>
+<edge source="CATLIN, PAUL A.*" target="HOBBS, ARTHUR M."/>
+<edge source="CATLIN, PAUL A.*" target="PALMER, EDGAR M."/>
+<edge source="CHALK, JOHN H. H." target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="CHARTRAND, GARY" target="CHUNG, FAN RONG K."/>
+<edge source="CHARTRAND, GARY" target="GODDARD, WAYNE D."/>
+<edge source="CHARTRAND, GARY" target="GOULD, RONALD J."/>
+<edge source="CHARTRAND, GARY" target="GRAHAM, RONALD L."/>
+<edge source="CHARTRAND, GARY" target="HARARY, FRANK"/>
+<edge source="CHARTRAND, GARY" target="HEDETNIEMI, STEPHEN T."/>
+<edge source="CHARTRAND, GARY" target="HENNING, MICHAEL A."/>
+<edge source="CHARTRAND, GARY" target="HOBBS, ARTHUR M."/>
+<edge source="CHARTRAND, GARY" target="JACOBSON, MICHAEL S."/>
+<edge source="CHARTRAND, GARY" target="KUBICKA, EWA MARIE"/>
+<edge source="CHARTRAND, GARY" target="KUBICKI, GRZEGORZ"/>
+<edge source="CHARTRAND, GARY" target="LEHEL, JENO"/>
+<edge source="CHARTRAND, GARY" target="LICK, DON R."/>
+<edge source="CHARTRAND, GARY" target="MCCANNA, JOSEPH E."/>
+<edge source="CHARTRAND, GARY" target="OELLERMANN, ORTRUD R."/>
+<edge source="CHARTRAND, GARY" target="PALMER, EDGAR M."/>
+<edge source="CHARTRAND, GARY" target="PIPPERT, RAYMOND E."/>
+<edge source="CHARTRAND, GARY" target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="CHARTRAND, GARY" target="SCHUSTER, SEYMOUR"/>
+<edge source="CHARTRAND, GARY" target="SCHWENK, ALLEN JOHN"/>
+<edge source="CHARTRAND, GARY" target="SWART, HENDA C."/>
+<edge source="CHARTRAND, GARY" target="WILSON, ROBIN JAMES"/>
+<edge source="CHARTRAND, GARY" target="WORMALD, NICHOLAS C."/>
+<edge source="CHEN, CHUAN CHONG" target="CHVATAL, VACLAV"/>
+<edge source="CHEN, CHUAN CHONG" target="DAYKIN, DAVID E."/>
+<edge source="CHEN, CHUAN CHONG" target="HOLTON, DEREK ALLAN"/>
+<edge source="CHEN, CHUAN CHONG" target="JIN, GUO PING"/>
+<edge source="CHEN, GUANTAO" target="FAUDREE, RALPH J."/>
+<edge source="CHEN, GUANTAO" target="GOULD, RONALD J."/>
+<edge source="CHEN, GUANTAO" target="GYARFAS, ANDRAS"/>
+<edge source="CHEN, GUANTAO" target="HATTINGH, JOHANNES H."/>
+<edge source="CHEN, GUANTAO" target="JACOBSON, MICHAEL S."/>
+<edge source="CHEN, GUANTAO" target="LASKAR, RENU C."/>
+<edge source="CHEN, GUANTAO" target="LEHEL, JENO"/>
+<edge source="CHEN, GUANTAO" target="ORDMAN, EDWARD T."/>
+<edge source="CHEN, GUANTAO" target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="CHEN, GUANTAO" target="SCHELP, RICHARD H."/>
+<edge source="CHEN, GUANTAO" target="SHREVE, WARREN E."/>
+<edge source="CHEN, GUANTAO" target="STATON, WILLIAM A., III"/>
+<edge source="CHEN, GUANTAO" target="WEST, DOUGLAS B."/>
+<edge source="CHEN, HANG" target="GODDARD, WAYNE D."/>
+<edge source="CHEN, HANG" target="MCCANNA, JOSEPH E."/>
+<edge source="CHEN, HANG" target="SCHWENK, ALLEN JOHN"/>
+<edge source="CHEN, ROBERT W." target="ODLYZKO, ANDREW M."/>
+<edge source="CHINN, PHYLLIS ZWEIG" target="CHUNG, FAN RONG K."/>
+<edge source="CHINN, PHYLLIS ZWEIG" target="GRAHAM, RONALD L."/>
+<edge source="CHINN, PHYLLIS ZWEIG" target="HARARY, FRANK"/>
+<edge source="CHINN, PHYLLIS ZWEIG" target="HEDETNIEMI, STEPHEN T."/>
+<edge source="CHOI, SHIU LUN GODFREY" target="KOMLOS, JANOS"/>
+<edge source="CHOI, SHIU LUN GODFREY" target="NATHANSON, MELVYN B."/>
+<edge source="CHOI, SHIU LUN GODFREY" target="SZEMEREDI, ENDRE"/>
+<edge source="CHOWLA, SARVADAMAN*" target="DAVENPORT, HAROLD*"/>
+<edge source="CHOWLA, SARVADAMAN*" target="GUPTA, HANSRAJ*"/>
+<edge source="CHOWLA, SARVADAMAN*" target="NATHANSON, MELVYN B."/>
+<edge source="CHOWLA, SARVADAMAN*" target="RAMACHANDRA, KANAKANAHALLI"/>
+<edge source="CHOWLA, SARVADAMAN*" target="SCHINZEL, ANDRZEJ"/>
+<edge source="CHOWLA, SARVADAMAN*" target="STRAUS, ERNST GABOR*"/>
+<edge source="CHUI, CHARLES KAM-TAI" target="SHISHA, OVED*"/>
+<edge source="CHUNG, FAN RONG K." target="FABER, VANCE"/>
+<edge source="CHUNG, FAN RONG K." target="FISHBURN, PETER C."/>
+<edge source="CHUNG, FAN RONG K." target="FRANKL, PETER"/>
+<edge source="CHUNG, FAN RONG K." target="FUREDI, ZOLTAN"/>
+<edge source="CHUNG, FAN RONG K." target="GODDARD, WAYNE D."/>
+<edge source="CHUNG, FAN RONG K." target="GRAHAM, RONALD L."/>
+<edge source="CHUNG, FAN RONG K." target="GYARFAS, ANDRAS"/>
+<edge source="CHUNG, FAN RONG K." target="HOGGATT, VERNER E., JR.*"/>
+<edge source="CHUNG, FAN RONG K." target="KLEITMAN, DANIEL J."/>
+<edge source="CHUNG, FAN RONG K." target="ODLYZKO, ANDREW M."/>
+<edge source="CHUNG, FAN RONG K." target="OELLERMANN, ORTRUD R."/>
+<edge source="CHUNG, FAN RONG K." target="PURDY, GEORGE B."/>
+<edge source="CHUNG, FAN RONG K." target="SAKS, MICHAEL E."/>
+<edge source="CHUNG, FAN RONG K." target="SPENCER, JOEL H."/>
+<edge source="CHUNG, FAN RONG K." target="SZEMEREDI, ENDRE"/>
+<edge source="CHUNG, FAN RONG K." target="TETALI, PRASAD"/>
+<edge source="CHUNG, FAN RONG K." target="TROTTER, WILLIAM T., JR."/>
+<edge source="CHUNG, FAN RONG K." target="TUZA, ZSOLT"/>
+<edge source="CHUNG, FAN RONG K." target="ULAM, STANISLAW MARCIN*"/>
+<edge source="CHUNG, FAN RONG K." target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="CHUNG, FAN RONG K." target="WEST, DOUGLAS B."/>
+<edge source="CHUNG, FAN RONG K." target="WILSON, RICHARD M."/>
+<edge source="CHUNG, FAN RONG K." target="WINKLER, PETER M."/>
+<edge source="CHUNG, FAN RONG K." target="YAO, FOONG FRANCES"/>
+<edge source="CHUNG, KAI-LAI" target="FELLER, WILLIAM*"/>
+<edge source="CHUNG, KAI-LAI" target="FUCHS, WOLFGANG HEINRICH JOHANNES*"/>
+<edge source="CHUNG, KAI-LAI" target="HUNT, GILBERT AGNEW"/>
+<edge source="CHUNG, KAI-LAI" target="KAC, MARK*"/>
+<edge source="CHUNG, KAI-LAI" target="POLLARD, HARRY*"/>
+<edge source="CHUNG, KAI-LAI" target="SIRAO, TUNEKITI"/>
+<edge source="CHVATAL, VACLAV" target="DAVIES, ROY O."/>
+<edge source="CHVATAL, VACLAV" target="GRAHAM, RONALD L."/>
+<edge source="CHVATAL, VACLAV" target="HANSON, DENIS"/>
+<edge source="CHVATAL, VACLAV" target="HARARY, FRANK"/>
+<edge source="CHVATAL, VACLAV" target="HEDRLIN, ZDENEK"/>
+<edge source="CHVATAL, VACLAV" target="HELL, PAVOL"/>
+<edge source="CHVATAL, VACLAV" target="HOFFMAN, ALAN J."/>
+<edge source="CHVATAL, VACLAV" target="KOMLOS, JANOS"/>
+<edge source="CHVATAL, VACLAV" target="LOVASZ, LASZLO"/>
+<edge source="CHVATAL, VACLAV" target="NESETRIL, JAROSLAV"/>
+<edge source="CHVATAL, VACLAV" target="RODL, VOJTECH"/>
+<edge source="CHVATAL, VACLAV" target="SCHWENK, ALLEN JOHN"/>
+<edge source="CHVATAL, VACLAV" target="SZEMEREDI, ENDRE"/>
+<edge source="CHVATAL, VACLAV" target="THOMASSEN, CARSTEN"/>
+<edge source="CHVATAL, VACLAV" target="TROTTER, WILLIAM T., JR."/>
+<edge source="CLARK, BRENT N." target="COLBOURN, CHARLES J."/>
+<edge source="CLARK, LANE HENRY" target="ENTRINGER, ROGER C."/>
+<edge source="CLARK, LANE HENRY" target="MCCANNA, JOSEPH E."/>
+<edge source="CLARK, LANE HENRY" target="MEIR, AMRAM"/>
+<edge source="CLARK, LANE HENRY" target="MOON, JOHN W."/>
+<edge source="CLARK, LANE HENRY" target="SUN, HUI CHENG"/>
+<edge source="CLARK, LANE HENRY" target="SZEKELY, LASZLO A."/>
+<edge source="CLARK, LANE HENRY" target="TUZA, ZSOLT"/>
+<edge source="CLARK, LANE HENRY" target="WORMALD, NICHOLAS C."/>
+<edge source="CLUNIE, JAMES G." target="EDREI, ALBERT*"/>
+<edge source="CLUNIE, JAMES G." target="KOVARI, TAMAS"/>
+<edge source="CLUNIE, JAMES G." target="RUBEL, LEE A.*"/>
+<edge source="COHEN, STEPHEN D." target="NATHANSON, MELVYN B."/>
+<edge source="COLBOURN, CHARLES J." target="DE CAEN, DOMINIQUE*"/>
+<edge source="COLBOURN, CHARLES J." target="MCKAY, BRENDAN D."/>
+<edge source="COLBOURN, CHARLES J." target="MULLIN, RONALD C."/>
+<edge source="COLBOURN, CHARLES J." target="PHELPS, KEVIN T."/>
+<edge source="COLBOURN, CHARLES J." target="RODL, VOJTECH"/>
+<edge source="COLBOURN, CHARLES J." target="ROSA, ALEXANDER"/>
+<edge source="COLBOURN, CHARLES J." target="SIRAN, JOZEF"/>
+<edge source="COLBOURN, CHARLES J." target="STINSON, DOUGLAS ROBERT"/>
+<edge source="COLBOURN, CHARLES J." target="WINKLER, PETER M."/>
+<edge source="COLBOURN, CHARLES J." target="WORMALD, NICHOLAS C."/>
+<edge source="CONWAY, JOHN HORTON" target="CROFT, HALLARD T."/>
+<edge source="CONWAY, JOHN HORTON" target="GUY, MICHAEL J. T."/>
+<edge source="CONWAY, JOHN HORTON" target="GUY, RICHARD K."/>
+<edge source="CONWAY, JOHN HORTON" target="ODLYZKO, ANDREW M."/>
+<edge source="COPELAND, ARTHUR H., SR.*" target="HARARY, FRANK"/>
+<edge source="CROFT, HALLARD T." target="GUY, MICHAEL J. T."/>
+<edge source="CROFT, HALLARD T." target="GUY, RICHARD K."/>
+<edge source="CSAKI, ENDRE" target="GRILL, KARL"/>
+<edge source="CSAKI, ENDRE" target="KOMLOS, JANOS"/>
+<edge source="CSAKI, ENDRE" target="REVESZ, PAL"/>
+<edge source="CSAKI, ENDRE" target="VINCZE, ISTVAN"/>
+<edge source="CSISZAR, IMRE" target="KOMLOS, JANOS"/>
+<edge source="CSISZAR, IMRE" target="LOVASZ, LASZLO"/>
+<edge source="CZIPSZER, JANOS" target="FREUD, GEZA*"/>
+<edge source="CZIPSZER, JANOS" target="HAJNAL, ANDRAS"/>
+<edge source="CZIPSZER, JANOS" target="RENYI, ALFRED A.*"/>
+<edge source="DARLING, DONALD A." target="KAC, MARK*"/>
+<edge source="DARST, RICHARD B." target="POLLARD, HARRY*"/>
+<edge source="DAVENPORT, HAROLD*" target="HEILBRONN, HANS ARNOLD*"/>
+<edge source="DAVENPORT, HAROLD*" target="LEVEQUE, WILLIAM JUDSON"/>
+<edge source="DAVENPORT, HAROLD*" target="MAHLER, KURT*"/>
+<edge source="DAVENPORT, HAROLD*" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="DAVENPORT, HAROLD*" target="SCHINZEL, ANDRZEJ"/>
+<edge source="DAVIES, ROY O." target="HARARY, FRANK"/>
+<edge source="DAVIES, ROY O." target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="DAVIES, ROY O." target="TAYLOR, SAMUEL JAMES"/>
+<edge source="DAYKIN, DAVID E." target="FRANKL, PETER"/>
+<edge source="DAYKIN, DAVID E." target="KLEITMAN, DANIEL J."/>
+<edge source="DAYKIN, DAVID E." target="LOVASZ, LASZLO"/>
+<edge source="DAYKIN, DAVID E." target="SHENG, TSENG KUO"/>
+<edge source="DAYKIN, DAVID E." target="WEST, DOUGLAS B."/>
+<edge source="DE BRUIJN, NICOLAAS GOVERT" target="SZEKERES, GEORGE"/>
+<edge source="DE BRUIJN, NICOLAAS GOVERT" target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="DE CAEN, DOMINIQUE*" target="FUREDI, ZOLTAN"/>
+<edge source="DE CAEN, DOMINIQUE*" target="GODSIL, CHRISTOPHER DAVID"/>
+<edge source="DE CAEN, DOMINIQUE*" target="PULLMAN, NORMAN J.*"/>
+<edge source="DE CAEN, DOMINIQUE*" target="SZEKELY, LASZLO A."/>
+<edge source="DE CAEN, DOMINIQUE*" target="WORMALD, NICHOLAS C."/>
+<edge source="DE KONINCK, JEAN-MARIE" target="GALAMBOS, JANOS"/>
+<edge source="DE KONINCK, JEAN-MARIE" target="IVIC, ALEKSANDAR"/>
+<edge source="DE KONINCK, JEAN-MARIE" target="KATAI, IMRE"/>
+<edge source="DE KONINCK, JEAN-MARIE" target="TENENBAUM, GERALD"/>
+<edge source="DEBOSE, YOLANDA" target="HOBBS, ARTHUR M."/>
+<edge source="DEHEUVELS, PAUL" target="GRILL, KARL"/>
+<edge source="DEHEUVELS, PAUL" target="REVESZ, PAL"/>
+<edge source="DELEGLISE, MARC" target="NICOLAS, JEAN-LOUIS"/>
+<edge source="DENES, JOZSEF" target="HARARY, FRANK"/>
+<edge source="DENES, JOZSEF" target="TURAN, PAL*"/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="FREIMAN, GREGORY A."/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="GRANVILLE, ANDREW J."/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="MELFI, GIUSEPPE"/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="POMERANCE, CARL"/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="SARKOZY, ANDRAS"/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="SOS, VERA T."/>
+<edge source="DESHOUILLERS, JEAN-MARC" target="TENENBAUM, GERALD"/>
+<edge source="DEUBER, WALTER A.*" target="GRAHAM, RONALD L."/>
+<edge source="DEUBER, WALTER A.*" target="GUNDERSON, DAVID S."/>
+<edge source="DEUBER, WALTER A.*" target="HINDMAN, NEIL"/>
+<edge source="DEUBER, WALTER A.*" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="DEUBER, WALTER A.*" target="LEFMANN, HANNO"/>
+<edge source="DEUBER, WALTER A.*" target="MEYER, ANJA GABRIELE"/>
+<edge source="DEUBER, WALTER A.*" target="ROTHSCHILD, BRUCE L."/>
+<edge source="DEUBER, WALTER A.*" target="SACHS, HORST"/>
+<edge source="DEUBER, WALTER A.*" target="SIMONOVITS, MIKLOS"/>
+<edge source="DEUBER, WALTER A.*" target="SOS, VERA T."/>
+<edge source="DEZA, MICHEL-MARIE" target="FRANKL, PETER"/>
+<edge source="DEZA, MICHEL-MARIE" target="MULLIN, RONALD C."/>
+<edge source="DEZA, MICHEL-MARIE" target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="DIAMOND, HAROLD GEORGE" target="POMERANCE, CARL"/>
+<edge source="DIAMOND, HAROLD GEORGE" target="RUBEL, LEE A.*"/>
+<edge source="DIAMOND, HAROLD GEORGE" target="VAALER, JEFFREY D."/>
+<edge source="DIRAC, GABRIEL ANDREW*" target="SCHUSTER, SEYMOUR"/>
+<edge source="DIRAC, GABRIEL ANDREW*" target="THOMASSEN, CARSTEN"/>
+<edge source="DIXMIER, JACQUES" target="NICOLAS, JEAN-LOUIS"/>
+<edge source="DRAKE, DAVID A." target="FUREDI, ZOLTAN"/>
+<edge source="DRAKE, DAVID A." target="LARSON, JEAN A."/>
+<edge source="DUKE, RICHARD A." target="FOWLER, JOEL C."/>
+<edge source="DUKE, RICHARD A." target="HARARY, FRANK"/>
+<edge source="DUKE, RICHARD A." target="LEFMANN, HANNO"/>
+<edge source="DUKE, RICHARD A." target="PHELPS, KEVIN T."/>
+<edge source="DUKE, RICHARD A." target="RODL, VOJTECH"/>
+<edge source="DUKE, RICHARD A." target="WINKLER, PETER M."/>
+<edge source="DVORETZKY, ARYEH" target="HANANI, HAIM*"/>
+<edge source="DVORETZKY, ARYEH" target="KAKUTANI, SHIZUO"/>
+<edge source="DVORETZKY, ARYEH" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="DVORETZKY, ARYEH" target="TAYLOR, SAMUEL JAMES"/>
+<edge source="ECKLUND, EARL F., JR." target="EGGLETON, ROGER B."/>
+<edge source="ECKLUND, EARL F., JR." target="SELFRIDGE, JOHN L."/>
+<edge source="EDREI, ALBERT*" target="FUCHS, WOLFGANG HEINRICH JOHANNES*"/>
+<edge source="EDREI, ALBERT*" target="SZEGO, GABOR*"/>
+<edge source="EGGLETON, ROGER B." target="FRAENKEL, AVIEZRI S."/>
+<edge source="EGGLETON, ROGER B." target="GUY, RICHARD K."/>
+<edge source="EGGLETON, ROGER B." target="HOLTON, DEREK ALLAN"/>
+<edge source="EGGLETON, ROGER B." target="LACAMPAGNE, CAROLE B."/>
+<edge source="EGGLETON, ROGER B." target="SELFRIDGE, JOHN L."/>
+<edge source="EGGLETON, ROGER B." target="SKILTON, DONALD K."/>
+<edge source="EL-ZAHAR, MOHAMED H." target="SAUER, NORBERT W."/>
+<edge source="ELEKES, GYORGY" target="HAJNAL, ANDRAS"/>
+<edge source="ELEKES, GYORGY" target="KOMJATH, PETER"/>
+<edge source="ELEKES, GYORGY" target="NATHANSON, MELVYN B."/>
+<edge source="ELEKES, GYORGY" target="RUZSA, IMRE Z."/>
+<edge source="ELLIOTT, PETER D. T. A." target="RYAVEC, CHARLES A."/>
+<edge source="ELLIOTT, PETER D. T. A." target="SARKOZY, ANDRAS"/>
+<edge source="ENTRINGER, ROGER C." target="GODDARD, WAYNE D."/>
+<edge source="ENTRINGER, ROGER C." target="GRAHAM, RONALD L."/>
+<edge source="ENTRINGER, ROGER C." target="HARNER, CHARLES C."/>
+<edge source="ENTRINGER, ROGER C." target="HENNING, MICHAEL A."/>
+<edge source="ENTRINGER, ROGER C." target="KLEITMAN, DANIEL J."/>
+<edge source="ENTRINGER, ROGER C." target="MCCANNA, JOSEPH E."/>
+<edge source="ENTRINGER, ROGER C." target="MEIR, AMRAM"/>
+<edge source="ENTRINGER, ROGER C." target="MOON, JOHN W."/>
+<edge source="ENTRINGER, ROGER C." target="PURDY, GEORGE B."/>
+<edge source="ENTRINGER, ROGER C." target="SIMMONS, GUSTAVUS J."/>
+<edge source="ENTRINGER, ROGER C." target="SUN, HUI CHENG"/>
+<edge source="ENTRINGER, ROGER C." target="SWART, HENDA C."/>
+<edge source="ENTRINGER, ROGER C." target="SZEKELY, LASZLO A."/>
+<edge source="ENTRINGER, ROGER C." target="TUZA, ZSOLT"/>
+<edge source="FABER, VANCE" target="FAJTLOWICZ, SIEMION"/>
+<edge source="FABER, VANCE" target="GOLDBERG, MARK K."/>
+<edge source="FABER, VANCE" target="JONES, FRED B."/>
+<edge source="FABER, VANCE" target="KIERSTEAD, HENRY A."/>
+<edge source="FABER, VANCE" target="LARSON, JEAN A."/>
+<edge source="FABER, VANCE" target="SIMMONS, GUSTAVUS J."/>
+<edge source="FAJTLOWICZ, SIEMION" target="HOFFMAN, ALAN J."/>
+<edge source="FAJTLOWICZ, SIEMION" target="REID, TALMAGE JAMES"/>
+<edge source="FAJTLOWICZ, SIEMION" target="STATON, WILLIAM A., III"/>
+<edge source="FAJTLOWICZ, SIEMION" target="URBANIK, KAZIMIERZ"/>
+<edge source="FAUDREE, RALPH J." target="FUREDI, ZOLTAN"/>
+<edge source="FAUDREE, RALPH J." target="GODDARD, WAYNE D."/>
+<edge source="FAUDREE, RALPH J." target="GOULD, RONALD J."/>
+<edge source="FAUDREE, RALPH J." target="GYARFAS, ANDRAS"/>
+<edge source="FAUDREE, RALPH J." target="GYORI, ERVIN"/>
+<edge source="FAUDREE, RALPH J." target="HARARY, FRANK"/>
+<edge source="FAUDREE, RALPH J." target="JACOBSON, MICHAEL S."/>
+<edge source="FAUDREE, RALPH J." target="JAGOTA, ARUN KUMAR"/>
+<edge source="FAUDREE, RALPH J." target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="FAUDREE, RALPH J." target="LEHEL, JENO"/>
+<edge source="FAUDREE, RALPH J." target="LUCZAK, TOMASZ"/>
+<edge source="FAUDREE, RALPH J." target="MCKAY, BRENDAN D."/>
+<edge source="FAUDREE, RALPH J." target="ORDMAN, EDWARD T."/>
+<edge source="FAUDREE, RALPH J." target="PACH, JANOS"/>
+<edge source="FAUDREE, RALPH J." target="PARSONS, TORRENCE DOUGLAS*"/>
+<edge source="FAUDREE, RALPH J." target="REID, TALMAGE JAMES"/>
+<edge source="FAUDREE, RALPH J." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="FAUDREE, RALPH J." target="RUSZINKO, MIKLOS"/>
+<edge source="FAUDREE, RALPH J." target="SCHELP, RICHARD H."/>
+<edge source="FAUDREE, RALPH J." target="SCHUSTER, SEYMOUR"/>
+<edge source="FAUDREE, RALPH J." target="SHREVE, WARREN E."/>
+<edge source="FAUDREE, RALPH J." target="SIMONOVITS, MIKLOS"/>
+<edge source="FAUDREE, RALPH J." target="SOS, VERA T."/>
+<edge source="FAUDREE, RALPH J." target="SPENCER, JOEL H."/>
+<edge source="FAUDREE, RALPH J." target="STATON, WILLIAM A., III"/>
+<edge source="FAUDREE, RALPH J." target="TUZA, ZSOLT"/>
+<edge source="FEJES TOTH, LASZLO" target="MAKAI, ENDRE, JR."/>
+<edge source="FEJES TOTH, LASZLO" target="SAUER, NORBERT W."/>
+<edge source="FELLER, WILLIAM*" target="POLLARD, HARRY*"/>
+<edge source="FELZENBAUM, ALEXANDER GERSH" target="FRAENKEL, AVIEZRI S."/>
+<edge source="FELZENBAUM, ALEXANDER GERSH" target="HOLZMAN, RON"/>
+<edge source="FELZENBAUM, ALEXANDER GERSH" target="KLEITMAN, DANIEL J."/>
+<edge source="FEW, LEONARD" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="FISHBURN, PETER C." target="FRANKL, PETER"/>
+<edge source="FISHBURN, PETER C." target="FUREDI, ZOLTAN"/>
+<edge source="FISHBURN, PETER C." target="GRAHAM, RONALD L."/>
+<edge source="FISHBURN, PETER C." target="ODLYZKO, ANDREW M."/>
+<edge source="FISHBURN, PETER C." target="SPENCER, JOEL H."/>
+<edge source="FISHBURN, PETER C." target="TETALI, PRASAD"/>
+<edge source="FISHBURN, PETER C." target="TROTTER, WILLIAM T., JR."/>
+<edge source="FISHBURN, PETER C." target="WINKLER, PETER M."/>
+<edge source="FODOR, GEZA*" target="HAJNAL, ANDRAS"/>
+<edge source="FODOR, GEZA*" target="MATE, ATTILA"/>
+<edge source="FON-DER-FLAASS, DMITRI G." target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="FON-DER-FLAASS, DMITRI G." target="NESETRIL, JAROSLAV"/>
+<edge source="FON-DER-FLAASS, DMITRI G." target="TUZA, ZSOLT"/>
+<edge source="FOWLER, JOEL C." target="PHELPS, KEVIN T."/>
+<edge source="FOWLER, JOEL C." target="SOS, VERA T."/>
+<edge source="FOWLER, JOEL C." target="WILSON, RICHARD M."/>
+<edge source="FRAENKEL, AVIEZRI S." target="GILLIS, JOSEPH E.*"/>
+<edge source="FRAENKEL, AVIEZRI S." target="GORDON, BASIL"/>
+<edge source="FRAENKEL, AVIEZRI S." target="HARARY, FRANK"/>
+<edge source="FRAENKEL, AVIEZRI S." target="HOLZMAN, RON"/>
+<edge source="FRAENKEL, AVIEZRI S." target="LOEBL, MARTIN"/>
+<edge source="FRAENKEL, AVIEZRI S." target="NESETRIL, JAROSLAV"/>
+<edge source="FRAENKEL, AVIEZRI S." target="SOS, VERA T."/>
+<edge source="FRAENKEL, AVIEZRI S." target="STRAUS, ERNST GABOR*"/>
+<edge source="FRANKL, PETER" target="FUREDI, ZOLTAN"/>
+<edge source="FRANKL, PETER" target="GRAHAM, RONALD L."/>
+<edge source="FRANKL, PETER" target="KLEITMAN, DANIEL J."/>
+<edge source="FRANKL, PETER" target="LI, WEN-CH'ING WINNIE"/>
+<edge source="FRANKL, PETER" target="LOVASZ, LASZLO"/>
+<edge source="FRANKL, PETER" target="ODLYZKO, ANDREW M."/>
+<edge source="FRANKL, PETER" target="PACH, JANOS"/>
+<edge source="FRANKL, PETER" target="RODL, VOJTECH"/>
+<edge source="FRANKL, PETER" target="RUZSA, IMRE Z."/>
+<edge source="FRANKL, PETER" target="SAKS, MICHAEL E."/>
+<edge source="FRANKL, PETER" target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="FRANKL, PETER" target="SOS, VERA T."/>
+<edge source="FRANKL, PETER" target="SZEKELY, LASZLO A."/>
+<edge source="FRANKL, PETER" target="WILSON, RICHARD M."/>
+<edge source="FREIMAN, GREGORY A." target="HERZOG, MARCEL"/>
+<edge source="FREIMAN, GREGORY A." target="RUZSA, IMRE Z."/>
+<edge source="FREIMAN, GREGORY A." target="SCHONHEIM, JOHANAN"/>
+<edge source="FREIMAN, GREGORY A." target="SOS, VERA T."/>
+<edge source="FREUD, GEZA*" target="NEWMAN, DONALD J."/>
+<edge source="FREUD, GEZA*" target="REDDY, A. R."/>
+<edge source="FREUD, GEZA*" target="SHARMA, AMBIKESHWAR"/>
+<edge source="FREUD, GEZA*" target="SZABADOS, JOZSEF"/>
+<edge source="FREUD, GEZA*" target="VERTESI, PETER O. H."/>
+<edge source="FREUD, ROBERT" target="HEGYVARI, NORBERT"/>
+<edge source="FREUD, ROBERT" target="PALFY, PETER PAL"/>
+<edge source="FRIED, ERVIN" target="HAJNAL, ANDRAS"/>
+<edge source="FRIED, ERVIN" target="MILNER, ERIC CHARLES*"/>
+<edge source="FRIED, ERVIN" target="PALFY, PETER PAL"/>
+<edge source="FRIED, ERVIN" target="SOS, VERA T."/>
+<edge source="FRIED, ERVIN" target="SURANYI, JANOS"/>
+<edge source="FUCHS, WOLFGANG HEINRICH JOHANNES*" target="MACINTYRE, ARCHIBALD JAMES*"/>
+<edge source="FUCHS, WOLFGANG HEINRICH JOHANNES*" target="POLLARD, HARRY*"/>
+<edge source="FUCHS, WOLFGANG HEINRICH JOHANNES*" target="RUBEL, LEE A.*"/>
+<edge source="FUREDI, ZOLTAN" target="GOULD, RONALD J."/>
+<edge source="FUREDI, ZOLTAN" target="GRAHAM, RONALD L."/>
+<edge source="FUREDI, ZOLTAN" target="GUNDERSON, DAVID S."/>
+<edge source="FUREDI, ZOLTAN" target="GYARFAS, ANDRAS"/>
+<edge source="FUREDI, ZOLTAN" target="HAJNAL, ANDRAS"/>
+<edge source="FUREDI, ZOLTAN" target="HOLZMAN, RON"/>
+<edge source="FUREDI, ZOLTAN" target="HORAK, PETER"/>
+<edge source="FUREDI, ZOLTAN" target="KLEITMAN, DANIEL J."/>
+<edge source="FUREDI, ZOLTAN" target="KOMJATH, PETER"/>
+<edge source="FUREDI, ZOLTAN" target="KOMLOS, JANOS"/>
+<edge source="FUREDI, ZOLTAN" target="LARSON, JEAN A."/>
+<edge source="FUREDI, ZOLTAN" target="LINIAL, NATHAN"/>
+<edge source="FUREDI, ZOLTAN" target="LOEBL, MARTIN"/>
+<edge source="FUREDI, ZOLTAN" target="LOVASZ, LASZLO"/>
+<edge source="FUREDI, ZOLTAN" target="ODLYZKO, ANDREW M."/>
+<edge source="FUREDI, ZOLTAN" target="PACH, JANOS"/>
+<edge source="FUREDI, ZOLTAN" target="REZNICK, BRUCE A."/>
+<edge source="FUREDI, ZOLTAN" target="RODL, VOJTECH"/>
+<edge source="FUREDI, ZOLTAN" target="ROTHSCHILD, BRUCE L."/>
+<edge source="FUREDI, ZOLTAN" target="RUBEL, LEE A.*"/>
+<edge source="FUREDI, ZOLTAN" target="RUSZINKO, MIKLOS"/>
+<edge source="FUREDI, ZOLTAN" target="RUZSA, IMRE Z."/>
+<edge source="FUREDI, ZOLTAN" target="SERESS, AKOS"/>
+<edge source="FUREDI, ZOLTAN" target="SIMONOVITS, MIKLOS"/>
+<edge source="FUREDI, ZOLTAN" target="SOS, VERA T."/>
+<edge source="FUREDI, ZOLTAN" target="TROTTER, WILLIAM T., JR."/>
+<edge source="FUREDI, ZOLTAN" target="TUZA, ZSOLT"/>
+<edge source="FUREDI, ZOLTAN" target="WEST, DOUGLAS B."/>
+<edge source="GAAL, STEVEN A. (= GAL, ISTVAN SANDOR)" target="KOKSMA, JURJEN FERDINAND*"/>
+<edge source="GALAMBOS, JANOS" target="INDLEKOFER, KARL-HEINZ"/>
+<edge source="GALAMBOS, JANOS" target="KATAI, IMRE"/>
+<edge source="GALAMBOS, JANOS" target="RENYI, ALFRED A.*"/>
+<edge source="GALAMBOS, JANOS" target="SZUSZ, PETER"/>
+<edge source="GALLAI, TIBOR* (GRUNWALD, TIBOR)" target="TUZA, ZSOLT"/>
+<edge source="GALLAI, TIBOR* (GRUNWALD, TIBOR)" target="VAZSONYI, ANDREW* (WEISZFELD, ENDRE)"/>
+<edge source="GALVIN, FRED" target="HAJNAL, ANDRAS"/>
+<edge source="GALVIN, FRED" target="KOMJATH, PETER"/>
+<edge source="GALVIN, FRED" target="LARSON, JEAN A."/>
+<edge source="GALVIN, FRED" target="MAGIDOR, MENACHEM"/>
+<edge source="GALVIN, FRED" target="MILNER, ERIC CHARLES*"/>
+<edge source="GALVIN, FRED" target="RADO, RICHARD*"/>
+<edge source="GALVIN, FRED" target="SHELAH, SAHARON"/>
+<edge source="GERENCSER, LASZLO" target="GYARFAS, ANDRAS"/>
+<edge source="GERENCSER, LASZLO" target="MATE, ATTILA"/>
+<edge source="GILLIS, JOSEPH E.*" target="REZNICK, BRUCE A."/>
+<edge source="GILLMAN, LEONARD" target="HENRIKSEN, MELVIN"/>
+<edge source="GIMBEL, JOHN GORDON" target="HENNING, MICHAEL A."/>
+<edge source="GIMBEL, JOHN GORDON" target="KRATSCH, DIETER"/>
+<edge source="GIMBEL, JOHN GORDON" target="PALMER, EDGAR M."/>
+<edge source="GIMBEL, JOHN GORDON" target="STRAIGHT, H. JOSEPH"/>
+<edge source="GIMBEL, JOHN GORDON" target="THOMASSEN, CARSTEN"/>
+<edge source="GIMBEL, JOHN GORDON" target="TUZA, ZSOLT"/>
+<edge source="GODDARD, WAYNE D." target="HAMBURGER, PETER"/>
+<edge source="GODDARD, WAYNE D." target="HEDETNIEMI, STEPHEN T."/>
+<edge source="GODDARD, WAYNE D." target="HENNING, MICHAEL A."/>
+<edge source="GODDARD, WAYNE D." target="KLEITMAN, DANIEL J."/>
+<edge source="GODDARD, WAYNE D." target="KLUGERMAN, MICHAEL"/>
+<edge source="GODDARD, WAYNE D." target="KUBICKA, EWA MARIE"/>
+<edge source="GODDARD, WAYNE D." target="KUBICKI, GRZEGORZ"/>
+<edge source="GODDARD, WAYNE D." target="MCCANNA, JOSEPH E."/>
+<edge source="GODDARD, WAYNE D." target="OELLERMANN, ORTRUD R."/>
+<edge source="GODDARD, WAYNE D." target="PACH, JANOS"/>
+<edge source="GODDARD, WAYNE D." target="PIPPERT, RAYMOND E."/>
+<edge source="GODDARD, WAYNE D." target="SCHULMAN, LEONARD J."/>
+<edge source="GODDARD, WAYNE D." target="SWART, HENDA C."/>
+<edge source="GODSIL, CHRISTOPHER DAVID" target="HOLTON, DEREK ALLAN"/>
+<edge source="GODSIL, CHRISTOPHER DAVID" target="KRANTZ, STEVEN GEORGE"/>
+<edge source="GODSIL, CHRISTOPHER DAVID" target="MCKAY, BRENDAN D."/>
+<edge source="GODSIL, CHRISTOPHER DAVID" target="NESETRIL, JAROSLAV"/>
+<edge source="GODSIL, CHRISTOPHER DAVID" target="PARSONS, TORRENCE DOUGLAS*"/>
+<edge source="GOLDBERG, MARK K." target="PACH, JANOS"/>
+<edge source="GOLDBERG, MARK K." target="SPENCER, JOEL H."/>
+<edge source="GOODMAN, ADOLPH W." target="POSA, LAJOS"/>
+<edge source="GORDON, BASIL" target="RUBEL, LEE A.*"/>
+<edge source="GORDON, BASIL" target="STRAUS, ERNST GABOR*"/>
+<edge source="GOULD, RONALD J." target="GUNDERSON, DAVID S."/>
+<edge source="GOULD, RONALD J." target="GYARFAS, ANDRAS"/>
+<edge source="GOULD, RONALD J." target="JACOBSON, MICHAEL S."/>
+<edge source="GOULD, RONALD J." target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="GOULD, RONALD J." target="KUBICKA, EWA MARIE"/>
+<edge source="GOULD, RONALD J." target="KUBICKI, GRZEGORZ"/>
+<edge source="GOULD, RONALD J." target="LEHEL, JENO"/>
+<edge source="GOULD, RONALD J." target="LICK, DON R."/>
+<edge source="GOULD, RONALD J." target="RODL, VOJTECH"/>
+<edge source="GOULD, RONALD J." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="GOULD, RONALD J." target="SCHELP, RICHARD H."/>
+<edge source="GOULD, RONALD J." target="WEST, DOUGLAS B."/>
+<edge source="GRAHAM, RONALD L." target="HARARY, FRANK"/>
+<edge source="GRAHAM, RONALD L." target="HELL, PAVOL"/>
+<edge source="GRAHAM, RONALD L." target="HOFFMAN, ALAN J."/>
+<edge source="GRAHAM, RONALD L." target="HOGGATT, VERNER E., JR.*"/>
+<edge source="GRAHAM, RONALD L." target="KLEITMAN, DANIEL J."/>
+<edge source="GRAHAM, RONALD L." target="LI, WEN-CH'ING WINNIE"/>
+<edge source="GRAHAM, RONALD L." target="LOVASZ, LASZLO"/>
+<edge source="GRAHAM, RONALD L." target="LUCZAK, TOMASZ"/>
+<edge source="GRAHAM, RONALD L." target="MONTGOMERY, PETER L."/>
+<edge source="GRAHAM, RONALD L." target="NESETRIL, JAROSLAV"/>
+<edge source="GRAHAM, RONALD L." target="ODLYZKO, ANDREW M."/>
+<edge source="GRAHAM, RONALD L." target="OELLERMANN, ORTRUD R."/>
+<edge source="GRAHAM, RONALD L." target="RODL, VOJTECH"/>
+<edge source="GRAHAM, RONALD L." target="ROTHSCHILD, BRUCE L."/>
+<edge source="GRAHAM, RONALD L." target="RUZSA, IMRE Z."/>
+<edge source="GRAHAM, RONALD L." target="SAKS, MICHAEL E."/>
+<edge source="GRAHAM, RONALD L." target="SIMMONS, GUSTAVUS J."/>
+<edge source="GRAHAM, RONALD L." target="SIMONOVITS, MIKLOS"/>
+<edge source="GRAHAM, RONALD L." target="SOS, VERA T."/>
+<edge source="GRAHAM, RONALD L." target="SPENCER, JOEL H."/>
+<edge source="GRAHAM, RONALD L." target="STRAUS, ERNST GABOR*"/>
+<edge source="GRAHAM, RONALD L." target="SZEMEREDI, ENDRE"/>
+<edge source="GRAHAM, RONALD L." target="TAYLOR, HERBERT"/>
+<edge source="GRAHAM, RONALD L." target="ULAM, STANISLAW MARCIN*"/>
+<edge source="GRAHAM, RONALD L." target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="GRAHAM, RONALD L." target="WILSON, RICHARD M."/>
+<edge source="GRAHAM, RONALD L." target="WINKLER, PETER M."/>
+<edge source="GRAHAM, RONALD L." target="YAO, FOONG FRANCES"/>
+<edge source="GRAHAM, SIDNEY W." target="IVIC, ALEKSANDAR"/>
+<edge source="GRAHAM, SIDNEY W." target="KOLESNIK, GRIGORI A."/>
+<edge source="GRAHAM, SIDNEY W." target="POMERANCE, CARL"/>
+<edge source="GRAHAM, SIDNEY W." target="VAALER, JEFFREY D."/>
+<edge source="GRANVILLE, ANDREW J." target="HILDEBRAND, ADOLF J."/>
+<edge source="GRANVILLE, ANDREW J." target="MAIER, HELMUT"/>
+<edge source="GRANVILLE, ANDREW J." target="MULLIN, RONALD C."/>
+<edge source="GRANVILLE, ANDREW J." target="POMERANCE, CARL"/>
+<edge source="GRANVILLE, ANDREW J." target="SELFRIDGE, JOHN L."/>
+<edge source="GRANVILLE, ANDREW J." target="SHALLIT, JEFFREY OUTLAW"/>
+<edge source="GRANVILLE, ANDREW J." target="SPIRO-SILVERMAN, CLAUDIA A."/>
+<edge source="GRANVILLE, ANDREW J." target="VAUGHAN, ROBERT C."/>
+<edge source="GRILL, KARL" target="REVESZ, PAL"/>
+<edge source="GRUNWALD, GEZA*" target="TURAN, PAL*"/>
+<edge source="GUNDERSON, DAVID S." target="HINDMAN, NEIL"/>
+<edge source="GUNDERSON, DAVID S." target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="GUNDERSON, DAVID S." target="MEYER, ANJA GABRIELE"/>
+<edge source="GUNDERSON, DAVID S." target="MOLLOY, MICHAEL SEAN O'BRIEN"/>
+<edge source="GUNDERSON, DAVID S." target="RODL, VOJTECH"/>
+<edge source="GUNDERSON, DAVID S." target="SAUER, NORBERT W."/>
+<edge source="GUPTA, HANSRAJ*" target="KHARE, SATGUR PRASAD"/>
+<edge source="GUY, MICHAEL J. T." target="GUY, RICHARD K."/>
+<edge source="GUY, RICHARD K." target="HANANI, HAIM*"/>
+<edge source="GUY, RICHARD K." target="HARARY, FRANK"/>
+<edge source="GUY, RICHARD K." target="LACAMPAGNE, CAROLE B."/>
+<edge source="GUY, RICHARD K." target="MILNER, ERIC CHARLES*"/>
+<edge source="GUY, RICHARD K." target="MOON, JOHN W."/>
+<edge source="GUY, RICHARD K." target="SAUER, NORBERT W."/>
+<edge source="GUY, RICHARD K." target="SCHAER, JONATHAN"/>
+<edge source="GUY, RICHARD K." target="SELFRIDGE, JOHN L."/>
+<edge source="GYARFAS, ANDRAS" target="JACOBSON, MICHAEL S."/>
+<edge source="GYARFAS, ANDRAS" target="JAGOTA, ARUN KUMAR"/>
+<edge source="GYARFAS, ANDRAS" target="KLEITMAN, DANIEL J."/>
+<edge source="GYARFAS, ANDRAS" target="KOHAYAKAWA, YOSHIHARU"/>
+<edge source="GYARFAS, ANDRAS" target="KOMLOS, JANOS"/>
+<edge source="GYARFAS, ANDRAS" target="KRATSCH, DIETER"/>
+<edge source="GYARFAS, ANDRAS" target="LEHEL, JENO"/>
+<edge source="GYARFAS, ANDRAS" target="LUCZAK, TOMASZ"/>
+<edge source="GYARFAS, ANDRAS" target="NESETRIL, JAROSLAV"/>
+<edge source="GYARFAS, ANDRAS" target="ORDMAN, EDWARD T."/>
+<edge source="GYARFAS, ANDRAS" target="PYBER, LASZLO"/>
+<edge source="GYARFAS, ANDRAS" target="RODL, VOJTECH"/>
+<edge source="GYARFAS, ANDRAS" target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="GYARFAS, ANDRAS" target="RUSZINKO, MIKLOS"/>
+<edge source="GYARFAS, ANDRAS" target="SCHELP, RICHARD H."/>
+<edge source="GYARFAS, ANDRAS" target="SZEMEREDI, ENDRE"/>
+<edge source="GYARFAS, ANDRAS" target="TROTTER, WILLIAM T., JR."/>
+<edge source="GYARFAS, ANDRAS" target="TUZA, ZSOLT"/>
+<edge source="GYARFAS, ANDRAS" target="WEST, DOUGLAS B."/>
+<edge source="GYARFAS, ANDRAS" target="ZALCSTEIN, YECHEZKEL"/>
+<edge source="GYORI, ERVIN" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="GYORI, ERVIN" target="LUCZAK, TOMASZ"/>
+<edge source="GYORI, ERVIN" target="MILNER, ERIC CHARLES*"/>
+<edge source="GYORI, ERVIN" target="PACH, JANOS"/>
+<edge source="GYORI, ERVIN" target="ROTHSCHILD, BRUCE L."/>
+<edge source="GYORI, ERVIN" target="SCHELP, RICHARD H."/>
+<edge source="GYORI, ERVIN" target="SIMONOVITS, MIKLOS"/>
+<edge source="GYORI, ERVIN" target="TUZA, ZSOLT"/>
+<edge source="GYORY, KALMAN" target="KISS, PETER"/>
+<edge source="GYORY, KALMAN" target="LOVASZ, LASZLO"/>
+<edge source="GYORY, KALMAN" target="PAPP, ZOLTAN Z."/>
+<edge source="GYORY, KALMAN" target="SARKOZY, ANDRAS"/>
+<edge source="GYORY, KALMAN" target="SCHINZEL, ANDRZEJ"/>
+<edge source="GYORY, KALMAN" target="SHOREY, TARLOK N."/>
+<edge source="GYORY, KALMAN" target="STEWART, CAMERON L."/>
+<edge source="GYORY, KALMAN" target="TIJDEMAN, ROBERT"/>
+<edge source="HAJNAL, ANDRAS" target="KOMJATH, PETER"/>
+<edge source="HAJNAL, ANDRAS" target="LARSON, JEAN A."/>
+<edge source="HAJNAL, ANDRAS" target="LOVASZ, LASZLO"/>
+<edge source="HAJNAL, ANDRAS" target="MATE, ATTILA"/>
+<edge source="HAJNAL, ANDRAS" target="MILNER, ERIC CHARLES*"/>
+<edge source="HAJNAL, ANDRAS" target="MOON, JOHN W."/>
+<edge source="HAJNAL, ANDRAS" target="PACH, JANOS"/>
+<edge source="HAJNAL, ANDRAS" target="POSA, LAJOS"/>
+<edge source="HAJNAL, ANDRAS" target="RADO, RICHARD*"/>
+<edge source="HAJNAL, ANDRAS" target="RODL, VOJTECH"/>
+<edge source="HAJNAL, ANDRAS" target="ROTHSCHILD, BRUCE L."/>
+<edge source="HAJNAL, ANDRAS" target="SAUER, NORBERT W."/>
+<edge source="HAJNAL, ANDRAS" target="SERESS, AKOS"/>
+<edge source="HAJNAL, ANDRAS" target="SHELAH, SAHARON"/>
+<edge source="HAJNAL, ANDRAS" target="SIMONOVITS, MIKLOS"/>
+<edge source="HAJNAL, ANDRAS" target="SOS, VERA T."/>
+<edge source="HAJNAL, ANDRAS" target="SURANYI, JANOS"/>
+<edge source="HAJNAL, ANDRAS" target="SZEGEDY, MARIO"/>
+<edge source="HAJNAL, ANDRAS" target="SZEMEREDI, ENDRE"/>
+<edge source="HAJNAL, ANDRAS" target="TUZA, ZSOLT"/>
+<edge source="HALASZ, GABOR" target="MONTGOMERY, HUGH L."/>
+<edge source="HALASZ, GABOR" target="TURAN, PAL*"/>
+<edge source="HALL, RICHARD ROXBY" target="TENENBAUM, GERALD"/>
+<edge source="HALL, RICHARD ROXBY" target="VINCZE, ISTVAN"/>
+<edge source="HAMBURGER, PETER" target="KLEITMAN, DANIEL J."/>
+<edge source="HAMBURGER, PETER" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="HAMBURGER, PETER" target="PIPPERT, RAYMOND E."/>
+<edge source="HAMBURGER, PETER" target="WEAKLEY, WILLIAM DOUGLAS"/>
+<edge source="HANANI, HAIM*" target="NETANYAHU, ELISHA*"/>
+<edge source="HANANI, HAIM*" target="SAUER, NORBERT W."/>
+<edge source="HANANI, HAIM*" target="SCHONHEIM, JOHANAN"/>
+<edge source="HANANI, HAIM*" target="SOS, VERA T."/>
+<edge source="HANANI, HAIM*" target="WILSON, RICHARD M."/>
+<edge source="HANSON, DENIS" target="SAUER, NORBERT W."/>
+<edge source="HARARY, FRANK" target="HARZHEIM, EGBERT"/>
+<edge source="HARARY, FRANK" target="HEDETNIEMI, STEPHEN T."/>
+<edge source="HARARY, FRANK" target="HELL, PAVOL"/>
+<edge source="HARARY, FRANK" target="HSU, DERBIAU FRANK"/>
+<edge source="HARARY, FRANK" target="JACOBSON, MICHAEL S."/>
+<edge source="HARARY, FRANK" target="KAINEN, PAUL C."/>
+<edge source="HARARY, FRANK" target="KLAWE, MARIA MARGARET"/>
+<edge source="HARARY, FRANK" target="KUBICKA, EWA MARIE"/>
+<edge source="HARARY, FRANK" target="KUBICKI, GRZEGORZ"/>
+<edge source="HARARY, FRANK" target="LICK, DON R."/>
+<edge source="HARARY, FRANK" target="MINC, HENRYK"/>
+<edge source="HARARY, FRANK" target="MOON, JOHN W."/>
+<edge source="HARARY, FRANK" target="MOSER, LEO*"/>
+<edge source="HARARY, FRANK" target="NESETRIL, JAROSLAV"/>
+<edge source="HARARY, FRANK" target="OELLERMANN, ORTRUD R."/>
+<edge source="HARARY, FRANK" target="PALMER, EDGAR M."/>
+<edge source="HARARY, FRANK" target="PRINS, GEERT CALEB ERNST*"/>
+<edge source="HARARY, FRANK" target="ROBINSON, ROBERT W."/>
+<edge source="HARARY, FRANK" target="RODL, VOJTECH"/>
+<edge source="HARARY, FRANK" target="SCHUSTER, SEYMOUR"/>
+<edge source="HARARY, FRANK" target="SCHWENK, ALLEN JOHN"/>
+<edge source="HARARY, FRANK" target="STATON, WILLIAM A., III"/>
+<edge source="HARARY, FRANK" target="SWART, HENDA C."/>
+<edge source="HARARY, FRANK" target="THOMASSEN, CARSTEN"/>
+<edge source="HARARY, FRANK" target="TROTTER, WILLIAM T., JR."/>
+<edge source="HARARY, FRANK" target="TUTTE, WILLIAM THOMAS*"/>
+<edge source="HARARY, FRANK" target="TUZA, ZSOLT"/>
+<edge source="HARARY, FRANK" target="WORMALD, NICHOLAS C."/>
+<edge source="HARCOS, GERGELY" target="PACH, JANOS"/>
+<edge source="HARCOS, GERGELY" target="RUZSA, IMRE Z."/>
+<edge source="HARDY, GEORGE EUGENE" target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="HARE, WILLIAM R." target="HEDETNIEMI, STEPHEN T."/>
+<edge source="HARE, WILLIAM R." target="LASKAR, RENU C."/>
+<edge source="HARTMAN, STANISLAW*" target="SCHINZEL, ANDRZEJ"/>
+<edge source="HARTMAN, STANISLAW*" target="SZUSZ, PETER"/>
+<edge source="HATTINGH, JOHANNES H." target="HEDETNIEMI, STEPHEN T."/>
+<edge source="HATTINGH, JOHANNES H." target="HENNING, MICHAEL A."/>
+<edge source="HATTINGH, JOHANNES H." target="LASKAR, RENU C."/>
+<edge source="HATTINGH, JOHANNES H." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="HECHLER, STEPHEN H." target="KAINEN, PAUL C."/>
+<edge source="HECHLER, STEPHEN H." target="KENNEDY, JOHN W."/>
+<edge source="HEDETNIEMI, STEPHEN T." target="HENNING, MICHAEL A."/>
+<edge source="HEDETNIEMI, STEPHEN T." target="JACOBSON, MICHAEL S."/>
+<edge source="HEDETNIEMI, STEPHEN T." target="LASKAR, RENU C."/>
+<edge source="HEDETNIEMI, STEPHEN T." target="PRINS, GEERT CALEB ERNST*"/>
+<edge source="HEDETNIEMI, STEPHEN T." target="ROBINSON, ROBERT W."/>
+<edge source="HEDETNIEMI, STEPHEN T." target="WEAKLEY, WILLIAM DOUGLAS"/>
+<edge source="HEDRLIN, ZDENEK" target="HELL, PAVOL"/>
+<edge source="HEGYVARI, NORBERT" target="JIN, GUO PING"/>
+<edge source="HEGYVARI, NORBERT" target="RAUZY, GERARD"/>
+<edge source="HEGYVARI, NORBERT" target="SARKOZY, ANDRAS"/>
+<edge source="HEILBRONN, HANS ARNOLD*" target="SCHERK, PETER*"/>
+<edge source="HELL, PAVOL" target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="HELL, PAVOL" target="NESETRIL, JAROSLAV"/>
+<edge source="HELL, PAVOL" target="ROSA, ALEXANDER"/>
+<edge source="HELL, PAVOL" target="ROSENFELD, MOSHE-1"/>
+<edge source="HELL, PAVOL" target="TAYLOR, HERBERT"/>
+<edge source="HELL, PAVOL" target="TUZA, ZSOLT"/>
+<edge source="HELL, PAVOL" target="WINKLER, PETER M."/>
+<edge source="HEMMINGER, ROBERT L." target="HOLTON, DEREK ALLAN"/>
+<edge source="HEMMINGER, ROBERT L." target="MCKAY, BRENDAN D."/>
+<edge source="HENNING, MICHAEL A." target="KUBICKI, GRZEGORZ"/>
+<edge source="HENNING, MICHAEL A." target="OELLERMANN, ORTRUD R."/>
+<edge source="HENNING, MICHAEL A." target="SWART, HENDA C."/>
+<edge source="HENNING, MICHAEL A." target="TUZA, ZSOLT"/>
+<edge source="HERZOG, FRITZ*" target="PIRANIAN, GEORGE"/>
+<edge source="HERZOG, MARCEL" target="SCHONHEIM, JOHANAN"/>
+<edge source="HICKERSON, DEAN R." target="NORTON, DONALD A."/>
+<edge source="HICKERSON, DEAN R." target="PACH, JANOS"/>
+<edge source="HICKERSON, DEAN R." target="STEIN, SHERMAN K."/>
+<edge source="HILDEBRAND, ADOLF J." target="MAIER, HELMUT"/>
+<edge source="HILDEBRAND, ADOLF J." target="ODLYZKO, ANDREW M."/>
+<edge source="HILDEBRAND, ADOLF J." target="PUDAITE, PAUL"/>
+<edge source="HILDEBRAND, ADOLF J." target="PURDY, GEORGE B."/>
+<edge source="HILDEBRAND, ADOLF J." target="REZNICK, BRUCE A."/>
+<edge source="HILDEBRAND, ADOLF J." target="TENENBAUM, GERALD"/>
+<edge source="HINDMAN, NEIL" target="LEFMANN, HANNO"/>
+<edge source="HINDMAN, NEIL" target="LUCZAK, TOMASZ"/>
+<edge source="HINDMAN, NEIL" target="ROTHSCHILD, BRUCE L."/>
+<edge source="HOBBS, ARTHUR M." target="PAYAN, CHARLES"/>
+<edge source="HOFFMAN, ALAN J." target="STRAUS, ERNST GABOR*"/>
+<edge source="HOGGATT, VERNER E., JR.*" target="STRAUS, ERNST GABOR*"/>
+<edge source="HOLTON, DEREK ALLAN" target="MCKAY, BRENDAN D."/>
+<edge source="HOLTON, DEREK ALLAN" target="THOMASSEN, CARSTEN"/>
+<edge source="HOLTON, DEREK ALLAN" target="WORMALD, NICHOLAS C."/>
+<edge source="HOLZMAN, RON" target="KLEITMAN, DANIEL J."/>
+<edge source="HOLZMAN, RON" target="KRIVELEVICH, MICHAEL"/>
+<edge source="HOLZMAN, RON" target="LINIAL, NATHAN"/>
+<edge source="HORAK, PETER" target="ROSA, ALEXANDER"/>
+<edge source="HORAK, PETER" target="SAUER, NORBERT W."/>
+<edge source="HORAK, PETER" target="SIRAN, JOZEF"/>
+<edge source="HORAK, PETER" target="TROTTER, WILLIAM T., JR."/>
+<edge source="HORAK, PETER" target="TUZA, ZSOLT"/>
+<edge source="HORVATH, MIKLOS" target="JOO, ISTVAN*"/>
+<edge source="HORVATH, MIKLOS" target="KOMORNIK, VILMOS"/>
+<edge source="HSU, DERBIAU FRANK" target="KLEITMAN, DANIEL J."/>
+<edge source="HSU, DERBIAU FRANK" target="LUCZAK, TOMASZ"/>
+<edge source="HSU, DERBIAU FRANK" target="O'NEIL, PATRICK EUGENE"/>
+<edge source="HWANG, JUN SHUNG" target="SCHNITZER, FRANZ JOSEF"/>
+<edge source="HWANG, JUN SHUNG" target="SEIDEL, WLADIMIR P.*"/>
+<edge source="INDLEKOFER, KARL-HEINZ" target="KATAI, IMRE"/>
+<edge source="IVIC, ALEKSANDAR" target="POMERANCE, CARL"/>
+<edge source="IVIC, ALEKSANDAR" target="RAMACHANDRA, KANAKANAHALLI"/>
+<edge source="IVIC, ALEKSANDAR" target="TENENBAUM, GERALD"/>
+<edge source="JACKSON, STEPHEN CRAIG" target="MAULDIN, R. DANIEL"/>
+<edge source="JACOBSON, MICHAEL S." target="KUBICKA, EWA MARIE"/>
+<edge source="JACOBSON, MICHAEL S." target="KUBICKI, GRZEGORZ"/>
+<edge source="JACOBSON, MICHAEL S." target="LEHEL, JENO"/>
+<edge source="JACOBSON, MICHAEL S." target="OELLERMANN, ORTRUD R."/>
+<edge source="JACOBSON, MICHAEL S." target="ORDMAN, EDWARD T."/>
+<edge source="JACOBSON, MICHAEL S." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="JACOBSON, MICHAEL S." target="SCHELP, RICHARD H."/>
+<edge source="JACOBSON, MICHAEL S." target="SHREVE, WARREN E."/>
+<edge source="JACOBSON, MICHAEL S." target="TUZA, ZSOLT"/>
+<edge source="JACOBSON, MICHAEL S." target="WEAKLEY, WILLIAM DOUGLAS"/>
+<edge source="JACOBSON, MICHAEL S." target="WEST, DOUGLAS B."/>
+<edge source="JAGOTA, ARUN KUMAR" target="LUCZAK, TOMASZ"/>
+<edge source="JAGOTA, ARUN KUMAR" target="SCHELP, RICHARD H."/>
+<edge source="JANSON, SVANTE" target="LUCZAK, TOMASZ"/>
+<edge source="JANSON, SVANTE" target="SPENCER, JOEL H."/>
+<edge source="JANSON, SVANTE" target="WORMALD, NICHOLAS C."/>
+<edge source="JOO, ISTVAN*" target="JOO, MIKLOS"/>
+<edge source="JOO, ISTVAN*" target="KOCZY, LASZLO A."/>
+<edge source="JOO, ISTVAN*" target="KOMORNIK, VILMOS"/>
+<edge source="JOO, ISTVAN*" target="SCHNITZER, FRANZ JOSEF"/>
+<edge source="JOO, ISTVAN*" target="SZABADOS, JOZSEF"/>
+<edge source="JOO, ISTVAN*" target="SZEKELY, LASZLO A."/>
+<edge source="KAC, MARK*" target="POLLARD, HARRY*"/>
+<edge source="KAC, MARK*" target="SZEGO, GABOR*"/>
+<edge source="KAC, MARK*" target="VAN KAMPEN, EGBERTUS RUDOLF*"/>
+<edge source="KAC, MARK*" target="WINTNER, AUREL*"/>
+<edge source="KAINEN, PAUL C." target="SCHWENK, ALLEN JOHN"/>
+<edge source="KAKUTANI, SHIZUO" target="OXTOBY, JOHN C.*"/>
+<edge source="KAKUTANI, SHIZUO" target="TAYLOR, SAMUEL JAMES"/>
+<edge source="KAPLANSKY, IRVING" target="MCKAY, BRENDAN D."/>
+<edge source="KAPLANSKY, IRVING" target="POLLARD, HARRY*"/>
+<edge source="KATAI, IMRE" target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="KELLY, PAUL JOSEPH*" target="STRAUS, ERNST GABOR*"/>
+<edge source="KENNEDY, JOHN W." target="PALMER, EDGAR M."/>
+<edge source="KENNEDY, JOHN W." target="ROBINSON, ROBERT W."/>
+<edge source="KESTELMAN, HYMAN*" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="KIERSTEAD, HENRY A." target="KOSTOCHKA, ALEXANDR V."/>
+<edge source="KIERSTEAD, HENRY A." target="LORENTZ, GEORGE GUNTHER"/>
+<edge source="KIERSTEAD, HENRY A." target="MILNER, ERIC CHARLES*"/>
+<edge source="KIERSTEAD, HENRY A." target="RODL, VOJTECH"/>
+<edge source="KIERSTEAD, HENRY A." target="SARKOZY, GABOR N."/>
+<edge source="KIERSTEAD, HENRY A." target="SELKOW, STANLEY M."/>
+<edge source="KIERSTEAD, HENRY A." target="SZEMEREDI, ENDRE"/>
+<edge source="KIERSTEAD, HENRY A." target="TROTTER, WILLIAM T., JR."/>
+<edge source="KIERSTEAD, HENRY A." target="TUZA, ZSOLT"/>
+<edge source="KISS, PETER" target="POMERANCE, CARL"/>
+<edge source="KISS, PETER" target="SARKOZY, ANDRAS"/>
+<edge source="KISS, PETER" target="SCHINZEL, ANDRZEJ"/>
+<edge source="KLAMKIN, MURRAY S." target="MEIR, AMRAM"/>
+<edge source="KLAMKIN, MURRAY S." target="NEWMAN, DONALD J."/>
+<edge source="KLAMKIN, MURRAY S." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="KLAMKIN, MURRAY S." target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="KLAMKIN, MURRAY S." target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="KLAWE, MARIA MARGARET" target="KLEITMAN, DANIEL J."/>
+<edge source="KLAWE, MARIA MARGARET" target="LINIAL, NATHAN"/>
+<edge source="KLAWE, MARIA MARGARET" target="MORAN, SHLOMO"/>
+<edge source="KLEITMAN, DANIEL J." target="KLUGERMAN, MICHAEL"/>
+<edge source="KLEITMAN, DANIEL J." target="LEWIN, MORDECHAI"/>
+<edge source="KLEITMAN, DANIEL J." target="MILNER, ERIC CHARLES*"/>
+<edge source="KLEITMAN, DANIEL J." target="PACH, JANOS"/>
+<edge source="KLEITMAN, DANIEL J." target="PIPPERT, RAYMOND E."/>
+<edge source="KLEITMAN, DANIEL J." target="POMERANCE, CARL"/>
+<edge source="KLEITMAN, DANIEL J." target="ROTHSCHILD, BRUCE L."/>
+<edge source="KLEITMAN, DANIEL J." target="SAKS, MICHAEL E."/>
+<edge source="KLEITMAN, DANIEL J." target="SCHULMAN, LEONARD J."/>
+<edge source="KLEITMAN, DANIEL J." target="SPENCER, JOEL H."/>
+<edge source="KLEITMAN, DANIEL J." target="SZEKELY, LASZLO A."/>
+<edge source="KLEITMAN, DANIEL J." target="THOMASSEN, CARSTEN"/>
+<edge source="KLEITMAN, DANIEL J." target="WEST, DOUGLAS B."/>
+<edge source="KLUGERMAN, MICHAEL" target="PACH, JANOS"/>
+<edge source="KLUGERMAN, MICHAEL" target="SCHULMAN, LEONARD J."/>
+<edge source="KNAPPENBERGER, J." target="NEWMAN, DONALD J."/>
+<edge source="KO, CHAO (KE, ZHAO)" target="RADO, RICHARD*"/>
+<edge source="KOHAYAKAWA, YOSHIHARU" target="LUCZAK, TOMASZ"/>
+<edge source="KOHAYAKAWA, YOSHIHARU" target="RODL, VOJTECH"/>
+<edge source="KOHAYAKAWA, YOSHIHARU" target="SCHELP, RICHARD H."/>
+<edge source="KOHAYAKAWA, YOSHIHARU" target="SZEMEREDI, ENDRE"/>
+<edge source="KOKSMA, JURJEN FERDINAND*" target="MAHLER, KURT*"/>
+<edge source="KOLESNIK, GRIGORI A." target="STRAUS, ERNST GABOR*"/>
+<edge source="KOMJATH, PETER" target="MILNER, ERIC CHARLES*"/>
+<edge source="KOMJATH, PETER" target="PACH, JANOS"/>
+<edge source="KOMJATH, PETER" target="RODL, VOJTECH"/>
+<edge source="KOMJATH, PETER" target="SERESS, AKOS"/>
+<edge source="KOMJATH, PETER" target="SHELAH, SAHARON"/>
+<edge source="KOMLOS, JANOS" target="ODLYZKO, ANDREW M."/>
+<edge source="KOMLOS, JANOS" target="PACH, JANOS"/>
+<edge source="KOMLOS, JANOS" target="REVESZ, PAL"/>
+<edge source="KOMLOS, JANOS" target="RODL, VOJTECH"/>
+<edge source="KOMLOS, JANOS" target="SARKOZY, GABOR N."/>
+<edge source="KOMLOS, JANOS" target="SIMONOVITS, MIKLOS"/>
+<edge source="KOMLOS, JANOS" target="SPENCER, JOEL H."/>
+<edge source="KOMLOS, JANOS" target="SZEMEREDI, ENDRE"/>
+<edge source="KOREN, ISRAEL" target="MORAN, SHLOMO"/>
+<edge source="KOREN, ISRAEL" target="SILBERMAN, GABRIEL M."/>
+<edge source="KOREN, ISRAEL" target="ZAKS, SHMUEL"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="LUCZAK, TOMASZ"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="MEYER, ANJA GABRIELE"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="NESETRIL, JAROSLAV"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="PACH, JANOS"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="PYBER, LASZLO"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="RODL, VOJTECH"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="SACHS, HORST"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="SCHELP, RICHARD H."/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="TETALI, PRASAD"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="TROTTER, WILLIAM T., JR."/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="TUZA, ZSOLT"/>
+<edge source="KOSTOCHKA, ALEXANDR V." target="WEST, DOUGLAS B."/>
+<edge source="KOVARI, TAMAS" target="SOS, VERA T."/>
+<edge source="KOVARI, TAMAS" target="TURAN, PAL*"/>
+<edge source="KRANTZ, STEVEN GEORGE" target="PARSONS, TORRENCE DOUGLAS*"/>
+<edge source="KRATSCH, DIETER" target="LEHEL, JENO"/>
+<edge source="KRATSCH, DIETER" target="TUZA, ZSOLT"/>
+<edge source="KRIVELEVICH, MICHAEL" target="SZEGEDY, MARIO"/>
+<edge source="KRIVELEVICH, MICHAEL" target="TETALI, PRASAD"/>
+<edge source="KRIVELEVICH, MICHAEL" target="WORMALD, NICHOLAS C."/>
+<edge source="KROO, ANDRAS V." target="SZABADOS, JOZSEF"/>
+<edge source="KUBICKA, EWA MARIE" target="KUBICKI, GRZEGORZ"/>
+<edge source="KUBICKA, EWA MARIE" target="LEHEL, JENO"/>
+<edge source="KUBICKA, EWA MARIE" target="OELLERMANN, ORTRUD R."/>
+<edge source="KUBICKA, EWA MARIE" target="SCHWENK, ALLEN JOHN"/>
+<edge source="KUBICKA, EWA MARIE" target="WEST, DOUGLAS B."/>
+<edge source="KUBICKI, GRZEGORZ" target="LEHEL, JENO"/>
+<edge source="KUBICKI, GRZEGORZ" target="OELLERMANN, ORTRUD R."/>
+<edge source="KUBICKI, GRZEGORZ" target="WEST, DOUGLAS B."/>
+<edge source="KUNEN, KENNETH" target="MAULDIN, R. DANIEL"/>
+<edge source="KUNEN, KENNETH" target="RUDIN, MARY ELLEN"/>
+<edge source="LACAMPAGNE, CAROLE B." target="POMERANCE, CARL"/>
+<edge source="LACAMPAGNE, CAROLE B." target="SELFRIDGE, JOHN L."/>
+<edge source="LAM, PETER CHE BOR" target="LICK, DON R."/>
+<edge source="LAM, PETER CHE BOR" target="LIU, JIUQIANG"/>
+<edge source="LAM, PETER CHE BOR" target="WANG, JIAN FANG"/>
+<edge source="LASKAR, RENU C." target="PRINS, GEERT CALEB ERNST*"/>
+<edge source="LEFMANN, HANNO" target="LUCZAK, TOMASZ"/>
+<edge source="LEFMANN, HANNO" target="PHELPS, KEVIN T."/>
+<edge source="LEFMANN, HANNO" target="RODL, VOJTECH"/>
+<edge source="LEHEL, JENO" target="NESETRIL, JAROSLAV"/>
+<edge source="LEHEL, JENO" target="OELLERMANN, ORTRUD R."/>
+<edge source="LEHEL, JENO" target="RODL, VOJTECH"/>
+<edge source="LEHEL, JENO" target="SCHELP, RICHARD H."/>
+<edge source="LEHEL, JENO" target="SHREVE, WARREN E."/>
+<edge source="LEHEL, JENO" target="TUZA, ZSOLT"/>
+<edge source="LEHEL, JENO" target="WEST, DOUGLAS B."/>
+<edge source="LEV, VSEVOLOD F." target="LUCZAK, TOMASZ"/>
+<edge source="LEV, VSEVOLOD F." target="RAUZY, GERARD"/>
+<edge source="LEV, VSEVOLOD F." target="RUZSA, IMRE Z."/>
+<edge source="LEV, VSEVOLOD F." target="SANDOR, CSABA"/>
+<edge source="LEV, VSEVOLOD F." target="SARKOZY, ANDRAS"/>
+<edge source="LICK, DON R." target="LIU, JIUQIANG"/>
+<edge source="LICK, DON R." target="SCHUSTER, SEYMOUR"/>
+<edge source="LICK, DON R." target="SWART, HENDA C."/>
+<edge source="LICK, DON R." target="WANG, JIAN FANG"/>
+<edge source="LINIAL, NATHAN" target="LOVASZ, LASZLO"/>
+<edge source="LINIAL, NATHAN" target="MORAN, SHLOMO"/>
+<edge source="LINIAL, NATHAN" target="PAYAN, CHARLES"/>
+<edge source="LINIAL, NATHAN" target="ROTHSCHILD, BRUCE L."/>
+<edge source="LINIAL, NATHAN" target="SAKS, MICHAEL E."/>
+<edge source="LINIAL, NATHAN" target="SOS, VERA T."/>
+<edge source="LIU, JIUQIANG" target="MCCANNA, JOSEPH E."/>
+<edge source="LIU, JIUQIANG" target="SCHWENK, ALLEN JOHN"/>
+<edge source="LIU, JIUQIANG" target="WANG, JIAN FANG"/>
+<edge source="LOEBL, MARTIN" target="NESETRIL, JAROSLAV"/>
+<edge source="LOEBL, MARTIN" target="SOS, VERA T."/>
+<edge source="LOVASZ, LASZLO" target="NESETRIL, JAROSLAV"/>
+<edge source="LOVASZ, LASZLO" target="PACH, JANOS"/>
+<edge source="LOVASZ, LASZLO" target="PYBER, LASZLO"/>
+<edge source="LOVASZ, LASZLO" target="SAKS, MICHAEL E."/>
+<edge source="LOVASZ, LASZLO" target="SARKOZY, ANDRAS"/>
+<edge source="LOVASZ, LASZLO" target="SERESS, AKOS"/>
+<edge source="LOVASZ, LASZLO" target="SIMMONS, GUSTAVUS J."/>
+<edge source="LOVASZ, LASZLO" target="SIMONOVITS, MIKLOS"/>
+<edge source="LOVASZ, LASZLO" target="SPENCER, JOEL H."/>
+<edge source="LOVASZ, LASZLO" target="STRAUS, ERNST GABOR*"/>
+<edge source="LOVASZ, LASZLO" target="SZEGEDY, MARIO"/>
+<edge source="LOVASZ, LASZLO" target="TETALI, PRASAD"/>
+<edge source="LOVASZ, LASZLO" target="TROTTER, WILLIAM T., JR."/>
+<edge source="LOVASZ, LASZLO" target="VESZTERGOMBI, KATALIN L."/>
+<edge source="LOVASZ, LASZLO" target="WINKLER, PETER M."/>
+<edge source="LOXTON, JOHN H." target="VAUGHAN, ROBERT C."/>
+<edge source="LUCZAK, TOMASZ" target="PALKA, ZBIGNIEW J."/>
+<edge source="LUCZAK, TOMASZ" target="PYBER, LASZLO"/>
+<edge source="LUCZAK, TOMASZ" target="RODL, VOJTECH"/>
+<edge source="LUCZAK, TOMASZ" target="SHELAH, SAHARON"/>
+<edge source="LUCZAK, TOMASZ" target="SPENCER, JOEL H."/>
+<edge source="LUCZAK, TOMASZ" target="SZEMEREDI, ENDRE"/>
+<edge source="MAGIDOR, MENACHEM" target="SHELAH, SAHARON"/>
+<edge source="MAHLER, KURT*" target="SZEKERES, GEORGE"/>
+<edge source="MAIER, HELMUT" target="POMERANCE, CARL"/>
+<edge source="MAIER, HELMUT" target="SARKOZY, ANDRAS"/>
+<edge source="MAIER, HELMUT" target="TENENBAUM, GERALD"/>
+<edge source="MAKAI, ENDRE, JR." target="PACH, JANOS"/>
+<edge source="MAKAI, ENDRE, JR." target="SPENCER, JOEL H."/>
+<edge source="MAKAI, ENDRE, JR." target="VINCZE, ISTVAN"/>
+<edge source="MAKKAI, MICHAEL" target="SHELAH, SAHARON"/>
+<edge source="MALDE, PARESH J." target="SCHWENK, ALLEN JOHN"/>
+<edge source="MALDE, PARESH J." target="SWART, HENDA C."/>
+<edge source="MALDE, PARESH J." target="THOMASSEN, CARSTEN"/>
+<edge source="MALOUF, JANICE L." target="SELFRIDGE, JOHN L."/>
+<edge source="MALOUF, JANICE L." target="SZEKERES, ESTHER KLEIN"/>
+<edge source="MATE, ATTILA" target="RADO, RICHARD*"/>
+<edge source="MATE, ATTILA" target="TOTIK, VILMOS"/>
+<edge source="MAUDUIT, CHRISTIAN" target="SARKOZY, ANDRAS"/>
+<edge source="MAULDIN, R. DANIEL" target="PREISS, DAVID"/>
+<edge source="MAULDIN, R. DANIEL" target="STONE, ARTHUR HAROLD*"/>
+<edge source="MAULDIN, R. DANIEL" target="ULAM, STANISLAW MARCIN*"/>
+<edge source="MCCANNA, JOSEPH E." target="SZEKELY, LASZLO A."/>
+<edge source="MCELIECE, ROBERT J." target="ODLYZKO, ANDREW M."/>
+<edge source="MCELIECE, ROBERT J." target="REZNICK, BRUCE A."/>
+<edge source="MCELIECE, ROBERT J." target="TAYLOR, HERBERT"/>
+<edge source="MCKAY, BRENDAN D." target="ODLYZKO, ANDREW M."/>
+<edge source="MCKAY, BRENDAN D." target="RICHMOND, LAWRENCE BRUCE"/>
+<edge source="MCKAY, BRENDAN D." target="ROBINSON, ROBERT W."/>
+<edge source="MCKAY, BRENDAN D." target="SIRAN, JOZEF"/>
+<edge source="MCKAY, BRENDAN D." target="THOMASSEN, CARSTEN"/>
+<edge source="MCKAY, BRENDAN D." target="WORMALD, NICHOLAS C."/>
+<edge source="MEIR, AMRAM" target="MOON, JOHN W."/>
+<edge source="MEIR, AMRAM" target="MOSER, LEO*"/>
+<edge source="MEIR, AMRAM" target="SCHAER, JONATHAN"/>
+<edge source="MEIR, AMRAM" target="SHARMA, AMBIKESHWAR"/>
+<edge source="MEIR, AMRAM" target="SOS, VERA T."/>
+<edge source="MEIR, AMRAM" target="SZEKELY, LASZLO A."/>
+<edge source="MEIR, AMRAM" target="TOTIK, VILMOS"/>
+<edge source="MEIR, AMRAM" target="TURAN, PAL*"/>
+<edge source="MILNER, ERIC CHARLES*" target="RADO, RICHARD*"/>
+<edge source="MILNER, ERIC CHARLES*" target="SAUER, NORBERT W."/>
+<edge source="MILNER, ERIC CHARLES*" target="SCHONHEIM, JOHANAN"/>
+<edge source="MILNER, ERIC CHARLES*" target="SHELAH, SAHARON"/>
+<edge source="MILNER, ERIC CHARLES*" target="SZEMEREDI, ENDRE"/>
+<edge source="MIRSKY, LEONID*" target="RADO, RICHARD*"/>
+<edge source="MOLLOY, MICHAEL SEAN O'BRIEN" target="ROBINSON, ROBERT W."/>
+<edge source="MOLLOY, MICHAEL SEAN O'BRIEN" target="WORMALD, NICHOLAS C."/>
+<edge source="MONTGOMERY, HUGH L." target="NIVEN, IVAN*"/>
+<edge source="MONTGOMERY, HUGH L." target="ODLYZKO, ANDREW M."/>
+<edge source="MONTGOMERY, HUGH L." target="SCHINZEL, ANDRZEJ"/>
+<edge source="MONTGOMERY, HUGH L." target="VAALER, JEFFREY D."/>
+<edge source="MONTGOMERY, HUGH L." target="VAUGHAN, ROBERT C."/>
+<edge source="MONTGOMERY, PETER L." target="ROTHSCHILD, BRUCE L."/>
+<edge source="MONTGOMERY, PETER L." target="SPENCER, JOEL H."/>
+<edge source="MONTGOMERY, PETER L." target="STRAUS, ERNST GABOR*"/>
+<edge source="MONTGOMERY, PETER L." target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="MOON, JOHN W." target="MOSER, LEO*"/>
+<edge source="MOON, JOHN W." target="PULLMAN, NORMAN J.*"/>
+<edge source="MOON, JOHN W." target="SZEKELY, LASZLO A."/>
+<edge source="MORAN, SHLOMO" target="SILBERMAN, GABRIEL M."/>
+<edge source="MORAN, SHLOMO" target="ZAKS, SHMUEL"/>
+<edge source="MORTON, PATRICK" target="SHALLIT, JEFFREY OUTLAW"/>
+<edge source="MULLIN, RONALD C." target="RICHMOND, LAWRENCE BRUCE"/>
+<edge source="MULLIN, RONALD C." target="ROSA, ALEXANDER"/>
+<edge source="MULLIN, RONALD C." target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="MULLIN, RONALD C." target="SOS, VERA T."/>
+<edge source="MULLIN, RONALD C." target="STINSON, DOUGLAS ROBERT"/>
+<edge source="MULLIN, RONALD C." target="WILSON, RICHARD M."/>
+<edge source="MURTY, MARUTI RAM" target="MURTY, VIJAYA KUMAR"/>
+<edge source="MURTY, MARUTI RAM" target="SHOREY, TARLOK N."/>
+<edge source="MURTY, VIJAYA KUMAR" target="SHOREY, TARLOK N."/>
+<edge source="NATHANSON, MELVYN B." target="RUZSA, IMRE Z."/>
+<edge source="NATHANSON, MELVYN B." target="SARKOZY, ANDRAS"/>
+<edge source="NATHANSON, MELVYN B." target="TENENBAUM, GERALD"/>
+<edge source="NATHANSON, MELVYN B." target="TETALI, PRASAD"/>
+<edge source="NESETRIL, JAROSLAV" target="PHELPS, KEVIN T."/>
+<edge source="NESETRIL, JAROSLAV" target="RODL, VOJTECH"/>
+<edge source="NESETRIL, JAROSLAV" target="ROSENFELD, MOSHE-1"/>
+<edge source="NESETRIL, JAROSLAV" target="SACHS, HORST"/>
+<edge source="NESETRIL, JAROSLAV" target="SCHELP, RICHARD H."/>
+<edge source="NESETRIL, JAROSLAV" target="SHELAH, SAHARON"/>
+<edge source="NESETRIL, JAROSLAV" target="TUZA, ZSOLT"/>
+<edge source="NESETRIL, JAROSLAV" target="VALTR, PAVEL"/>
+<edge source="NEVEU, JACQUES" target="RENYI, ALFRED A.*"/>
+<edge source="NEWMAN, DONALD J." target="PARSONS, TORRENCE DOUGLAS*"/>
+<edge source="NEWMAN, DONALD J." target="REDDY, A. R."/>
+<edge source="NEWMAN, DONALD J." target="RICHARDS, J. IAN"/>
+<edge source="NEWMAN, DONALD J." target="RUBEL, LEE A.*"/>
+<edge source="NEWMAN, DONALD J." target="SHAPIRO, HAROLD S."/>
+<edge source="NEWMAN, DONALD J." target="SHISHA, OVED*"/>
+<edge source="NICOLAS, JEAN-LOUIS" target="POMERANCE, CARL"/>
+<edge source="NICOLAS, JEAN-LOUIS" target="RUZSA, IMRE Z."/>
+<edge source="NICOLAS, JEAN-LOUIS" target="SARKOZY, ANDRAS"/>
+<edge source="NICOLAS, JEAN-LOUIS" target="SCHINZEL, ANDRZEJ"/>
+<edge source="NICOLAS, JEAN-LOUIS" target="SZALAY, MIHALY"/>
+<edge source="NICOLAS, JEAN-LOUIS" target="TENENBAUM, GERALD"/>
+<edge source="NORTON, DONALD A." target="STEIN, SHERMAN K."/>
+<edge source="ODLYZKO, ANDREW M." target="PUDAITE, PAUL"/>
+<edge source="ODLYZKO, ANDREW M." target="REZNICK, BRUCE A."/>
+<edge source="ODLYZKO, ANDREW M." target="RICHMOND, LAWRENCE BRUCE"/>
+<edge source="ODLYZKO, ANDREW M." target="SARKOZY, ANDRAS"/>
+<edge source="ODLYZKO, ANDREW M." target="SZEKERES, GEORGE"/>
+<edge source="ODLYZKO, ANDREW M." target="WORMALD, NICHOLAS C."/>
+<edge source="OELLERMANN, ORTRUD R." target="PIPPERT, RAYMOND E."/>
+<edge source="OELLERMANN, ORTRUD R." target="SCHWENK, ALLEN JOHN"/>
+<edge source="OELLERMANN, ORTRUD R." target="SWART, HENDA C."/>
+<edge source="ORDMAN, EDWARD T." target="PULLMAN, NORMAN J.*"/>
+<edge source="ORDMAN, EDWARD T." target="ROUSSEAU, CECIL CLYDE"/>
+<edge source="ORDMAN, EDWARD T." target="SCHELP, RICHARD H."/>
+<edge source="ORDMAN, EDWARD T." target="TUZA, ZSOLT"/>
+<edge source="ORDMAN, EDWARD T." target="ZALCSTEIN, YECHEZKEL"/>
+<edge source="OXTOBY, JOHN C.*" target="ULAM, STANISLAW MARCIN*"/>
+<edge source="PACH, JANOS" target="POLLACK, RICHARD M."/>
+<edge source="PACH, JANOS" target="PYBER, LASZLO"/>
+<edge source="PACH, JANOS" target="RODL, VOJTECH"/>
+<edge source="PACH, JANOS" target="ROGERS, CLAUDE AMBROSE"/>
+<edge source="PACH, JANOS" target="RUZSA, IMRE Z."/>
+<edge source="PACH, JANOS" target="SAUER, NORBERT W."/>
+<edge source="PACH, JANOS" target="SCHULMAN, LEONARD J."/>
+<edge source="PACH, JANOS" target="SIMONOVITS, MIKLOS"/>
+<edge source="PACH, JANOS" target="SPENCER, JOEL H."/>
+<edge source="PACH, JANOS" target="SZEGEDY, MARIO"/>
+<edge source="PACH, JANOS" target="SZEMEREDI, ENDRE"/>
+<edge source="PACH, JANOS" target="TUZA, ZSOLT"/>
+<edge source="PACH, JANOS" target="VALTR, PAVEL"/>
+<edge source="PALFY, PETER PAL" target="PYBER, LASZLO"/>
+<edge source="PALFY, PETER PAL" target="SERESS, AKOS"/>
+<edge source="PALFY, PETER PAL" target="SZALAY, MIHALY"/>
+<edge source="PALFY, PETER PAL" target="SZEGEDY, MARIO"/>
+<edge source="PALKA, ZBIGNIEW J." target="SPENCER, JOEL H."/>
+<edge source="PALMER, EDGAR M." target="ROBINSON, ROBERT W."/>
+<edge source="PALMER, EDGAR M." target="SCHWENK, ALLEN JOHN"/>
+<edge source="PARSONS, TORRENCE DOUGLAS*" target="SCHELP, RICHARD H."/>
+<edge source="PENNEY, DAVID E." target="POMERANCE, CARL"/>
+<edge source="PHELPS, KEVIN T." target="RODL, VOJTECH"/>
+<edge source="PHELPS, KEVIN T." target="ROSA, ALEXANDER"/>
+<edge source="PHELPS, KEVIN T." target="STINSON, DOUGLAS ROBERT"/>
+<edge source="PHELPS, KEVIN T." target="WINKLER, PETER M."/>
+<edge source="PINKUS, ALLAN M." target="SHISHA, OVED*"/>
+<edge source="PINKUS, ALLAN M." target="TOTIK, VILMOS"/>
+<edge source="PIPPERT, RAYMOND E." target="WEAKLEY, WILLIAM DOUGLAS"/>
+<edge source="PIRANIAN, GEORGE" target="SHIELDS, ALLEN LOWELL*"/>
+<edge source="POLLACK, RICHARD M." target="SHAPIRO, HAROLD N."/>
+<edge source="POLLACK, RICHARD M." target="SPENCER, JOEL H."/>
+<edge source="POLLACK, RICHARD M." target="TUZA, ZSOLT"/>
+<edge source="POLLARD, HARRY*" target="SHISHA, OVED*"/>
+<edge source="POMERANCE, CARL" target="RUBEL, LEE A.*"/>
+<edge source="POMERANCE, CARL" target="SAKS, MICHAEL E."/>
+<edge source="POMERANCE, CARL" target="SARKOZY, ANDRAS"/>
+<edge source="POMERANCE, CARL" target="SCHMUTZ, ERIC"/>
+<edge source="POMERANCE, CARL" target="SELFRIDGE, JOHN L."/>
+<edge source="POMERANCE, CARL" target="SHALLIT, JEFFREY OUTLAW"/>
+<edge source="POMERANCE, CARL" target="SPIRO-SILVERMAN, CLAUDIA A."/>
+<edge source="POMERANCE, CARL" target="STEWART, CAMERON L."/>
+<edge source="POMERANCE, CARL" target="STRAUS, ERNST GABOR*"/>
+<edge source="POMERANCE, CARL" target="TENENBAUM, GERALD"/>
+<edge source="POMERANCE, CARL" target="VAUGHAN, ROBERT C."/>
+<edge source="POMERANCE, CARL" target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="PREISS, DAVID" target="RODL, VOJTECH"/>
+<edge source="PRINS, GEERT CALEB ERNST*" target="SCHNITZER, FRANZ JOSEF"/>
+<edge source="PRINS, GEERT CALEB ERNST*" target="TUTTE, WILLIAM THOMAS*"/>
+<edge source="PUDAITE, PAUL" target="REZNICK, BRUCE A."/>
+<edge source="PULLMAN, NORMAN J.*" target="WORMALD, NICHOLAS C."/>
+<edge source="PURDY, GEORGE B." target="SIMMONS, GUSTAVUS J."/>
+<edge source="PURDY, GEORGE B." target="STRAUS, ERNST GABOR*"/>
+<edge source="PURDY, GEORGE B." target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="PYBER, LASZLO" target="RODL, VOJTECH"/>
+<edge source="PYBER, LASZLO" target="SERESS, AKOS"/>
+<edge source="PYBER, LASZLO" target="SZEMEREDI, ENDRE"/>
+<edge source="PYBER, LASZLO" target="TUZA, ZSOLT"/>
+<edge source="RAMACHANDRA, KANAKANAHALLI" target="SHOREY, TARLOK N."/>
+<edge source="RAMACHANDRA, KANAKANAHALLI" target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="RAMACHANDRA, KANAKANAHALLI" target="TIJDEMAN, ROBERT"/>
+<edge source="RAO, SIDDANI BHASKARA" target="SIMONOVITS, MIKLOS"/>
+<edge source="RAO, SIDDANI BHASKARA" target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="RAO, SIDDANI BHASKARA" target="SOS, VERA T."/>
+<edge source="RAUZY, GERARD" target="SANDOR, CSABA"/>
+<edge source="RAUZY, GERARD" target="SARKOZY, ANDRAS"/>
+<edge source="REDDY, A. R." target="SHISHA, OVED*"/>
+<edge source="REID, TALMAGE JAMES" target="SCHELP, RICHARD H."/>
+<edge source="REID, TALMAGE JAMES" target="STATON, WILLIAM A., III"/>
+<edge source="RENYI, ALFRED A.*" target="REVESZ, PAL"/>
+<edge source="RENYI, ALFRED A.*" target="SOS, VERA T."/>
+<edge source="RENYI, ALFRED A.*" target="SURANYI, JANOS"/>
+<edge source="RENYI, ALFRED A.*" target="SZEKERES, GEORGE"/>
+<edge source="RENYI, ALFRED A.*" target="SZUSZ, PETER"/>
+<edge source="RENYI, ALFRED A.*" target="TURAN, PAL*"/>
+<edge source="RENYI, ALFRED A.*" target="URBANIK, KAZIMIERZ"/>
+<edge source="RENYI, ALFRED A.*" target="VINCZE, ISTVAN"/>
+<edge source="REZNICK, BRUCE A." target="WEST, DOUGLAS B."/>
+<edge source="RICHMOND, LAWRENCE BRUCE" target="ROBINSON, ROBERT W."/>
+<edge source="RICHMOND, LAWRENCE BRUCE" target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="RICHMOND, LAWRENCE BRUCE" target="SZEKERES, GEORGE"/>
+<edge source="RICHMOND, LAWRENCE BRUCE" target="WORMALD, NICHOLAS C."/>
+<edge source="RIESEL, HANS" target="VAUGHAN, ROBERT C."/>
+<edge source="ROBINSON, ROBERT W." target="SCHWENK, ALLEN JOHN"/>
+<edge source="ROBINSON, ROBERT W." target="WORMALD, NICHOLAS C."/>
+<edge source="RODL, VOJTECH" target="SAUER, NORBERT W."/>
+<edge source="RODL, VOJTECH" target="SCHELP, RICHARD H."/>
+<edge source="RODL, VOJTECH" target="SERESS, AKOS"/>
+<edge source="RODL, VOJTECH" target="SPENCER, JOEL H."/>
+<edge source="RODL, VOJTECH" target="SZEMEREDI, ENDRE"/>
+<edge source="RODL, VOJTECH" target="TETALI, PRASAD"/>
+<edge source="RODL, VOJTECH" target="TOVEY, CRAIG A."/>
+<edge source="RODL, VOJTECH" target="TROTTER, WILLIAM T., JR."/>
+<edge source="RODL, VOJTECH" target="TUZA, ZSOLT"/>
+<edge source="RODL, VOJTECH" target="WILSON, RICHARD M."/>
+<edge source="RODL, VOJTECH" target="WINKLER, PETER M."/>
+<edge source="ROGERS, CLAUDE AMBROSE" target="TAYLOR, SAMUEL JAMES"/>
+<edge source="ROSA, ALEXANDER" target="SIRAN, JOZEF"/>
+<edge source="ROSA, ALEXANDER" target="STINSON, DOUGLAS ROBERT"/>
+<edge source="ROTHSCHILD, BRUCE L." target="SINGHI, NAVIN MADHAVPRASAD"/>
+<edge source="ROTHSCHILD, BRUCE L." target="SOS, VERA T."/>
+<edge source="ROTHSCHILD, BRUCE L." target="SPENCER, JOEL H."/>
+<edge source="ROTHSCHILD, BRUCE L." target="STRAUS, ERNST GABOR*"/>
+<edge source="ROTHSCHILD, BRUCE L." target="VAN LINT, JACOBUS HENDRICUS"/>
+<edge source="ROUSSEAU, CECIL CLYDE" target="SCHELP, RICHARD H."/>
+<edge source="ROUSSEAU, CECIL CLYDE" target="SCHUSTER, SEYMOUR"/>
+<edge source="ROUSSEAU, CECIL CLYDE" target="TUZA, ZSOLT"/>
+<edge source="RUBEL, LEE A.*" target="SCHINZEL, ANDRZEJ"/>
+<edge source="RUBEL, LEE A.*" target="SHIELDS, ALLEN LOWELL*"/>
+<edge source="RUBEL, LEE A.*" target="STRAUS, ERNST GABOR*"/>
+<edge source="RUBIN, ARTHUR L." target="TAYLOR, HERBERT"/>
+<edge source="RUDIN, MARY ELLEN" target="SHELAH, SAHARON"/>
+<edge source="RUSZINKO, MIKLOS" target="SZEKELY, LASZLO A."/>
+<edge source="RUZSA, IMRE Z." target="SARKOZY, ANDRAS"/>
+<edge source="RUZSA, IMRE Z." target="SCHINZEL, ANDRZEJ"/>
+<edge source="RUZSA, IMRE Z." target="STRAUS, ERNST GABOR*"/>
+<edge source="RUZSA, IMRE Z." target="SZEMEREDI, ENDRE"/>
+<edge source="RUZSA, IMRE Z." target="TAYLOR, HERBERT"/>
+<edge source="RUZSA, IMRE Z." target="TENENBAUM, GERALD"/>
+<edge source="RUZSA, IMRE Z." target="TIJDEMAN, ROBERT"/>
+<edge source="RUZSA, IMRE Z." target="TUZA, ZSOLT"/>
+<edge source="SAFFARI, BAHMAN" target="SMITH, BRENT PENDLETON"/>
+<edge source="SAFFARI, BAHMAN" target="VAUGHAN, ROBERT C."/>
+<edge source="SAKS, MICHAEL E." target="SOS, VERA T."/>
+<edge source="SAKS, MICHAEL E." target="SZEKELY, LASZLO A."/>
+<edge source="SAKS, MICHAEL E." target="THOMASSEN, CARSTEN"/>
+<edge source="SAKS, MICHAEL E." target="TROTTER, WILLIAM T., JR."/>
+<edge source="SALAT, TIBOR" target="SCHINZEL, ANDRZEJ"/>
+<edge source="SALAT, TIBOR" target="TAYLOR, SAMUEL JAMES"/>
+<edge source="SALAT, TIBOR" target="TIJDEMAN, ROBERT"/>
+<edge source="SALAT, TIBOR" target="TOTH, JANOS T."/>
+<edge source="SANDOR, CSABA" target="SARKOZY, ANDRAS"/>
+<edge source="SARKOZY, ANDRAS" target="SIMONOVITS, MIKLOS"/>
+<edge source="SARKOZY, ANDRAS" target="SOS, VERA T."/>
+<edge source="SARKOZY, ANDRAS" target="STEWART, CAMERON L."/>
+<edge source="SARKOZY, ANDRAS" target="SZEMEREDI, ENDRE"/>
+<edge source="SARKOZY, GABOR N." target="SELKOW, STANLEY M."/>
+<edge source="SARKOZY, GABOR N." target="SZEMEREDI, ENDRE"/>
+<edge source="SAUER, NORBERT W." target="SCHAER, JONATHAN"/>
+<edge source="SAUER, NORBERT W." target="SCHONHEIM, JOHANAN"/>
+<edge source="SAUER, NORBERT W." target="SIRAN, JOZEF"/>
+<edge source="SAUER, NORBERT W." target="SPENCER, JOEL H."/>
+<edge source="SCHAER, JONATHAN" target="SPENCER, JOEL H."/>
+<edge source="SCHELP, RICHARD H." target="SCHUSTER, SEYMOUR"/>
+<edge source="SCHELP, RICHARD H." target="SHREVE, WARREN E."/>
+<edge source="SCHELP, RICHARD H." target="SIMONOVITS, MIKLOS"/>
+<edge source="SCHELP, RICHARD H." target="SOS, VERA T."/>
+<edge source="SCHELP, RICHARD H." target="STATON, WILLIAM A., III"/>
+<edge source="SCHELP, RICHARD H." target="TUZA, ZSOLT"/>
+<edge source="SCHELP, RICHARD H." target="WEST, DOUGLAS B."/>
+<edge source="SCHINZEL, ANDRZEJ" target="SHOREY, TARLOK N."/>
+<edge source="SCHINZEL, ANDRZEJ" target="SZEKERES, GEORGE"/>
+<edge source="SCHINZEL, ANDRZEJ" target="TIJDEMAN, ROBERT"/>
+<edge source="SCHNITZER, FRANZ JOSEF" target="SEIDEL, WLADIMIR P.*"/>
+<edge source="SCHNITZER, FRANZ JOSEF" target="SHIELDS, ALLEN LOWELL*"/>
+<edge source="SCHWENK, ALLEN JOHN" target="SWART, HENDA C."/>
+<edge source="SCHWENK, ALLEN JOHN" target="THOMASSEN, CARSTEN"/>
+<edge source="SCHWENK, ALLEN JOHN" target="WILSON, ROBIN JAMES"/>
+<edge source="SELFRIDGE, JOHN L." target="STRAUS, ERNST GABOR*"/>
+<edge source="SELFRIDGE, JOHN L." target="SZEKERES, ESTHER KLEIN"/>
+<edge source="SELFRIDGE, JOHN L." target="WAGSTAFF, SAMUEL S., JR."/>
+<edge source="SELKOW, STANLEY M." target="SZEMEREDI, ENDRE"/>
+<edge source="SERESS, AKOS" target="SZEKELY, LASZLO A."/>
+<edge source="SERESS, AKOS" target="WEST, DOUGLAS B."/>
+<edge source="SHALLIT, JEFFREY OUTLAW" target="SZEGEDY, MARIO"/>
+<edge source="SHAPIRO, HAROLD S." target="SHIELDS, ALLEN LOWELL*"/>
+<edge source="SHARMA, AMBIKESHWAR" target="STRAUS, ERNST GABOR*"/>
+<edge source="SHARMA, AMBIKESHWAR" target="SZABADOS, JOZSEF"/>
+<edge source="SHARMA, AMBIKESHWAR" target="VARMA, ARUN KUMAR*"/>
+<edge source="SHARMA, AMBIKESHWAR" target="VERTESI, PETER O. H."/>
+<edge source="SHELAH, SAHARON" target="SOIFER, ALEXANDER"/>
+<edge source="SHELAH, SAHARON" target="SPENCER, JOEL H."/>
+<edge source="SHOREY, TARLOK N." target="STEWART, CAMERON L."/>
+<edge source="SHOREY, TARLOK N." target="TIJDEMAN, ROBERT"/>
+<edge source="SILBERMAN, GABRIEL M." target="ZAKS, SHMUEL"/>
+<edge source="SIMMONS, GUSTAVUS J." target="STRAUS, ERNST GABOR*"/>
+<edge source="SIMONOVITS, MIKLOS" target="SOS, VERA T."/>
+<edge source="SIMONOVITS, MIKLOS" target="SPENCER, JOEL H."/>
+<edge source="SIMONOVITS, MIKLOS" target="SZEMEREDI, ENDRE"/>
+<edge source="SIRAN, JOZEF" target="TUZA, ZSOLT"/>
+<edge source="SOS, VERA T." target="STINSON, DOUGLAS ROBERT"/>
+<edge source="SOS, VERA T." target="STRAUS, ERNST GABOR*"/>
+<edge source="SOS, VERA T." target="SZEKERES, GEORGE"/>
+<edge source="SOS, VERA T." target="SZEMEREDI, ENDRE"/>
+<edge source="SOS, VERA T." target="TURAN, PAL*"/>
+<edge source="SOS, VERA T." target="WILSON, RICHARD M."/>
+<edge source="SOS, VERA T." target="ZAREMBA, STANISLAW KRYSTYN"/>
+<edge source="SPENCER, JOEL H." target="STRAUS, ERNST GABOR*"/>
+<edge source="SPENCER, JOEL H." target="SZEMEREDI, ENDRE"/>
+<edge source="SPENCER, JOEL H." target="TETALI, PRASAD"/>
+<edge source="SPENCER, JOEL H." target="TROTTER, WILLIAM T., JR."/>
+<edge source="SPENCER, JOEL H." target="VESZTERGOMBI, KATALIN L."/>
+<edge source="SPENCER, JOEL H." target="WEST, DOUGLAS B."/>
+<edge source="SPENCER, JOEL H." target="WINKLER, PETER M."/>
+<edge source="SPENCER, JOEL H." target="WORMALD, NICHOLAS C."/>
+<edge source="STEWART, CAMERON L." target="TIJDEMAN, ROBERT"/>
+<edge source="STONE, ARTHUR HAROLD*" target="TUTTE, WILLIAM THOMAS*"/>
+<edge source="STRAUS, ERNST GABOR*" target="SUBBARAO, MATHUKUMALLI VENKATA"/>
+<edge source="STRAUS, ERNST GABOR*" target="SZEKERES, GEORGE"/>
+<edge source="SUEN, W.-C. STEPHEN" target="WINKLER, PETER M."/>
+<edge source="SUN, HUI CHENG" target="SZEKELY, LASZLO A."/>
+<edge source="SURANYI, JANOS" target="SZALAY, MIHALY"/>
+<edge source="SURANYI, JANOS" target="TURAN, PAL*"/>
+<edge source="SZABADOS, JOZSEF" target="VARMA, ARUN KUMAR*"/>
+<edge source="SZABADOS, JOZSEF" target="VERTESI, PETER O. H."/>
+<edge source="SZALAY, MIHALY" target="TURAN, PAL*"/>
+<edge source="SZALAY, MIHALY" target="WILLIAMSON, ALAN GLYNNE"/>
+<edge source="SZEGO, GABOR*" target="TURAN, PAL*"/>
+<edge source="SZEKELY, LASZLO A." target="TUZA, ZSOLT"/>
+<edge source="SZEKELY, LASZLO A." target="WORMALD, NICHOLAS C."/>
+<edge source="SZEKERES, ESTHER KLEIN" target="SZEKERES, GEORGE"/>
+<edge source="SZEKERES, GEORGE" target="TURAN, PAL*"/>
+<edge source="SZEKERES, GEORGE" target="WORMALD, NICHOLAS C."/>
+<edge source="SZEMEREDI, ENDRE" target="TROTTER, WILLIAM T., JR."/>
+<edge source="SZEMEREDI, ENDRE" target="TUZA, ZSOLT"/>
+<edge source="SZUSZ, PETER" target="TURAN, PAL*"/>
+<edge source="SZUSZ, PETER" target="VINCZE, ISTVAN"/>
+<edge source="SZUSZ, PETER" target="VOLKMANN, BODO"/>
+<edge source="TAYLOR, SAMUEL JAMES" target="TOTH, JANOS T."/>
+<edge source="TETALI, PRASAD" target="WINKLER, PETER M."/>
+<edge source="TOTIK, VILMOS" target="VINCZE, ISTVAN"/>
+<edge source="TOVEY, CRAIG A." target="WEST, DOUGLAS B."/>
+<edge source="TROTTER, WILLIAM T., JR." target="TUZA, ZSOLT"/>
+<edge source="TROTTER, WILLIAM T., JR." target="WEST, DOUGLAS B."/>
+<edge source="TROTTER, WILLIAM T., JR." target="WINKLER, PETER M."/>
+<edge source="TUZA, ZSOLT" target="VALTR, PAVEL"/>
+<edge source="TUZA, ZSOLT" target="WEST, DOUGLAS B."/>
+<edge source="ULAM, STANISLAW MARCIN*" target="YAO, FOONG FRANCES"/>
+<edge source="VAN KAMPEN, EGBERTUS RUDOLF*" target="WINTNER, AUREL*"/>
+<edge source="VAN LINT, JACOBUS HENDRICUS" target="WILSON, RICHARD M."/>
+<edge source="VARMA, ARUN KUMAR*" target="VERTESI, PETER O. H."/>
+<edge source="WANG, JIAN FANG" target="WEST, DOUGLAS B."/>
+</graph>
+</graphml>
