@@ -2,7 +2,6 @@ from pathlib import PurePath, Path
 from glob import glob
 import pickle
 import sys
-import traceback
 
 import networkx as nx
 import numpy as np
@@ -20,26 +19,21 @@ _reader = dict(zip(_extensions,
 # D3-style .json?
 
 
-def read(path, *args, type=None, **keywords):
+def read(path, *args, format=None, **keywords):
     p = PurePath(path)
-    dir, stem, suffix = p.parent, p.stem, p.suffix
-    if type == None and suffix[1:] in _reader.keys(): type = suffix[1:]
-    if type in _reader.keys():
+    stem, suffix = p.stem, p.suffix
+    if format is None and suffix[1:] in _reader.keys(): format = suffix[1:]
+    if format in _reader.keys():
         try:
-            # label_path = dir.joinpath(stem + '.labels')
-            # print(path)
-            # print(label_path)
-            if type == 'gml':
+            if format == 'gml':
                 keywords['label'] = 'id'
-            elif type == 'graphml':
+            elif format == 'graphml':
                 keywords['node_type'] = int
-            g = _reader[type](path, *args, **keywords)
-            return g
+            return _reader[format](path, *args, **keywords)
         except:
             print('Parsing failure')
             e, message, trace = sys.exc_info()
             print(message)
-            #traceback.print_tb(trace)
             return None
 
 
@@ -54,35 +48,24 @@ centrality = dict(
     e=dict(
         betweenness=nx.edge_betweenness_centrality))
 
-#def process(G):
-if __name__ == '__main__':
-    profile = dict()
 
-    dataset_root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+def compute_graph(G, profile):
+    original_nodes = G.nodes()
 
-    for path in [
-        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml',
-        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/sengoku/sengoku.graphml',
-        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml']:
+    root = profile['root']
+    dataset = root.joinpath(profile['name'])
+    Path(dataset).mkdir(exist_ok=True)
 
-        G = read(path)
+    graph_dir = root.joinpath('graph')
+    Path(graph_dir).mkdir(exist_ok=True)
 
-        p = PurePath(path)
-        dataset = dataset_root.joinpath(p.stem)
-        Path(dataset).mkdir(exist_ok=True)
-
-        labels = None
-        label_path = Path(p.parent.joinpath(p.stem + '.labels'))
-        if _DEBUG_: print(label_path)
-        if label_path.is_file():
-            labels = label_path.read_text(encoding='utf8')
-
-        original_nodes = G.nodes()
-        if _DEBUG_: print(original_nodes)
-
+    graph_path = graph_dir.joinpath(profile['name'] + 'graph.adjlist')
+    if Path(graph_path).is_file():
+        G = nx.read_adjlist(str(graph_path))
+    else:
         # Remove self loops (if any)
-        for v in G.nodes_with_selfloops():
-            G.remove_edge(v, v)
+        self_referencing = G.nodes_with_selfloops()
+        G.remove_edges_from(zip(self_referencing, self_referencing))
         assert G.number_of_selfloops() == 0
 
         # Convert to undirected graph (if necessary)
@@ -91,71 +74,90 @@ if __name__ == '__main__':
         # Find the largest connected component
         G = max(nx.connected_component_subgraphs(G), key=len)
 
-        # Relabel the node labels
-        mapping = dict(zip(G.nodes(), range(0, G.number_of_nodes())))
-        G = nx.convert_node_labels_to_integers(G)
+        # Do we need to convert node labels to integers?
+        # G = nx.convert_node_labels_to_integers(G)
 
-        # Save the graph and adjacency-list format
-        graph = dataset.joinpath('graph')
-        Path(graph).mkdir(exist_ok=True)
-        nx.write_adjlist(G, str(graph.joinpath('graph.adjlist')))
+        nx.write_adjlist(G, str(graph_path))
 
-        if labels:
-            revmap = dict(zip(range(0, G.number_of_nodes()), G.nodes()))
-            relabels = [ 0 for i in range(len(G.nodes()))]
-            for i in G.nodes():
-                relabels[i] = labels[revmap[i]]
-            labels = relabels
-            with open(str(graph.joinpath('labels.p')), 'wb') as w:
-                pickle.dump(labels, w)
+    # Relabel the node labels
+    labels_path = graph_dir.joinpath('labels.p')
+    if Path(labels_path).exists():
+        labels = pickle.load(str(labels_path))
+    elif Path(labels_path).exists():
+        labels = labels_path.read_text(encoding='utf8')
+        relabel = dict(zip(original_nodes, range(0, G.number_of_nodes())))
+        rev_label = dict(zip([(v, k) for k, v in relabel]))
+        labels = [labels[rev_label[i]] for i in G.nodes()]
+        with open(str(labels_path), 'wb') as w:
+            pickle.dump(labels, w)
+
+    profile['#nodes'] = len(G.nodes())
+    profile['#edges'] = len(G.edges())
+
+    return G
 
 
-        nodes, edges = nx.nodes(G), nx.edges(G)
-        profile['#nodes'] = len(G.nodes())
-        profile['#edges'] = len(G.edges())
+def CMDS(G, profile):
+    graph_dir = profile['root'].joinpath(profile['name'])
+    Λ_path, E_path = Path(graph_dir.joinpath('eigenvalues')), Path(graph_dir.joinpath('eigenvectors'))
+    if Λ_path.exists() and E_path.exists():
+        return np.load(Λ_path), np.load(E_path)
 
-        if _DEBUG_:
-            print(profile)
-            print(G.nodes())
-            print()
+    # Distance matrix (All-pairs shortest path length in numpy array)
+    distance_file = graph_dir.joinpath('graph', 'distance.npy')
+    if Path(distance_file).is_file():
+        D = np.load(str(distance_file))
+    else:
+        D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
+        np.save(str(distance_file), D)
+        if _DEBUG_ and G.number_of_nodes() < 100: print(D)
 
-        # Distance matrix (All-pairs shortest path length in numpy array)
-        distance_file = graph.joinpath('distance.npy')
-        if Path(distance_file).is_file():
-            D = np.load(str(distance_file))
-        else:
-            D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
-            np.save(str(distance_file), D)
-            if G.number_of_nodes() < 100:
-                print(D)
+    # Classical Multi Dimensional Scaling
+    N, _ = D.shape
+    J = np.eye(N) - np.ones((N, N)) / N      # Centering matrix
+    B = - J.dot(D * D).dot(J) / 2.0          # Apply double centering
+    Λ, E = np.linalg.eigh(B)
 
-        # Classical Multi Dimensional Scaling
-        N, _ = D.shape
-        D2 = D * D
-        J = np.eye(N) - np.ones((N, N)) / N # Centering matrix
-        B = - J.dot(D).dot(J) / 2.0 # Apply double centering
-        Λ, E = np.linalg.eigh(B)
+    Λ_positive = Λ > 0                      # Choose positive eigenvalues
+    Λ, E = Λ[Λ_positive], E[:, Λ_positive]
+    Λ_descending = np.argsort(-Λ)              # Organize in descending order of eigenvalues
+    Λ, E = Λ[Λ_descending], E[:, Λ_descending]
+    dim_hd = Λ.shape[0]
 
-        # Organize eigenvalues in descending order of their eigenvalues
-        positive_ev = Λ > 0
-        Λ, E = Λ[positive_ev], E[:,positive_ev]
-        descending = np.argsort(-Λ)
-        Λ, E = Λ[descending], E[:,descending]
-        print(Λ.shape, E.shape)
-        dim_hd = Λ.shape[0]
+    if _DEBUG_:
+        for i in range(dim_hd):
+            v = E[:, i]
+            diff = B.dot(v) - v * Λ[i]
+            print(diff.dot(diff))
+            assert diff.dot(diff) < 1e-10 # Confirm that E are truely eigenvectors
 
-        if _DEBUG_:
-            for i in range(dim_hd):
-                v = E[:, i]
-                diff = B.dot(v) - v * Λ[i]
-                print(diff.dot(diff))
-                assert diff.dot(diff) < 1e-10 # Confirm that E are truely eigenvectors
+    profile['dim_hd'] = dim_hd
 
-        layout = dataset.joinpath('layout')
-        Path(layout).mkdir(exist_ok=True)
-        np.save(str(layout.joinpath('eigenvalues')), Λ)
-        np.save(str(layout.joinpath('eigenvectors')), E)
+    layout_dir = graph_dir.joinpath('layout')
+    Path(layout_dir).mkdir(exist_ok=True)
+    np.save(str(layout_dir.joinpath('eigenvalues')),  Λ)
+    np.save(str(layout_dir.joinpath('eigenvectors')), E)
 
+    return Λ, E
+
+
+def main():
+    root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+
+    for path in [
+        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml',
+        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/sengoku/sengoku.graphml',
+        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml']:
+
+        G = read(path)
+        p = Path(PurePath(path))
+        profile = dict(root=root, dir=p.parent, name=p.stem)
+
+        G = compute_graph(G, profile)
+        Λ, E = CMDS(G, profile)
+
+if __name__ == '__main__':
+    main()
 
 if __name__ == '__main__' and False:
     for path in glob('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/**/*', recursive=True):
