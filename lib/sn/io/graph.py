@@ -1,5 +1,6 @@
 from pathlib import PurePath, Path
 from glob import glob
+import pickle
 import sys
 import traceback
 
@@ -57,6 +58,8 @@ centrality = dict(
 if __name__ == '__main__':
     profile = dict()
 
+    dataset_root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+
     for path in [
         #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml',
         #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/sengoku/sengoku.graphml',
@@ -64,8 +67,11 @@ if __name__ == '__main__':
 
         G = read(path)
 
-        labels = None
         p = PurePath(path)
+        dataset = dataset_root.joinpath(p.stem)
+        Path(dataset).mkdir(exist_ok=True)
+
+        labels = None
         label_path = Path(p.parent.joinpath(p.stem + '.labels'))
         if _DEBUG_: print(label_path)
         if label_path.is_file():
@@ -89,12 +95,20 @@ if __name__ == '__main__':
         mapping = dict(zip(G.nodes(), range(0, G.number_of_nodes())))
         G = nx.convert_node_labels_to_integers(G)
 
+        # Save the graph and adjacency-list format
+        graph = dataset.joinpath('graph')
+        Path(graph).mkdir(exist_ok=True)
+        nx.write_adjlist(G, str(graph.joinpath('graph.adjlist')))
+
         if labels:
             revmap = dict(zip(range(0, G.number_of_nodes()), G.nodes()))
             relabels = [ 0 for i in range(len(G.nodes()))]
             for i in G.nodes():
                 relabels[i] = labels[revmap[i]]
             labels = relabels
+            with open(str(graph.joinpath('labels.p')), 'wb') as w:
+                pickle.dump(labels, w)
+
 
         nodes, edges = nx.nodes(G), nx.edges(G)
         profile['#nodes'] = len(G.nodes())
@@ -106,9 +120,14 @@ if __name__ == '__main__':
             print()
 
         # Distance matrix (All-pairs shortest path length in numpy array)
-        D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
-        if G.number_of_nodes() < 100:
-            print(D)
+        distance_file = graph.joinpath('distance.npy')
+        if Path(distance_file).is_file():
+            D = np.load(str(distance_file))
+        else:
+            D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
+            np.save(str(distance_file), D)
+            if G.number_of_nodes() < 100:
+                print(D)
 
         # Classical Multi Dimensional Scaling
         N, _ = D.shape
@@ -131,6 +150,11 @@ if __name__ == '__main__':
                 diff = B.dot(v) - v * Λ[i]
                 print(diff.dot(diff))
                 assert diff.dot(diff) < 1e-10 # Confirm that E are truely eigenvectors
+
+        layout = dataset.joinpath('layout')
+        Path(layout).mkdir(exist_ok=True)
+        np.save(str(layout.joinpath('eigenvalues')), Λ)
+        np.save(str(layout.joinpath('eigenvectors')), E)
 
 
 if __name__ == '__main__' and False:
