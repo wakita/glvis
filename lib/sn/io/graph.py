@@ -56,10 +56,10 @@ def compute_graph(G, profile):
     dataset = root.joinpath(profile['name'])
     Path(dataset).mkdir(exist_ok=True)
 
-    graph_dir = root.joinpath('graph')
+    graph_dir = dataset.joinpath('graph')
     Path(graph_dir).mkdir(exist_ok=True)
 
-    graph_path = graph_dir.joinpath(profile['name'] + 'graph.adjlist')
+    graph_path = graph_dir.joinpath('graph.adjlist')
     if Path(graph_path).is_file():
         G = nx.read_adjlist(str(graph_path))
     else:
@@ -82,7 +82,8 @@ def compute_graph(G, profile):
     # Relabel the node labels
     labels_path = graph_dir.joinpath('labels.p')
     if Path(labels_path).exists():
-        labels = pickle.load(str(labels_path))
+        with open(str(labels_path), 'rb') as r:
+            labels = pickle.load(r)
     elif Path(labels_path).exists():
         labels = labels_path.read_text(encoding='utf8')
         relabel = dict(zip(original_nodes, range(0, G.number_of_nodes())))
@@ -123,41 +124,41 @@ def CMDS(G, profile):
     Λ_descending = np.argsort(-Λ)              # Organize in descending order of eigenvalues
     Λ, E = Λ[Λ_descending], E[:, Λ_descending]
     dim_hd = Λ.shape[0]
+    profile['dim_hd'] = dim_hd
 
     if _DEBUG_:
         for i in range(dim_hd):
             v = E[:, i]
-            diff = B.dot(v) - v * Λ[i]
+            diff = B.dot(v) - Λ[i] * v
             print(diff.dot(diff))
             assert diff.dot(diff) < 1e-10 # Confirm that E are truely eigenvectors
 
-    profile['dim_hd'] = dim_hd
+    L = np.eye(N, dim_hd).dot(np.diag(Λ))
 
     layout_dir = graph_dir.joinpath('layout')
     Path(layout_dir).mkdir(exist_ok=True)
     np.save(str(layout_dir.joinpath('eigenvalues')),  Λ)
     np.save(str(layout_dir.joinpath('eigenvectors')), E)
+    np.save(str(layout_dir.joinpath('layout_hd')), B.dot(L))
 
     return Λ, E
 
 
-def main():
-    root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
-
-    for path in [
-        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml',
-        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/sengoku/sengoku.graphml',
-        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml']:
-
+def convert(root, path):
         G = read(path)
         p = Path(PurePath(path))
         profile = dict(root=root, dir=p.parent, name=p.stem)
 
         G = compute_graph(G, profile)
         Λ, E = CMDS(G, profile)
+        return G, Λ, E
 
 if __name__ == '__main__':
-    main()
+    root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+    path = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
+    G, Λ, E = convert(root, path)
+
+    #nx_draw(G, Λ, E)
 
 if __name__ == '__main__' and False:
     for path in glob('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/**/*', recursive=True):
