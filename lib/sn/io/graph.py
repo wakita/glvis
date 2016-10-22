@@ -6,6 +6,8 @@ import traceback
 import networkx as nx
 import numpy as np
 
+_DEBUG_ = True
+
 _extensions = 'adjlist, multiline_adjlist, edgelist, gexf, gml, graph6, graphml, leda, pajek, shp, yaml'.split(', ')
 
 _reader = dict(zip(_extensions,
@@ -26,7 +28,10 @@ def read(path, *args, type=None, **keywords):
             # label_path = dir.joinpath(stem + '.labels')
             # print(path)
             # print(label_path)
-            if type == 'gml': keywords['label'] = 'id'
+            if type == 'gml':
+                keywords['label'] = 'id'
+            elif type == 'graphml':
+                keywords['node_type'] = int
             g = _reader[type](path, *args, **keywords)
             return g
         except:
@@ -48,8 +53,87 @@ centrality = dict(
     e=dict(
         betweenness=nx.edge_betweenness_centrality))
 
-
+#def process(G):
 if __name__ == '__main__':
+    profile = dict()
+
+    for path in [
+        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml',
+        #'/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/sengoku/sengoku.graphml',
+        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml']:
+
+        G = read(path)
+
+        labels = None
+        p = PurePath(path)
+        label_path = Path(p.parent.joinpath(p.stem + '.labels'))
+        if _DEBUG_: print(label_path)
+        if label_path.is_file():
+            labels = label_path.read_text(encoding='utf8')
+
+        original_nodes = G.nodes()
+        if _DEBUG_: print(original_nodes)
+
+        # Remove self loops (if any)
+        for v in G.nodes_with_selfloops():
+            G.remove_edge(v, v)
+        assert G.number_of_selfloops() == 0
+
+        # Convert to undirected graph (if necessary)
+        if nx.is_directed(G): G = G.to_undirected()
+
+        # Find the largest connected component
+        G = max(nx.connected_component_subgraphs(G), key=len)
+
+        # Relabel the node labels
+        mapping = dict(zip(G.nodes(), range(0, G.number_of_nodes())))
+        G = nx.convert_node_labels_to_integers(G)
+
+        if labels:
+            revmap = dict(zip(range(0, G.number_of_nodes()), G.nodes()))
+            relabels = [ 0 for i in range(len(G.nodes()))]
+            for i in G.nodes():
+                relabels[i] = labels[revmap[i]]
+            labels = relabels
+
+        nodes, edges = nx.nodes(G), nx.edges(G)
+        profile['#nodes'] = len(G.nodes())
+        profile['#edges'] = len(G.edges())
+
+        if _DEBUG_:
+            print(profile)
+            print(G.nodes())
+            print()
+
+        # Distance matrix (All-pairs shortest path length in numpy array)
+        D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
+        if G.number_of_nodes() < 100:
+            print(D)
+
+        # Classical Multi Dimensional Scaling
+        N, _ = D.shape
+        D2 = D * D
+        J = np.eye(N) - np.ones((N, N)) / N # Centering matrix
+        B = - J.dot(D).dot(J) / 2.0 # Apply double centering
+        Λ, E = np.linalg.eigh(B)
+
+        # Organize eigenvalues in descending order of their eigenvalues
+        positive_ev = Λ > 0
+        Λ, E = Λ[positive_ev], E[:,positive_ev]
+        descending = np.argsort(-Λ)
+        Λ, E = Λ[descending], E[:,descending]
+        print(Λ.shape, E.shape)
+        dim_hd = Λ.shape[0]
+
+        if _DEBUG_:
+            for i in range(dim_hd):
+                v = E[:, i]
+                diff = B.dot(v) - v * Λ[i]
+                print(diff.dot(diff))
+                assert diff.dot(diff) < 1e-10 # Confirm that E are truely eigenvectors
+
+
+if __name__ == '__main__' and False:
     for path in glob('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/**/*', recursive=True):
         g = read(path)
         if g: print(path, g.order())
