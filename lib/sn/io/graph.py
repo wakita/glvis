@@ -49,6 +49,7 @@ centrality = dict(
         betweenness=nx.edge_betweenness_centrality))
 
 
-for path in glob('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/**/*', recursive=True):
-    g = read(path)
-    if g: print(path, g.order())
+if __name__ == '__main__':
+    for path in glob('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/**/*', recursive=True):
+        g = read(path)
+        if g: print(path, g.order())
