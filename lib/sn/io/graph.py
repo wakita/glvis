@@ -143,20 +143,61 @@ def CMDS(G, profile):
 
     return Λ, E
 
+centrality_functions = dict(
+    v=dict(
+        degree=nx.degree_centrality,
+        closeness=nx.closeness_centrality,
+        betweenness=nx.betweenness_centrality,
+        eigenvector=nx.eigenvector_centrality,
+        katz=nx.katz_centrality,
+        communicability=nx.communicability_centrality),
+    e=dict(
+        betweenness=nx.edge_betweenness_centrality)
+)
+
+
+def compute_centrality(G, profile):
+
+    centrality_path = profile['root'].joinpath(profile['name'], 'centrality')
+    v_centrality_path = centrality_path.joinpath('v')
+    e_centrality_path = centrality_path.joinpath('e')
+    for dir in [centrality_path, v_centrality_path, e_centrality_path]:
+        Path(dir).mkdir(exist_ok=True)
+
+    def compute_v_centrality(name, **keywords):
+        path = v_centrality_path.joinpath(name + '-dict.npy')
+        if not Path(path).exists():
+            np.save(str(path), centrality_functions['v'][name](G, **keywords))
+
+    compute_v_centrality('degree')
+    compute_v_centrality('closeness')
+    compute_v_centrality('betweenness', normalized=True)
+    compute_v_centrality('eigenvector')
+    compute_v_centrality('katz')
+    compute_v_centrality('communicability')
+
+    def compute_e_centrality(name, **keywords):
+        path = e_centrality_path.joinpath(name + '-dict.npy')
+        if not Path(path).exists():
+            np.save(str(path), centrality_functions['e'][name](G, **keywords))
+
+    compute_e_centrality('betweenness')
+
+# Edge centrality
 
 def convert(root, path):
-        G = read(path)
-        p = Path(PurePath(path))
-        profile = dict(root=root, dir=p.parent, name=p.stem)
+    G = read(path)
+    p = Path(PurePath(path))
+    profile = dict(root=root, dir=p.parent, name=p.stem)
 
-        G = compute_graph(G, profile)
-        Λ, E = CMDS(G, profile)
-        return G, Λ, E
+    G = compute_graph(G, profile)
+    Λ, E = CMDS(G, profile)
+    compute_centrality(G, profile)
 
 if __name__ == '__main__':
     root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
     path = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
-    G, Λ, E = convert(root, path)
+    convert(root, path)
 
     #nx_draw(G, Λ, E)
 
