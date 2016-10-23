@@ -6,7 +6,12 @@ import sys
 import networkx as nx
 import numpy as np
 
-_DEBUG_ = True
+import sn.utils
+from sn.utils import time as benchmark
+
+_DEBUG_ = False
+
+sn.utils._VERBOSE_ = True
 
 _extensions = 'adjlist, multiline_adjlist, edgelist, gexf, gml, graph6, graphml, leda, pajek, shp, yaml'.split(', ')
 
@@ -19,7 +24,7 @@ _reader = dict(zip(_extensions,
 # D3-style .json?
 
 
-def read(path, *args, format=None, **keywords):
+def read(path, *args, force=False, format=None, **keywords):
     p = PurePath(path)
     stem, suffix = p.stem, p.suffix
     if format is None and suffix[1:] in _reader.keys(): format = suffix[1:]
@@ -29,12 +34,14 @@ def read(path, *args, format=None, **keywords):
                 keywords['label'] = 'id'
             elif format == 'graphml':
                 keywords['node_type'] = int
-            return _reader[format](path, *args, **keywords)
+            G = _reader[format](path, *args, **keywords)
+            benchmark(message='Reading "{0}"'.format(path))
+            return G
         except:
             print('Parsing failure')
             e, message, trace = sys.exc_info()
             print(message)
-            return None
+            raise e
 
 
 centrality = dict(
@@ -49,7 +56,7 @@ centrality = dict(
         betweenness=nx.edge_betweenness_centrality))
 
 
-def compute_graph(G, profile):
+def compute_graph(G, profile, force=False):
     original_nodes = G.nodes()
 
     root = profile['root']
@@ -60,7 +67,7 @@ def compute_graph(G, profile):
     Path(graph_dir).mkdir(exist_ok=True)
 
     graph_path = graph_dir.joinpath('graph.adjlist')
-    if Path(graph_path).is_file():
+    if not force and Path(graph_path).is_file():
         G = nx.read_adjlist(str(graph_path))
     else:
         # Remove self loops (if any)
@@ -78,10 +85,11 @@ def compute_graph(G, profile):
         # G = nx.convert_node_labels_to_integers(G)
 
         nx.write_adjlist(G, str(graph_path))
+        benchmark(message='Computing the largest connected component')
 
     # Relabel the node labels
     labels_path = graph_dir.joinpath('labels.p')
-    if Path(labels_path).exists():
+    if not force and Path(labels_path).exists():
         with open(str(labels_path), 'rb') as r:
             labels = pickle.load(r)
     elif Path(labels_path).exists():
@@ -91,6 +99,7 @@ def compute_graph(G, profile):
         labels = [labels[rev_label[i]] for i in G.nodes()]
         with open(str(labels_path), 'wb') as w:
             pickle.dump(labels, w)
+        benchmark(message='Relabeling nodes')
 
     profile['#nodes'] = len(G.nodes())
     profile['#edges'] = len(G.edges())
@@ -98,20 +107,21 @@ def compute_graph(G, profile):
     return G
 
 
-def CMDS(G, profile):
+def CMDS(G, profile, force=False):
     graph_dir = profile['root'].joinpath(profile['name'])
     Λ_path, E_path = Path(graph_dir.joinpath('eigenvalues')), Path(graph_dir.joinpath('eigenvectors'))
-    if Λ_path.exists() and E_path.exists():
+    if not force and Λ_path.exists() and E_path.exists():
         return np.load(Λ_path), np.load(E_path)
 
     # Distance matrix (All-pairs shortest path length in numpy array)
     distance_file = graph_dir.joinpath('graph', 'distance.npy')
-    if Path(distance_file).is_file():
+    if not force and Path(distance_file).is_file():
         D = np.load(str(distance_file))
     else:
         D = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(G).values()], dtype=np.int)
         np.save(str(distance_file), D)
         if _DEBUG_ and G.number_of_nodes() < 100: print(D)
+        benchmark(message='All-pairs shortest path length over the graph')
 
     # Classical Multi Dimensional Scaling
     N, _ = D.shape
@@ -119,9 +129,9 @@ def CMDS(G, profile):
     B = - J.dot(D * D).dot(J) / 2.0          # Apply double centering
     Λ, E = np.linalg.eigh(B)
 
-    Λ_positive = Λ > 0                      # Choose positive eigenvalues
+    Λ_positive = Λ > 0                       # Choose positive eigenvalues
     Λ, E = Λ[Λ_positive], E[:, Λ_positive]
-    Λ_descending = np.argsort(-Λ)              # Organize in descending order of eigenvalues
+    Λ_descending = np.argsort(-Λ)            # Organize in descending order of eigenvalues
     Λ, E = Λ[Λ_descending], E[:, Λ_descending]
     dim_hd = Λ.shape[0]
     profile['dim_hd'] = dim_hd
@@ -141,6 +151,8 @@ def CMDS(G, profile):
     np.save(str(layout_dir.joinpath('eigenvectors')), E)
     np.save(str(layout_dir.joinpath('layout_hd')), B.dot(L))
 
+    benchmark(message='Classical multi dimensional scaling')
+
     return Λ, E
 
 centrality_functions = dict(
@@ -148,66 +160,74 @@ centrality_functions = dict(
         degree=nx.degree_centrality,
         closeness=nx.closeness_centrality,
         betweenness=nx.betweenness_centrality,
-        eigenvector=nx.eigenvector_centrality,
-        katz=nx.katz_centrality,
+        eigenvector=nx.eigenvector_centrality_numpy,
+        katz=nx.katz_centrality_numpy,
         communicability=nx.communicability_centrality,
 
         cc=nx.clustering,
-        pagerank=nx.pagerank
+        pagerank=nx.pagerank_numpy
     ),
     e=dict(
         betweenness=nx.edge_betweenness_centrality)
 )
 
 
-def compute_centrality(G, profile):
+def compute_centrality(G, profile, force=False):
 
     centrality_path = profile['root'].joinpath(profile['name'], 'centrality')
-    v_centrality_path = centrality_path.joinpath('v')
+    n_centrality_path = centrality_path.joinpath('n')
     e_centrality_path = centrality_path.joinpath('e')
-    for dir in [centrality_path, v_centrality_path, e_centrality_path]:
+    for dir in [centrality_path, n_centrality_path, e_centrality_path]:
         Path(dir).mkdir(exist_ok=True)
 
-    def compute_v_centrality(name, **keywords):
-        path = v_centrality_path.joinpath(name + '-dict.npy')
-        centrality = centrality_functions['v'][name](G, **keywords)
-        if not Path(path).exists():
-            np.save(str(path), centrality)
-        print(name, min(centrality.values()), max(centrality.values()))
+    def compute_n_centrality(name, **keywords):
+        path = n_centrality_path.joinpath(name + '-dict.npy')
+        try:
+            centrality = centrality_functions['v'][name](G, **keywords)
+            if force or not Path(path).exists():
+                np.save(str(path), centrality)
+        except nx.NetworkXError:
+            print('Failed to compute a node centrality ({0}). Ignored'.format(name))
+        benchmark(message='Computing node centrality ({0})'.format(name))
+        if _DEBUG_: print(name, min(centrality.values()), max(centrality.values()))
 
-    compute_v_centrality('degree')
-    compute_v_centrality('closeness')
-    compute_v_centrality('betweenness', normalized=True)
-    compute_v_centrality('eigenvector')
-    compute_v_centrality('katz')
-    compute_v_centrality('communicability')
+    compute_n_centrality('degree')
+    compute_n_centrality('closeness')
+    compute_n_centrality('betweenness', normalized=True)
+    compute_n_centrality('eigenvector')
+    compute_n_centrality('katz', normalized=True)
+    compute_n_centrality('communicability')
 
-    compute_v_centrality('cc')
-    compute_v_centrality('pagerank')
+    compute_n_centrality('cc')
+    compute_n_centrality('pagerank')
 
     def compute_e_centrality(name, **keywords):
         path = e_centrality_path.joinpath(name + '-dict.npy')
         centrality = centrality_functions['e'][name](G, **keywords)
-        if not Path(path).exists():
+        if force or not Path(path).exists():
             np.save(str(path), centrality)
-        print(name, min(centrality.values()), max(centrality.values()))
+        benchmark(message='Computing edge centrality ({0})'.format(name))
+        if _DEBUG_: print(name, min(centrality.values()), max(centrality.values()))
 
     compute_e_centrality('betweenness')
 
 
-def convert(root, path):
-    G = read(path)
+def convert(root, path, force=False):
+    G = read(path, force=force)
     p = Path(PurePath(path))
-    profile = dict(root=root, dir=p.parent, name=p.stem)
+    profile = dict(root=root, dir=p.parent, name=p.stem, force=force)
 
-    G = compute_graph(G, profile)
-    Λ, E = CMDS(G, profile)
-    compute_centrality(G, profile)
+    G = compute_graph(G, profile, force=force)
+    Λ, E = CMDS(G, profile, force=force)
+    compute_centrality(G, profile, force=force)
 
 if __name__ == '__main__':
+    dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
+    dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml'
     convert(
         PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'),
-        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml')
+        dataset,
+        force=True)
 
     #nx_draw(G, Λ, E)
 
