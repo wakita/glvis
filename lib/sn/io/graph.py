@@ -150,7 +150,11 @@ centrality_functions = dict(
         betweenness=nx.betweenness_centrality,
         eigenvector=nx.eigenvector_centrality,
         katz=nx.katz_centrality,
-        communicability=nx.communicability_centrality),
+        communicability=nx.communicability_centrality,
+
+        cc=nx.clustering,
+        pagerank=nx.pagerank
+    ),
     e=dict(
         betweenness=nx.edge_betweenness_centrality)
 )
@@ -166,8 +170,10 @@ def compute_centrality(G, profile):
 
     def compute_v_centrality(name, **keywords):
         path = v_centrality_path.joinpath(name + '-dict.npy')
+        centrality = centrality_functions['v'][name](G, **keywords)
         if not Path(path).exists():
-            np.save(str(path), centrality_functions['v'][name](G, **keywords))
+            np.save(str(path), centrality)
+        print(name, min(centrality.values()), max(centrality.values()))
 
     compute_v_centrality('degree')
     compute_v_centrality('closeness')
@@ -176,14 +182,18 @@ def compute_centrality(G, profile):
     compute_v_centrality('katz')
     compute_v_centrality('communicability')
 
+    compute_v_centrality('cc')
+    compute_v_centrality('pagerank')
+
     def compute_e_centrality(name, **keywords):
         path = e_centrality_path.joinpath(name + '-dict.npy')
+        centrality = centrality_functions['e'][name](G, **keywords)
         if not Path(path).exists():
-            np.save(str(path), centrality_functions['e'][name](G, **keywords))
+            np.save(str(path), centrality)
+        print(name, min(centrality.values()), max(centrality.values()))
 
     compute_e_centrality('betweenness')
 
-# Edge centrality
 
 def convert(root, path):
     G = read(path)
@@ -195,9 +205,9 @@ def convert(root, path):
     compute_centrality(G, profile)
 
 if __name__ == '__main__':
-    root = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
-    path = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
-    convert(root, path)
+    convert(
+        PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'),
+        '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml')
 
     #nx_draw(G, Λ, E)
 
