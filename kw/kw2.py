@@ -15,8 +15,6 @@ class KW2(GLWidget):
 
     def onTick(self): self.updateGL()
 
-    keyPresseEvent = Window.keyPressEvent
-
     def initializeGL(self):
         super().initializeGL()
         self.program = Program('kw2.shaders')
@@ -30,7 +28,7 @@ class KW2(GLWidget):
         program.use()
 
         t = Time.time
-        glDrawArrays(GL_PATCHES, 1, 3)
+        glDrawArrays(GL_PATCHES, 0, 3)
         glFlush()
 
 if __name__ == '__main__':

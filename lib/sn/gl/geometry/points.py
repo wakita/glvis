@@ -18,7 +18,7 @@ class V(Volume):
         glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_STATIC_DRAW)
 
         position_l = program.a['position_vs'].loc
-        glVertexAttribPointer(position_l, 3, GL_FLOAT, GL_FALSE, 0, None)
+        glVertexAttribPointer(position_l, int(len(v) / self.N), GL_FLOAT, GL_FALSE, 0, None)
         glEnableVertexAttribArray(position_l)
 
         if colors:
