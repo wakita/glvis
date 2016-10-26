@@ -1,0 +1,53 @@
+# vertex shader
+# version 430
+
+uniform mat4 MV;
+uniform mat4 P;
+uniform float pointsize;
+
+uniform float t;
+uniform vec2 Gravity = vec2(0.0, -0.05);
+
+out float transparency_fs;
+out vec3 color_fs;
+
+const int P1 = 15485863, P2 = 32452843;
+const int N_COLORS = 6;
+const vec3 colors[] = vec3[](
+    vec3(0, 0, 1), vec3(0, 1, 0), vec3(0, 1, 1),
+    vec3(1, 0, 0), vec3(1, 0, 1), vec3(1, 1, 0));
+
+in vec3 position_vs;
+// in vec2 delay;
+
+void main() {
+  float time = t - position_vs.z;
+  if (time < 0) time += 10.0;
+
+  vec4 p = vec4(position_vs.xy * time + Gravity * time * time / 2, 0, 1);
+  vec4 p_mv = MV * p;
+  gl_Position = P * p_mv;
+
+  gl_PointSize = pointsize; // (-p_mv.z);
+
+  // color_fs = colors[(gl_VertexID + P1) * P2 % N_COLORS];
+  color_fs = colors[2];
+  transparency_fs = 1.0 - time / 10.0;
+}
+
+
+# fragment shader
+# version 430
+
+in float transparency_fs;
+in vec3 color_fs;
+
+out vec4 color_fb;
+
+void main() {
+  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
+  normal.z = 1.0 - dot(normal.xy, normal.xy);
+  if (normal.z < 0) discard;
+
+  color_fb = vec4(vec3(sqrt(normal.z)) * 0.6, transparency_fs) + vec4(color_fs, 1) * 0.5;
+}
