@@ -190,6 +190,11 @@ class Program(_GLObject_):
 
     uniformHandler = dict()
 
+    def _glUniform_(f, loc, name, v):
+        if debug._logOnSetUniform_:
+            print('Uniform[{0}]: {1}\n'.format(name, v))
+        f(loc, v)
+
     def _glUniformv_(f, loc, name, v):
         if debug._logOnSetUniform_:
             print('Uniform[{0}]: {1}\n'.format(name, v))
@@ -200,10 +205,11 @@ class Program(_GLObject_):
             print('Uniform[{0}]: {1}\n'.format(name, V))
         f(loc, *V)
 
+    def _uniform_(f): return lambda loc, name, v: Program._glUniform_(f, loc, name, v)
     def _uniformv_(f): return lambda loc, name, v: Program._glUniformv_(f, loc, name, v)
     def _uniformfv_(f): return lambda loc, name, *V: Program._glUniformfv_(f, loc, name, V)
 
-    uniformHandler[GL_INT]        = _uniformv_(glUniform1i)
+    uniformHandler[GL_INT]        = _uniform_(glUniform1i)
     uniformHandler[GL_INT_VEC2]   = _uniformv_(glUniform2i)
     uniformHandler[GL_INT_VEC3]   = _uniformv_(glUniform3i)
     uniformHandler[GL_INT_VEC4]   = _uniformv_(glUniform4i)
