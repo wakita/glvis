@@ -31,8 +31,9 @@ class D(GLWidget):
         super().initializeGL()
         self.program = self.program or Program(shaderpath)
         self.program.use()
-        self.geometry = Geometry(self.program)
-        self.geometry.use()
+        if Geometry:
+            self.geometry = Geometry(self.program)
+            self.geometry.use()
 
     def paintGL(self):
         super().paintGL()
