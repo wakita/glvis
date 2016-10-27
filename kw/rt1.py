@@ -11,7 +11,6 @@ class RT1(GLWidget3D):
 
     def __init__(self, W):
         super().__init__(W)
-        self.N = 100 ** 3
         self.MAX_DELAY = 20
 
     def minimumSizeHint(self): return QtCore.QSize(1000, 800)
@@ -29,7 +28,6 @@ class RT1(GLWidget3D):
 
         eye, target, up = T.vec3(0, 0, 25), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
-        self.program.u['pointsize'](50.0 / pow(self.N, 1./3))
 
         glDisable(GL_DEPTH_TEST)
         for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_BLEND]:
@@ -39,8 +37,11 @@ class RT1(GLWidget3D):
     def paintGL(self):
         super().paintGL()
         self.program.use()
-        self.program.u['time'](Time.time)
-        glDrawArrays(GL_POINTS, 0, self.N)
+        t = Time.time
+        self.program.u['time'](t)
+        N = int(min(Time.time + 1, 200)**1.8)
+        self.program.u['pointsize'](100.0 / pow(N, 1./3))
+        glDrawArrays(GL_POINTS, 0, N)
         glFlush()
 
 if __name__ == '__main__':

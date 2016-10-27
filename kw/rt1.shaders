@@ -1,9 +1,9 @@
 # vertex shader
 # version 430
 
-const int max_delay = 20;
-const vec2 gravity = vec2(0.0, -0.05);
-const vec2 origin = vec2(0, -10);
+const int max_delay = 30;
+const vec3 gravity = vec3(0.0, -0.2, 0.0);
+const vec3 origin = vec3(0, -7, 0);
 
 uniform mat4 MV;
 uniform mat4 P;
@@ -13,9 +13,6 @@ uniform float time;
 
 out float transparency_fs;
 out vec3 color_fs;
-
-// Prime numbers for hash code generation
-const uint P1 = 15485863, P2 = 32452843;
 
 // A single iteration of Bob Jenkins' One-At-A-Time hashing algorithm.
 uint hash( uint x ) {
@@ -59,16 +56,17 @@ void main() {
 
     float sx = random(delay);
     float sy = random(sx);
-    vec2 speed = vec2((sx - 0.5) * 2, (sy * sy * 0.3 + 0.2) * 5);
+    float sz = random(sy);
+    vec3 speed = vec3((sx - 0.5) * 2, (sy * sy * 0.3 + 0.4) * 5, (sz - 0.5) * 2);
 
-    vec4 p = vec4(origin + speed * t + gravity * t * t / 2, 0, 1);
+    vec4 p = vec4(origin + speed * t + gravity * t * t / 2, 1);
     vec4 p_mv = MV * p;
     gl_Position = P * p_mv;
 
     gl_PointSize = pointsize;
 
+    transparency_fs = (t < 0 ? 0 : 1 - t / max_delay);
     color_fs = vec3(0, 1, 1);
-    transparency_fs = t < 0 ? 0 : 1 - t / max_delay;
 }
 
 
@@ -85,5 +83,5 @@ void main() {
     normal.z = 1.0 - dot(normal.xy, normal.xy);
     if (normal.z < 0) discard;
 
-    color_fb = vec4(vec3(sqrt(normal.z)) * 0.6, transparency_fs) + vec4(color_fs, 1) * 0.5;
+    color_fb = vec4(color_fs * sqrt(normal.z) * 0.6, transparency_fs);
 }
