@@ -217,11 +217,66 @@ def convert(root, path, force=False):
     p = Path(PurePath(path))
     profile = dict(root=root, dir=p.parent, name=p.stem, force=force)
 
+    root = profile['root']
+    dataset = root.joinpath(profile['name'])
+    Path(dataset).mkdir(exist_ok=True)
+
+    graph_dir = dataset.joinpath('graph')
+    Path(graph_dir).mkdir(exist_ok=True)
+
+    graph_path = graph_dir.joinpath('graph.adjlist')
+    if not force and Path(graph_path).is_file():
+        G = nx.read_adjlist(str(graph_path))
+
     G = compute_graph(G, profile, force=force)
     Λ, E = CMDS(G, profile, force=force)
     compute_centrality(G, profile, force=force)
 
+
+def load_graph(root, name):
+    root = PurePath(root).joinpath(name)
+
+    graph_dir = root.joinpath('graph')
+    graph_path = graph_dir.joinpath('graph.adjlist')
+    G = None
+    print('Graph path:', graph_path)
+    if Path(graph_path).is_file():
+        G = nx.read_adjlist(str(graph_path))
+
+    labels_path = graph_dir.joinpath('labels.p')
+    labels = None
+    if Path(labels_path).exists():
+        with open(str(labels_path), 'rb') as r:
+            labels = pickle.load(r)
+
+    # Distance matrix (All-pairs shortest path length in numpy array)
+    distance_file = graph_dir.joinpath('distance.npy')
+    if Path(distance_file).is_file():
+        D = np.load(str(distance_file))
+
+    layout_dir = root.joinpath('layout')
+    Λ_path, E_path, layoutHD_path = [layout_dir.joinpath(name + '.npy')
+                                       for name in 'eigenvalues, eigenvectors, layout_hd'.split(', ')]
+    print(E_path)
+    if Path(Λ_path).exists():
+        Λ = np.load(str(Λ_path))
+    if Path(E_path).exists():
+        E = np.load(str(E_path))
+    if Path(layoutHD_path).exists():
+        layoutHD = np.load(str(layoutHD_path))
+
+    return G, labels, D, Λ, E, layoutHD
+
 if __name__ == '__main__':
+    dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
+    dbpath = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'
+    convert(
+        PurePath(dbpath),
+        dataset,
+        force=True)
+    print(load_graph(dbpath, 'dolphins'))
+
+if __name__ == '__main__' and False:
     dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
     dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml'
     convert(
