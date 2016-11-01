@@ -26,7 +26,7 @@ class RT1(GLWidget3D):
 
         self.program.u['max_delay'](self.MAX_DELAY)
 
-        eye, target, up = T.vec3(0, 0, 25), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
+        eye, target, up = T.vec3(0, -10, 25), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
 
         glDisable(GL_DEPTH_TEST)
@@ -39,7 +39,7 @@ class RT1(GLWidget3D):
         self.program.use()
         t = Time.time
         self.program.u['time'](t)
-        N = int(min(Time.time + 1, 200)**1.8)
+        N = int(max(min(Time.time - 10, 120)**3, 1))
         self.program.u['pointsize'](100.0 / pow(N, 1./3))
         glDrawArrays(GL_POINTS, 0, N)
         glFlush()
