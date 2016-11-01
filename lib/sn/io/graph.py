@@ -134,7 +134,8 @@ def CMDS(G, profile, force=False):
     Λ_descending = np.argsort(-Λ)            # Organize in descending order of eigenvalues
     Λ, E = Λ[Λ_descending], E[:, Λ_descending]
     dim_hd = Λ.shape[0]
-    profile['dim_hd'] = dim_hd
+    layout_hd = E.dot(np.diag(np.sqrt(Λ)))
+    profile['dim_hd'] = layout_hd.shape
 
     if _DEBUG_:
         for i in range(dim_hd):
@@ -149,7 +150,7 @@ def CMDS(G, profile, force=False):
     Path(layout_dir).mkdir(exist_ok=True)
     np.save(str(layout_dir.joinpath('eigenvalues')),  Λ)
     np.save(str(layout_dir.joinpath('eigenvectors')), E)
-    np.save(str(layout_dir.joinpath('layout_hd')), B.dot(L))
+    np.save(str(layout_dir.joinpath('layout_hd')), layout_hd)
 
     benchmark(message='Classical multi dimensional scaling')
 
@@ -267,7 +268,7 @@ def load_graph(root, name):
 
     return G, labels, D, Λ, E, layoutHD
 
-if __name__ == '__main__':
+if __name__ == '__main__' and False:
     dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
     dbpath = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'
     convert(
@@ -276,9 +277,9 @@ if __name__ == '__main__':
         force=True)
     print(load_graph(dbpath, 'dolphins'))
 
-if __name__ == '__main__' and False:
+if __name__ == '__main__':
     dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
-    dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml'
+    #dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml'
     convert(
         PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'),
         dataset,
