@@ -1,5 +1,6 @@
 from pathlib import PurePath, Path
 from glob import glob
+import json
 import pickle
 import sys
 
@@ -59,7 +60,7 @@ centrality = dict(
 def compute_graph(G, profile, force=False):
     original_nodes = G.nodes()
 
-    root = profile['root']
+    root = PurePath(profile['root'])
     dataset = root.joinpath(profile['name'])
     Path(dataset).mkdir(exist_ok=True)
 
@@ -108,7 +109,7 @@ def compute_graph(G, profile, force=False):
 
 
 def CMDS(G, profile, force=False):
-    graph_dir = profile['root'].joinpath(profile['name'])
+    graph_dir = PurePath(profile['root']).joinpath(profile['name'])
     Λ_path, E_path = Path(graph_dir.joinpath('eigenvalues')), Path(graph_dir.joinpath('eigenvectors'))
     if not force and Λ_path.exists() and E_path.exists():
         return np.load(Λ_path), np.load(E_path)
@@ -175,7 +176,7 @@ centrality_functions = dict(
 
 def compute_centrality(G, profile, force=False):
 
-    centrality_path = profile['root'].joinpath(profile['name'], 'centrality')
+    centrality_path = PurePath(profile['root']).joinpath(profile['name'], 'centrality')
     n_centrality_path = centrality_path.joinpath('n')
     e_centrality_path = centrality_path.joinpath('e')
     for dir in [centrality_path, n_centrality_path, e_centrality_path]:
@@ -216,9 +217,8 @@ def compute_centrality(G, profile, force=False):
 def convert(root, path, force=False):
     G = read(path, force=force)
     p = Path(PurePath(path))
-    profile = dict(root=root, dir=p.parent, name=p.stem, force=force)
+    profile = dict(root=str(root), dir=str(p.parent), name=p.stem, force=force)
 
-    root = profile['root']
     dataset = root.joinpath(profile['name'])
     Path(dataset).mkdir(exist_ok=True)
 
@@ -232,6 +232,13 @@ def convert(root, path, force=False):
     G = compute_graph(G, profile, force=force)
     Λ, E = CMDS(G, profile, force=force)
     compute_centrality(G, profile, force=force)
+
+    misc_dir = dataset.joinpath('misc')
+    Path(misc_dir).mkdir(exist_ok=True)
+    profile_path = misc_dir.joinpath('profile.p')
+    with open(str(profile_path), 'wb') as w:
+        pickle.dump(profile, w)
+    print(json.dumps(profile, indent = 4))
 
 
 def load_graph(root, name):
