@@ -11,7 +11,7 @@ from sn.gl.geometry.pointgrid import V as PointGrid
 from sn.gl.geometry.volume import D as DemoWidget
 
 
-class KW8Widget(DemoWidget):
+class KW1Widget(DemoWidget):
     def initializeGL(self):
 
         S = 100
@@ -34,4 +34,4 @@ class KW8Widget(DemoWidget):
         debug.logOnSetUniform(False)
         self.updateGL()
 
-KW8Widget.start(KW8Widget, fullscreen=True)
+KW1Widget.start(KW1Widget, fullscreen=True)
