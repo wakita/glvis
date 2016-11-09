@@ -1,5 +1,3 @@
-import random
-
 from PyQt5 import QtCore
 from sn.gl import *
 from sn.qt import *
