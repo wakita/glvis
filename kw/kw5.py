@@ -12,4 +12,4 @@ class KW5(Demo):
     def onTick(self):
         self.updateGL()
 
-KW5.start(KW5)
+KW5.start(KW5, fullscreen=True)
