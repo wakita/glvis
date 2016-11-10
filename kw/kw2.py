@@ -2,7 +2,6 @@ import os.path
 
 from sn.gl import *
 from sn.qt import *
-from sn.gl import *
 import sn.gl.debug
 
 sn.gl.debug.logOnShaderVariables(True)
