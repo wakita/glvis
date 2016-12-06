@@ -287,6 +287,7 @@ if __name__ == '__main__' and False:
 if __name__ == '__main__':
     dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/dolphins.gml'
     #dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/math.wikipedia/math.graphml'
+    dataset = '/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf/graphs/hypercube-4d.graphml'
     convert(
         PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset'),
         dataset,
