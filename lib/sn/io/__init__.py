@@ -1,16 +1,20 @@
 from pathlib import PurePath, Path
-from glob import glob
+import pickle as pcl
 
 
-def pickle(path, data=None):
-    import pickle as p
+def mkdir_parent(path: PurePath):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+
+
+def pickle(path: PurePath, data=None):
     path = str(path)
     if data is None:
         with open(path, 'rb') as r:
-            return pickle.load(r)
+            return pcl.load(r)
     else:
+        mkdir_parent(path)
         with open(path, 'wb') as w:
-            pickle.dump(data, w)
+            pcl.dump(data, w)
 
 
 def io_array(path, data=None):
@@ -19,4 +23,5 @@ def io_array(path, data=None):
     if data is None:
         return np.load(path)
     else:
+        mkdir_parent(path)
         np.save(path, data)

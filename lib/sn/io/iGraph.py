@@ -4,7 +4,7 @@ import json
 import re
 import sys
 
-from igraph import Graph
+from igraph import Graph, ALL
 import numpy as np
 
 from sn.io import pickle, io_array
@@ -36,7 +36,6 @@ def read(path: PurePath, *args, **kwds) -> Graph:
 def normalize(g: Graph, profile: dict) -> Graph:
     graph_dir = PurePath(profile['root']).joinpath(profile['name'], 'graph')
     print('graph_dir:', graph_dir)
-    Path(graph_dir).mkdir(exist_ok=True, parents=True)
 
     adj_path = graph_dir.joinpath('edgelist')
     try:
@@ -97,11 +96,11 @@ def cmdscale(g: Graph, profile: dict):
     # Distance matrix (All-pairs shortest path length in numpy array)
     distance_file = graph_dir.joinpath('graph', 'distance.npy')
     try:
-        if not profile['force']:
-            raise FileNotFoundError
-        d = np.load(str(distance_file))
+        if not profile['force']: raise FileNotFoundError
+        d = io_array(distance_file)
     except FileNotFoundError:
-        d = np.array([list(row.values()) for row in nx.all_pairs_shortest_path_length(g).values()], dtype=np.int)
+        paths = g.shortest_paths(weights=None)
+        d = np.array(paths, dtype=np.int)
         io_array(str(distance_file), d)
         if _DEBUG_ and g.number_of_nodes() < 100: print(d)
         benchmark(message='All-pairs shortest path length over the graph')
@@ -130,10 +129,9 @@ def cmdscale(g: Graph, profile: dict):
     L = np.eye(N, dim_hd).dot(np.diag(Λ))
 
     layout_dir = graph_dir.joinpath('layout')
-    Path(layout_dir).mkdir(exist_ok=True)
-    np.save(str(layout_dir.joinpath('eigenvalues')),  Λ)
-    np.save(str(layout_dir.joinpath('eigenvectors')), E)
-    np.save(str(layout_dir.joinpath('layout_hd')), layout_hd)
+    io_array(layout_dir.joinpath('eigenvalues'),  Λ)
+    io_array(layout_dir.joinpath('eigenvectors'), E)
+    io_array(layout_dir.joinpath('layout_hd'),    layout_hd)
 
     benchmark(message='Classical multi dimensional scaling')
 
@@ -142,51 +140,40 @@ def cmdscale(g: Graph, profile: dict):
 
 def centrality(g: Graph, profile: dict):
 
-    # Betweenness centrality
-    # API: G.betweenness(vertices, directed=True, cutoff=None, weights=None, nobigint=True)
+    directory = None
+    def save(name: str, c: np.array):
+        io_array(directory.joinpath(name), c)
+        benchmark(message='{0}.{1}'.format(directory, name))
 
-    # Closeness centrality
-    g.closeness(vertices=None, mode=ALL, cutoff=None, weights=None, normalized=True)
-
-    # Clustering coefficient
-    g.transitivity_local_undirected(vertices=None, mode="nan", weights=None)
-
-    # Degree distribution
-    # API: G.degree(G.vertices, loops=False) -- Degrees of 'vertices' for both incoming&outgoing direction (mode=ALL), ignoring self-loops
-    g.degree(loops=False)
-
-    # Eigenvector centrality
-    g.eigenvector_centrality(directed=True, scale=True, weights=None, return_eigenvalue=False, arpack_options=None)
-
-    # The Hub score for Kleinberg's HITS model
-    g.hub_score(weights=None, scale=True, arpack_options=None, return_eigenvalue=False)
-
-    # PageRank score
-    #G.pagerank(self, vertices=None, directed=True, damping=0.85, weights=None, arpack_options=None, implementation='prpack', niter=1000, eps=0.001)
-    #Calculates the Google PageRank values of a graph.	source code
+    directory = PurePath(profile['root']).joinpath(profile['name'], 'centrality', 'v')
+    save('betweenness', g.betweenness(directed=False))
+    save('closeness', g.closeness())
+    save('clustering', g.transitivity_local_undirected())
+    save('degree', g.degree())
+    save('eigenvector', g.eigenvector_centrality(directed=False))
+    save('hits_hub', g.hub_score()) # The Hub score for Kleinberg's HITS model
+    save('pagerank', g.pagerank(directed=False))
 
     # Personalized PageRank score
-    g.personalized_pagerank(vertices=None, directed=True, damping=0.85, reset=None, reset_vertices=None, weights=None, arpack_options=None, implementation="prpack", niter=1000, eps=0.001)
+    #save('ppagerank', g.personalized_pagerank(*args))
 
 
-    # Edge betweenness centrality
-    g.edge_betweenness(directed=True, cutoff=None, weights=None)
+    directory = PurePath(profile['root']).joinpath(profile['name'], 'centrality', 'e')
+    save('betweenness', g.edge_betweenness(directed=False))
 
 
-def analyse(root: PurePath, path: PurePath, profile: dict):
+def analyse(root: PurePath, path: PurePath, profile: dict) -> Graph:
     g = normalize(read(path), profile)
 
     dataset_dir = root.joinpath(profile['name'])
 
     Λ, E = cmdscale(g, profile)
-    #centrality(g, profile)
+    centrality(g, profile)
 
-    misc_dir = dataset.joinpath('misc')
-    Path(misc_dir).mkdir(exist_ok=True, parents=True)
-    profile_path = misc_dir.joinpath('profile.p')
-    with open(str(profile_path), 'wb') as w:
-        pickle.dump(profile, w)
+    pickle(root.joinpath('name', 'misc', 'profile.p'), profile)
     print(json.dumps(profile, indent = 4))
+
+    return g
 
 
 if __name__ == '__main__':
@@ -201,7 +188,8 @@ if __name__ == '__main__':
     }
 
     for name, path in testcase.items():
-        g = normalize(read(PurePath(path)), dict(profile, name=name))
+        #g = normalize(read(PurePath(path)), dict(profile, name=name))
+        g = analyse(PurePath(profile['root']), PurePath(path), dict(profile, name=name))
         if all([len(label) > 0 for label in g.vs['label']]):
             print(g.vs['label'][0:4])
         else: print('No labels')
