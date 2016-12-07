@@ -37,26 +37,32 @@ def normalize(g: Graph, profile: dict) -> Graph:
     graph_dir = PurePath(profile['root']).joinpath(profile['name'], 'graph')
     print('graph_dir:', graph_dir)
 
-    adj_path = graph_dir.joinpath('edgelist')
+    adj_path = graph_dir.joinpath('adjacency')
     try:
-        if not profile['force']: raise FileNotFoundError
+        if profile['force']: raise FileNotFoundError
         return io_array(adj_path)
     except FileNotFoundError:
+        benchmark(message='Starting normalize')
         # Convert to undirected graph
         g.to_undirected()
         assert not g.is_directed()
+        benchmark(message='Converted to directed graph')
 
-        # The largest strongly connected component
-        g = g.decompose(maxcompno=1)[0]
-        # ToDo: Check if vertex numbers change after 'decompose'.
-        # If they do, we need to reorganize the labels as well.
+    # The largest strongly connected component
+        g = max(g.decompose(maxcompno=1), key=(lambda g: len(g.vs)))
+        benchmark(message='Maximum connected component')
 
         # Remove self-loops
         g.simplify()
         assert not any(g.is_loop())
+        benchmark(message='Removed self-loops')
 
-        io_array(adj_path, g.get_edgelist())
+        profile['graph_size'] = [len(g.vs), len(g.es)]
 
+        io_array(adj_path, g.get_adjlist())
+        io_array(graph_dir.joinpath('edgelist'), g.get_edgelist())
+
+        if not 'label' in g.vs.attributes(): g.vs['label'] = g.vs['id']
         if all([len(label) > 0 for label in g.vs['label']]):
             label_path = graph_dir.joinpath('label')
             io_array(label_path, g.vs['label'])
@@ -94,9 +100,9 @@ def cmdscale(g: Graph, profile: dict):
         return io_array(Λ_path), io_array(E_path)
 
     # Distance matrix (All-pairs shortest path length in numpy array)
-    distance_file = graph_dir.joinpath('graph', 'distance.npy')
+    distance_file = graph_dir.joinpath('graph', 'distance')
     try:
-        if not profile['force']: raise FileNotFoundError
+        if profile['force']: raise FileNotFoundError
         d = io_array(distance_file)
     except FileNotFoundError:
         paths = g.shortest_paths(weights=None)
@@ -148,7 +154,7 @@ def centrality(g: Graph, profile: dict):
     directory = PurePath(profile['root']).joinpath(profile['name'], 'centrality', 'v')
     save('betweenness', g.betweenness(directed=False))
     save('closeness', g.closeness())
-    save('clustering', g.transitivity_local_undirected())
+    save('clustering', g.transitivity_local_undirected(mode='zero'))
     save('degree', g.degree())
     save('eigenvector', g.eigenvector_centrality(directed=False))
     save('hits_hub', g.hub_score()) # The Hub score for Kleinberg's HITS model
@@ -170,7 +176,7 @@ def analyse(root: PurePath, path: PurePath, profile: dict) -> Graph:
     Λ, E = cmdscale(g, profile)
     centrality(g, profile)
 
-    pickle(root.joinpath('name', 'misc', 'profile.p'), profile)
+    pickle(root.joinpath(profile['name'], 'misc', 'profile.p'), profile)
     print(json.dumps(profile, indent = 4))
 
     return g
@@ -184,7 +190,8 @@ if __name__ == '__main__':
     testcase = {
         'hypercube-4d': dataset + 'graphs/hypercube-4d.graphml',
         'lesmis': dataset + 'lesmis.gml',
-        'math': dataset + 'math.wikipedia/math.graphml'
+        'math': dataset + 'math.wikipedia/math.graphml',
+        'gdea_conf': dataset + 'gdea_conf_paper_1995_2011.gml'
     }
 
     for name, path in testcase.items():

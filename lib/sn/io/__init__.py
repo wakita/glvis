@@ -21,7 +21,7 @@ def io_array(path, data=None):
     import numpy as np
     path = str(path)
     if data is None:
-        return np.load(path)
+        return np.load(path + '.npy')
     else:
         mkdir_parent(path)
         np.save(path, data)
