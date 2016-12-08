@@ -7,7 +7,7 @@ def mkdir_parent(path: PurePath):
 
 
 def pickle(path: PurePath, data=None):
-    path = str(path)
+    path = str(path) + '.pickle'
     if data is None:
         with open(path, 'rb') as r:
             return pcl.load(r)
@@ -19,9 +19,9 @@ def pickle(path: PurePath, data=None):
 
 def io_array(path, data=None):
     import numpy as np
-    path = str(path)
+    path = str(path) + '.npy'
     if data is None:
-        return np.load(path + '.npy')
+        return np.load(path)
     else:
         mkdir_parent(path)
         np.save(path, data)
