@@ -220,13 +220,24 @@ class Loader:
     def dim_hd(self):
         return self.profile['dim_hd']
 
+    def layout_hd(self):
+        return io_array(self.root.joinpath('layout', 'layout_hd'))
+
+    def eigens(self):
+        layout_dir = self.root.joinpath('layout')
+        Λ = io_array(layout_dir.joinpath('eigenvalues'))
+        E = io_array(layout_dir.joinpath('eigenvectors'))
+        return Λ, E
+
     def centralities(self):
         return self.profile['centrality']
 
     def centrality_v(self, name) -> np.array:
+        assert name in self.centralities()['v']
         return io_array(self.root.joinpath('centrality', 'v', name))
 
     def centrality_e(self, name) -> np.array:
+        assert name in self.centralities()['e']
         return io_array(self.root.joinpath('centrality', 'e', name))
 
 
@@ -267,7 +278,10 @@ if __name__ == '__main__':
         print(g.attributes())
         for a in g.attribute('label'):
             print(a)
-        pass
+        Λ, E = g.eigens()
+        print('Shape(Λ): {}, Shape(E): {}'.format(Λ.shape, E.shape))
+        layout_hd = g.layout_hd()
+        print('Shape(layout_hd): {}'.format(layout_hd.shape))
 
     analyse_test()
     load_test()
