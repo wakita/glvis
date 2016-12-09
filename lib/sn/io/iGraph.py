@@ -45,7 +45,7 @@ def normalize(g: Graph, profile: dict) -> Graph:
     benchmark(message='Converted to directed graph')
 
     # The largest strongly connected component
-    g = max(g.decompose(maxcompno=1), key=(lambda g: len(g.vs)))
+    g = max(g.decompose(), key=(lambda g: len(g.vs)))
     benchmark(message='Maximum connected component')
 
     # Remove self-loops
