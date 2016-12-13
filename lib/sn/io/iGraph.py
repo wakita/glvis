@@ -256,13 +256,15 @@ if __name__ == '__main__':
         testcase = {
             'hypercube-4d': dataset_dir.joinpath('graphs', 'hypercube-4d.graphml'),
             'lesmis': dataset_dir.joinpath('lesmis.gml'),
-            'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
+            #'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
+            'gdea_conf': dataset_dir.joinpath('gdea_conf_paper_1995_2011_nographics.gml'),
+            '4dai': dataset_dir.joinpath('twitter', '4dai_uni_d_nolabel.gml'),
+            'techchan': dataset_dir.joinpath('twitter', 'techchan_uni_d_nolabel.gml')
         }
-        # 'gdea_conf': dataset_dir.joinpath('gdea_conf_paper_1995_2011.gml')
 
         for name, path in testcase.items():
             g = analyse(root, path, dict(profile, name=name))
-            if all([len(label) > 0 for label in g.vs['label']]):
+            if 'label' in g.vs.attribute_names() and all([len(label) > 0 for label in g.vs['label']]):
                 print(g.vs['label'][0:4])
             else:
                 print('No labels')
@@ -282,6 +284,9 @@ if __name__ == '__main__':
         print('Shape(Λ): {}, Shape(E): {}'.format(Λ.shape, E.shape))
         layout_hd = g.layout_hd()
         print('Shape(layout_hd): {}'.format(layout_hd.shape))
+
+    # Crash on load bug
+    # techchan_uni_ud.gml, 4dai_uni_d.gml, gdea_conf_paper_1995_2011.gml
 
     analyse_test()
     load_test()
