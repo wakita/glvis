@@ -1,0 +1,42 @@
+# vertex shader
+# version 430
+
+uniform mat4 MV;
+uniform mat4 P;
+
+in  vec3 position_vs;
+
+void main() {
+  vec4 p = vec4(position_vs, 1);
+  gl_Position = P * MV * p;
+  gl_Position = p;
+}
+
+# geometry shader
+# version 430
+
+layout (lines) in;
+layout (triangle_strip, max_vertices = 4) out;
+
+const float width = 0.05;
+
+void main(void) {
+  vec4 p0 = gl_in[0].gl_Position;
+  vec4 p1 = gl_in[1].gl_Position;
+  vec3 n  = width / 2 * normalize(cross((p1 - p0).xyz, vec3(0, 0, 1)));
+  gl_Position = p0 + vec4(n, 0); EmitVertex();
+  gl_Position = p0 - vec4(n, 0); EmitVertex();
+  gl_Position = p1 + vec4(n, 0); EmitVertex();
+  gl_Position = p1 - vec4(n, 0); EmitVertex();
+}
+
+
+# fragment shader
+# version 430
+
+ in vec2 gl_PointCoord;
+out vec4 color_fb;
+
+void main() {
+  color_fb = vec4(1, 1, 1, 1);
+}
