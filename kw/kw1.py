@@ -34,4 +34,6 @@ class KW1Widget(DemoWidget):
         debug.logOnSetUniform(False)
         self.updateGL()
 
-KW1Widget.start(KW1Widget, fullscreen=True)
+if __name__ == '__main__':
+    KW1Widget.start(KW1Widget, fullscreen=True)
+
