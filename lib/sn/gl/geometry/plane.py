@@ -39,7 +39,7 @@ class V(Volume):
             for j in range(S-1):
                 p00, p10 = r0  + j,  r1 + j
                 p01, p11 = p00 + 1, p10 + 1
-                elements[p:p+6] = [p00, p10, p11, p00, p11, p01]
+                elements[p:p+6] = [p00, p11, p10, p00, p01, p11]
                 p += 6
         print(len(elements), elements)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glGenBuffers(1))
