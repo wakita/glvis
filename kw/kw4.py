@@ -41,15 +41,17 @@ class KW4(DEMO):
     keyPressEvent = Window.keyPressEvent
 
     def initializeGL(self):
+
         points = self.points
         super().initializeGL('kw4.shaders', lambda _program: POINTS(_program, points))
 
         eye, target, up = T.vec3(0, 0, 3), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
 
-        for p in [GL_VERTEX_PROGRAM_POINT_SIZE]:
+        for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_BLEND]:
             glEnable(p)
-        self.program.u['pointsize'](800 / self.S)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        self.program.u['pointsize'](1000 / self.S)
 
         # Prepare an application-side SSB region
         self.click_buffer = glGenBuffers(1)

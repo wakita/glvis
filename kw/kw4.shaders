@@ -9,6 +9,7 @@ layout (location=0) in vec3 position_vs;
 
 flat out int   vertexID_fs;
 flat out float vertexZ_fs;
+flat out float pointSize;
 
 void main() {
   vec4 p = vec4(position_vs, 1);
@@ -16,6 +17,7 @@ void main() {
   gl_Position = P * p_mv;
 
   gl_PointSize = pointsize / (-p_mv.z);
+  pointSize = gl_PointSize;
 
   vertexID_fs = gl_VertexID;
   vertexZ_fs  = p_mv.z;
@@ -29,6 +31,7 @@ const   vec4 RED   = vec4(1, 0, 0, 1);
 layout (origin_upper_left) in vec4 gl_FragCoord;
 flat in int   vertexID_fs;
 flat in float vertexZ_fs;
+flat in float pointSize;
 
 out vec4 color_fb;
 
@@ -44,11 +47,11 @@ layout (std430, binding = 0) buffer SSB {
 
 const int UNLOCKED = 0, LOCKED = 1;
 
-subroutine void Fragment(float);
+subroutine void Fragment(float, float);
 subroutine uniform Fragment fragment;
 
 subroutine (Fragment)
-void pick(float r) {
+void pick(float D, float d) {
   if (int(gl_FragCoord.x) == clicked_x && int(gl_FragCoord.y) == clicked_y) {
     while (pick_z < vertexZ_fs) {
       if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
@@ -61,14 +64,21 @@ void pick(float r) {
 }
 
 subroutine (Fragment)
-void paint(float r) {
+void paint(float D, float d) {
+
   if (abs((gl_FragCoord.x - clicked_x) * (gl_FragCoord.y - clicked_y)) < 5) color_fb = WHITE;
-  else color_fb = vec4(vec3(r) * 0.5, 1) + ((pick_id == vertexID_fs) ? RED : WHITE) * 0.5;
+  else {
+      vec3 ambient = (pick_id == vertexID_fs ? RED : WHITE).rgb;
+      float diffuse = max(1 - D * D, 0);
+      color_fb = vec4((ambient + diffuse) / 2, 1);
+      if (d >= (pointSize - 1)) color_fb.a = ((pointSize + 1) - d) / 2;
+  }
 }
 
 void main() {
-  vec2 offset = vec2(gl_PointCoord * 2.0 - 1.0);
-  if (1.0 - dot(offset, offset) < 0) discard;
-  float r = sqrt(1 - dot(offset, offset));
-  fragment(r);
+  vec2 XY = 2.0 * gl_PointCoord.xy - 1.0;
+  vec2 xy = pointSize * XY;
+  float d = length(xy);
+  if (d > pointSize + 1) discard;
+  fragment(length(XY), d);
 }
