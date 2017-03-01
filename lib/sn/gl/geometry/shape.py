@@ -1,3 +1,4 @@
+from PyQt5 import QtCore
 from ...qt.glwidget import GLWidget
 from .. import *
 
