@@ -1,68 +1,62 @@
 # vertex shader
-# version 430
-
-layout (location = 0) in vec3 VertexPosition;
-out vec4 color;
-
-const int P1 = 15485863, P2 = 32452843;
-const int N_COLORS = 6;
-const vec4 colors[] = vec4[](
-    vec4(0, 0, 1, 1),
-    vec4(0, 1, 0, 1),
-    vec4(0, 1, 1, 1),
-    vec4(1, 0, 0, 1),
-    vec4(1, 0, 1, 1),
-    vec4(1, 1, 0, 1));
-
-uniform float t;
-uniform mat4 MVP;
-
-// 注意：glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
-uniform float pointSize;
-
-const float T_WAIT = 3;
+# version 410
 
 void main() {
-  gl_Position = MVP * vec4(VertexPosition, 0.6);
-  gl_PointSize = pointSize / gl_Position.w;
-  gl_ClipDistance[0] = - distance(VertexPosition, vec3(0.6, 0.3, 0.4)) + (t - T_WAIT)/6;
-  color = colors[(gl_VertexID + P1) * P2 % N_COLORS];
+  gl_Position = vec4(0, 0, 0, 1);
+  gl_PointSize = 30;
+}
+
+# tessellation control shader
+# version 410
+
+layout (vertices = 4) out;
+const int S = 16;
+
+void main() {
+  if (gl_InvocationID == 0) {
+    gl_TessLevelInner[0] = S;
+    gl_TessLevelOuter[0] = S;
+    gl_TessLevelOuter[1] = S;
+    gl_TessLevelOuter[2] = S;
+  }
+  gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+}
+
+# tessellation evaluation shader
+# version 410
+
+#define Pi 3.14159265
+
+layout (quads, equal_spacing, cw) in;
+
+out vec4    color_fs;
+
+void main() {
+  vec3 T = gl_TessCoord;
+  //vec4 pos = gl_TessLevelOuter;
+
+  float t = 0;
+  if      (T[0] < 1 / (gl_TessLevelOuter[0] + 1)) t = T[2];
+  else if (T[1] < 1 / (gl_TessLevelOuter[1] + 1)) t = 1 + T[0];
+  else if (T[2] < 1 / (gl_TessLevelOuter[2] + 1)) t = 2 + T[1];
+  else t = -1;
+
+  if (t >= 0) {
+    float theta = Pi * 2 * t / 3;
+    gl_Position = vec4(cos(theta), sin(theta), 1, 1);
+  } else {
+    gl_Position = vec4(0, 0, 0, 1);
+  }
+  gl_Position = gl_Position + gl_in[0].gl_Position;
+  color_fs    = gl_Position;
 }
 
 # fragment shader
-# version 430
+# version 410
 
-// subroutine void paintType();
-// subroutine uniform paintType paint;
-
-in vec4 color;
-layout (location = 0) out vec4 FragColor;
-
-uniform vec3 Light;
-uniform float t;
-
-/*
- * 参考： 床井先生「シェーダで Point Sprite」
- * http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20110324
- *
- * 注意: glEnable(GL_POINT_SPRITE)
- */
-
-// subroutine(paintType)
-void paintForPick() {
-}
-
-void paintNormal() {
-  vec3 normal = vec3(gl_PointCoord * 2.0 - 1.0, 0);
-  normal.z = 1.0 - dot(normal.xy, normal.xy);
-  if (normal.z < 0) discard;
-  normal.z = sqrt(normal.z);
-  float luminance = dot(Light, normalize(normal));
-  //FragColor = vec4(vec3(luminance) * 0.8 + vec3(0.2, 0.2, 0.5), 1 / max(1, (t - 10) / 5));
-  // FragColor = vec4(vec3(luminance) * 0.8 + vec3(0.2, 0.2, 0.8), 0.7);
-  FragColor = vec4(vec3(luminance) * 0.8, 0.7) + color * 0.5;
-}
+in  vec4 color_fs;
+out vec4 color_fb;
 
 void main() {
-  paintNormal();
+  color_fb = color_fs;
 }
