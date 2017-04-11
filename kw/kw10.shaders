@@ -1,0 +1,22 @@
+# vertex shader
+# version 430
+
+in vec2 pos;
+
+//uniform mat4 P;
+//uniform mat4 V;
+
+void main(void) {
+    gl_Position = vec4(pos, 0, 1);
+    gl_PointSize = 2;
+    //gl_Position = P * V * vec4(pos, 1);
+}
+
+# fragment shader
+# version 430
+
+out vec4 color_fs;
+
+void main(void) {
+    color_fs = vec4(1.0, 1.0, 1.0, 1.0);
+}
