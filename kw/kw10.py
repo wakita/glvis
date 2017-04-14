@@ -36,7 +36,7 @@ class KW10(GLWidget):
         glBindVertexArray(glGenVertexArrays(1))
 
         graphics = Program('kw10.shaders')
-        compute = Program('kw10a.cs')
+        compute = Program('kw10.cs')
 
         ssbo = glGenBuffers(1)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
@@ -56,15 +56,12 @@ class KW10(GLWidget):
 
         compute.use()
         compute.u['time'](self.time)
-        glDispatchCompute(128, 1, 1)
-        #glDispatchCompute(N, 1, 1)
-        #glDispatchCompute(N // 128, 1, 1)
+        #glDispatchCompute(128, 1, 1)
+        glDispatchCompute(9192, 4, 1)
 
         graphics.use()
         glClear(GL_COLOR_BUFFER_BIT)
-        #glDrawArrays(GL_POINTS, 0, 5)
-        glDrawArrays(GL_POINTS, 0, N)
-        #glDrawArrays(GL_POINTS, 0, int(2 * self.time))
+        glDrawArrays(GL_POINTS, 0, min(int(100 * self.time), N))
 
 if __name__ == '__main__':
     KW10.start(KW10)
