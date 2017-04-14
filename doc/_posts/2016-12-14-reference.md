@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "参考になる情報"
+categories: opengl
+---
+
+
 # Official site
 
 - [OpenGL](http://www.opengl.org/)
