@@ -1,4 +1,4 @@
-from sn.gl import *
+f,*.tesc,*.tese,*.geom,*.frag,*.comprom sn.gl import *
 import sn.gl.debug
 
 from sn.gl.geometry.lines import S as Lines

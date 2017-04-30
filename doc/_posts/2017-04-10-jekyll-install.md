@@ -10,7 +10,7 @@ categories: jekyll
 1. ひとまず必要なソフトをまとめてインストールします。
 
     ```
-    sudo apt install build-essential rbenv rbenv-build pandoc
+    sudo apt install build-essential rbenv pandoc
     sudo apt install libssl-dev libreadline-dev zlib1g-dev
     ```
 

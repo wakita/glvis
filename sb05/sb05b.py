@@ -16,10 +16,10 @@ class W(SB05):
         glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
         glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_DYNAMIC_DRAW)
 
-        glVertexAttribPointer(p.A['position_vs'], 3, GL_FLOAT, GL_FALSE, 24, None)
+        glVertexAttribPointer(p.a['position_vs'].loc, 3, GL_FLOAT, GL_FALSE, 24, None)
         glEnableVertexAttribArray(0)
 
-        glVertexAttribPointer(p.A['color_vs'], 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+        glVertexAttribPointer(p.a['color_vs'].loc, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
         glEnableVertexAttribArray(1)
 
     def onTick(self):

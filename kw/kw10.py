@@ -57,11 +57,12 @@ class KW10(GLWidget):
         compute.use()
         compute.u['time'](self.time)
         #glDispatchCompute(128, 1, 1)
-        glDispatchCompute(9192, 4, 1)
+        glDispatchCompute(N // 1024, 1, 1)
 
         graphics.use()
         glClear(GL_COLOR_BUFFER_BIT)
-        glDrawArrays(GL_POINTS, 0, min(int(100 * self.time), N))
+        #glDrawArrays(GL_POINTS, 0, min(int(100 * self.time), N))
+        glDrawArrays(GL_POINTS, 0, N)
 
 if __name__ == '__main__':
     KW10.start(KW10)

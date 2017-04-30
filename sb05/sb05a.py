@@ -20,13 +20,13 @@ class W(SB05):
 
         glBindBuffer(GL_ARRAY_BUFFER, position_b)
         glBufferData(GL_ARRAY_BUFFER, p.nbytes, p, GL_STATIC_DRAW)
-        position_vs = self.program.A['position_vs']
+        position_vs = self.program.a['position_vs'].loc
         glVertexAttribPointer(position_vs, 3, GL_FLOAT, GL_FALSE, 12, None)
         glEnableVertexAttribArray(position_vs)
 
         glBindBuffer(GL_ARRAY_BUFFER, color_b)
         glBufferData(GL_ARRAY_BUFFER, c.nbytes, c, GL_STATIC_DRAW)
-        color_vs = self.program.A['color_vs']
+        color_vs = self.program.a['color_vs'].loc
         glVertexAttribPointer(color_vs, 3, GL_FLOAT, GL_FALSE, 12, None)
         glEnableVertexAttribArray(color_vs)
 

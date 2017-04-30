@@ -7,7 +7,7 @@ layout(std430, binding=0) buffer particles {
 
 uniform float time;
 
-layout (local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
+layout (local_size_x = 1024, local_size_y = 1, local_size_z = 1) in;
 
 #define PI atan(1) * 4
 #define PI2 (PI * 2)

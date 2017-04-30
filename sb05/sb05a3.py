@@ -2,6 +2,8 @@
 # I attempted to use OpenGL.arrays.vbo feature of PyOpenGL but so far unsuccessful.
 # The app crashes.
 
+# なにかやりたかったらしいが、今となっては意味不明。
+
 from sb05 import *
 
 from OpenGL.arrays import vbo
@@ -20,10 +22,14 @@ class W(SB05):
         vertex_b = vbo.VBO(v)
         vertex_b.bind()
 
-        glVertexAttribPointer(self.program.A['position_vs'], 3, GL_FLOAT, GL_FALSE, 24, None)
+        glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
+        glBufferData(GL_ARRAY_BUFFER, v.nbytes, v, GL_STATIC_DRAW)
+
+        glVertexAttribPointer(self.program.a['position_vs'].loc, 3, GL_FLOAT, GL_FALSE, 24, None)
         glEnableVertexAttribArray(0)
 
-        glVertexAttribPointer(self.program.A['color_vs'], 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+        glVertexAttribPointer(self.program.a['color_vs'].loc, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
         glEnableVertexAttribArray(1)
 
         print('initialization done')
