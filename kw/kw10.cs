@@ -1,7 +1,7 @@
 # compute shader
 # version 430
 
-layout(std430, binding=0) buffer particles {
+layout(std430) buffer particles {
     vec2 pos[];
 };
 

@@ -1,5 +1,6 @@
 import collections, re, sys
 from collections import defaultdict
+from ctypes import *
 import numpy as np
 
 from PyQt5 import QtGui, QtOpenGL, QtWidgets
@@ -10,6 +11,125 @@ from OpenGL.GL.shaders import *
 from . import debug
 from .globject import _GLObject_
 from ..qt.application import Application
+
+
+class ProgramResource(Structure):
+    @staticmethod
+    def specs(specs):
+        return [(name, c_uint) for name, _ in specs], [feature for _, feature in specs]
+
+    def bufinfo(self):
+        return len(self._features_), self._features_, sizeof(self), glres.pointer(), self.pointer()
+
+    def pointer(self):
+        return pointer(self)
+
+    def query(self, p, interface, target):
+        glGetProgramResourceiv(p, interface, target,
+                               len(self._features_), self._features_,
+                               sizeof(self), glres.pointer(), pointer(self))
+
+
+class UINT(ProgramResource):
+    _fields_, _features_ = ProgramResource.specs([('val', c_uint)])
+
+
+glres = UINT()
+
+
+class SIZEI(UINT):
+    pass
+
+
+class SSBlock_Information(ProgramResource):
+    _fields_, _features_ = ProgramResource.specs([
+        ('name_length', GL_NAME_LENGTH),
+        ('num_active_variables', GL_NUM_ACTIVE_VARIABLES),
+        ('buffer_binding', GL_BUFFER_BINDING),
+        ('buffer_data_size', GL_BUFFER_DATA_SIZE)])
+
+class SSB_Variable_Information(ProgramResource):
+    _fields_, _features_ = ProgramResource.specs([
+        ('type', GL_TYPE),
+        ('array_size', GL_ARRAY_SIZE),
+        ('offset', GL_OFFSET),
+        ('array_stride', GL_ARRAY_STRIDE),
+        ('name_length', GL_NAME_LENGTH),
+        ('top_level_array_size', GL_TOP_LEVEL_ARRAY_SIZE)])
+
+
+name_buf = bytes(256)
+
+def resource_name(p, interface, target, length):
+    glGetProgramResourceName(p, interface, target, len(name_buf), glres.pointer(), name_buf)
+    return name_buf[:length - 1].decode('utf-8')
+
+
+def _examine_uniforms_(self):
+    p = self._program
+
+    types = list(self.uniformHandler.keys())
+    u = self.u = defaultdict(lambda: lambda *args: None)
+
+    ibuf = np.zeros(5, dtype=np.int32)
+    glGetProgramInterfaceiv(self._program, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
+    n = ibuf[0]
+    if debug._logOnShaderVariables_:
+        print('#uniforms = {0}'.format(n))
+
+    bbuf = bytes(256)
+    properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
+    for i in range(n):
+        glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
+                               len(ibuf), ibuf[len(properties):], ibuf)
+        loc = ibuf[2]
+        if loc == -1: continue
+
+        # print("loc = {0}, len = {1}, type = {2}".format(loc, ibuf[0], ibuf[1]))
+        length = ibuf[0] + 1
+        _t = ibuf[1]
+        t = types[types.index(ibuf[1])].__repr__()
+        # print('length = {0}, type = {1}, location = {2}' .format(length, t, loc))
+
+        glGetProgramResourceName(p, GL_UNIFORM, i, len(bbuf), ibuf[:1], bbuf)
+        length = ibuf[0]
+        name = bbuf[:length].decode('utf-8')
+        if debug._logOnShaderVariables_:
+            print('uniform {0}:{1}@{2}'.format(name, t, loc))
+        f = self.uniformHandler[_t]
+        u[name] = (lambda *args, f=f, loc=loc, name=name: f(*([loc, name] + list(args))))
+        u[name].name = name; u[name].loc = loc
+        # print(u)
+
+
+def _examine_shader_storage_block_(self):
+    p = self._program
+    ssb = self.ssb = dict()
+
+    glGetProgramInterfaceiv(p, GL_SHADER_STORAGE_BLOCK, GL_ACTIVE_RESOURCES, pointer(glres))
+    active_blocks = glres.val
+    print('#active shader storage block(s) = {}'.format(active_blocks))
+
+    ssb_info = SSBlock_Information()
+    ssb_varinfo = SSB_Variable_Information()
+    for block in range(active_blocks):
+        ssb_info.query(p, GL_SHADER_STORAGE_BLOCK, block)
+        print('name length = {}, #active variables = {}\nbuffer binding = {}, buffer data size = {}'.format(ssb_info.name_length, ssb_info.num_active_variables, ssb_info.buffer_binding, ssb_info.buffer_data_size))
+
+        # Retrieving an active SS-Block name
+        #glGetProgramResourceName(p, GL_SHADER_STORAGE_BLOCK, block, len(name_buf), glres.pointer(), name_buf)
+        #name = name_buf[:ssb_info.name_length - 1].decode('utf-8')
+        name = resource_name(p, GL_SHADER_STORAGE_BLOCK, block, ssb_info.name_length)
+        print('name: "{}"'.format(name))
+        ssb[name] = ssb_info.buffer_binding
+
+        # Retrieving indices of the active member variables
+        for var in range(ssb_info.num_active_variables):
+            ssb_varinfo.query(p, GL_BUFFER_VARIABLE, var)
+            print(ssb_varinfo.type, ssb_varinfo.array_size, ssb_varinfo.offset, ssb_varinfo.array_stride, ssb_varinfo.name_length, ssb_varinfo.top_level_array_size)
+            var_name = resource_name(p, GL_BUFFER_VARIABLE, var, ssb_varinfo.name_length)
+            print('active variable[{}]: length: {}, name: "{}"'.format(var, ssb_varinfo.name_length,  var_name))
+
 
 class Program(_GLObject_):
     shadertypes = dict(
@@ -40,8 +160,9 @@ class Program(_GLObject_):
         self._compileLink()
         self._validate()
         self._examineVariables()
-        self._examineUniforms()
+        self._examine_uniforms()
         self._examineUniformBlocks()
+        self._examine_shader_storage_block()
 
     def delete(self):
         if self._program and bool(glDeleteProgram):
@@ -244,20 +365,22 @@ class Program(_GLObject_):
     uniformHandler[GL_FLOAT_MAT4x2] = glUniformMatrix4x2fv
     uniformHandler[GL_FLOAT_MAT4x3] = glUniformMatrix4x3fv
 
-    def _examineUniforms(self):
+    _examine_uniforms = _examine_uniforms_
+
+    def was_examineUniforms(self):
         p = self._program
 
-        ibuf = np.zeros(5, dtype=np.int32)
-        bbuf = bytes(256)
-
-        glGetProgramInterfaceiv(p, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
-        n = ibuf[0]
-
         types = list(self.uniformHandler.keys())
-        properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
         u = self.u = defaultdict(lambda: lambda *args: None)
+
+        ibuf = np.zeros(5, dtype=np.int32)
+        glGetProgramInterfaceiv(self._program, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
+        n = ibuf[0]
         if debug._logOnShaderVariables_:
             print('#uniforms = {0}'.format(n))
+
+        bbuf = bytes(256)
+        properties = np.array([ GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX ])
         for i in range(n):
             glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
                     len(ibuf), ibuf[len(properties):], ibuf)
@@ -282,6 +405,13 @@ class Program(_GLObject_):
 
     def _examineUniformBlocks(self):
         pass
+
+    def _get_active_resources(self, interface):
+        ibuf = np.zeros(5, dtype=np.int32)
+        glGetProgramInterfaceiv(self._program, interface, GL_ACTIVE_RESOURCES, ibuf)
+        return ibuf
+
+    _examine_shader_storage_block = _examine_shader_storage_block_
 
     def use(self):
         glUseProgram(self._program)
