@@ -206,8 +206,8 @@ class Program(_GLObject_):
             if glGetShaderiv(shader, GL_COMPILE_STATUS) != GL_TRUE:
                 errors = str(glGetShaderInfoLog(shader), 'utf-8')
                 msg = self._get_error(code, errors, 4)
-                raise RuntimeError('Shader compilation failure error in {0}:\n{1}'
-                        .format(t, msg))
+                print('Shader compilation failure error in {}:\n{}\n\n'.format(t, msg))
+                raise SyntaxError(msg)
             glAttachShader(program, shader)
 
         glLinkProgram(program)
@@ -215,7 +215,8 @@ class Program(_GLObject_):
             errors = glGetProgramInfoLog(program)
             if len(errors) > 0:
                 errors = errors.decode('utf-8')
-            raise RuntimeError('Program linking error:\n{0}'.format(errors))
+            print('Program linking error:\n{}\n\n'.format(errors))
+            raise RuntimeError(errors)
         for shader in shaderlist:
             glDetachShader(program, shader)
             glDeleteShader(shader)

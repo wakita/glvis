@@ -1,0 +1,18 @@
+# vertex shader
+# version 410
+
+out vec2 color_fs;
+
+void main(void) {
+  color_fs = vec2(1, 2);
+  gl_Position = vec4(color_fs, 0, 0);
+}
+# fragment shader
+# version 410
+
+in vec4 color_fs;
+out vec4 color_fb;
+
+void main(void) {
+  color_fb = color_fs;
+}

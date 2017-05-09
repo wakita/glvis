@@ -42,7 +42,7 @@ class KW10(GLWidget):
         for k, v in compute.ssb.items():
             print('- {}: {}'.format(k, v))
 
-        ssbo, foo = glGenBuffers(2)
+        ssbo = glGenBuffers(1)
 
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
         glBufferData(GL_SHADER_STORAGE_BUFFER, 4 * 2 * N, None, GL_STATIC_DRAW)
