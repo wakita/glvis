@@ -42,10 +42,11 @@ class KW10(GLWidget):
         for k, v in compute.ssb.items():
             print('- {}: {}'.format(k, v))
 
-        ssbo = glGenBuffers(1)
+        ssbo, foo = glGenBuffers(2)
+
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
         glBufferData(GL_SHADER_STORAGE_BUFFER, 4 * 2 * N, None, GL_STATIC_DRAW)
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo)
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, compute.ssb['particles'], ssbo)
 
         graphics.use()
         glBindBuffer(GL_ARRAY_BUFFER, ssbo)

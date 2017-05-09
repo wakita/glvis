@@ -1,6 +1,11 @@
 # compute shader
 # version 430
 
+/* For testing purpose, the following buffer is declared but (intentionally) not used in the application code. */
+layout(std430) buffer misc {
+    vec2 not_used[];
+};
+
 layout(std430) buffer particles {
     vec2 pos[];
 };
