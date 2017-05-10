@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 from PyQt5 import (QtGui, QtOpenGL, QtWidgets)
 from PyQt5.QtCore import QSize
@@ -68,6 +69,13 @@ class GLWidget(QtOpenGL.QGLWidget):
 
     @classmethod
     def start(cls, W, fullscreen=False, timeout=1000/60):
+        import traceback
+        def excepthook(type, value, tback):
+            print('{}:\n    {}'.format(type.__name__, value), file=sys.stderr)
+            traceback.print_exception(type, value, tback, file=sys.stderr)
+
+        sys.excepthook = excepthook
+
         app = Application()
         widget = W(None)
         widget.show()

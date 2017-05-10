@@ -13,6 +13,16 @@ from .globject import _GLObject_
 from ..qt.application import Application
 
 
+class ShaderProgramSyntaxError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
+class ShaderProgramLinkingError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
 class ProgramResource(Structure):
     @staticmethod
     def specs(specs):
@@ -69,7 +79,13 @@ def _examine_uniforms_(self):
     p = self._program
 
     types = list(self.uniformHandler.keys())
-    u = self.u = defaultdict(lambda: lambda *args: None)
+
+    #u = self.u = defaultdict(lambda: lambda *args: None)
+    def _unbound_uniform_(*args):
+        print('なにこのユニフォーム変数、知らないわよ！', *args, file=sys.stderr)
+    _unbound_uniform_.loc = -1
+    _unbound_uniform_.name = 'なにこのユニフォーム変数、知らないわよ！'
+    u = self.u = defaultdict(lambda *args: _unbound_uniform_(*args))
 
     ibuf = np.zeros(5, dtype=np.int32)
     glGetProgramInterfaceiv(self._program, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
@@ -164,6 +180,7 @@ class Program(_GLObject_):
         self._examineUniformBlocks()
         self._examine_shader_storage_block()
 
+
     def delete(self):
         if self._program and bool(glDeleteProgram):
             p = self._program; self._program = None
@@ -205,18 +222,14 @@ class Program(_GLObject_):
             glCompileShader(shader)
             if glGetShaderiv(shader, GL_COMPILE_STATUS) != GL_TRUE:
                 errors = str(glGetShaderInfoLog(shader), 'utf-8')
-                msg = self._get_error(code, errors, 4)
-                print('Shader compilation failure error in {}:\n{}\n\n'.format(t, msg))
-                raise SyntaxError(msg)
+                raise ShaderProgramSyntaxError(self._get_error(code, errors, 4))
             glAttachShader(program, shader)
 
         glLinkProgram(program)
         if glGetProgramiv(program, GL_LINK_STATUS) != GL_TRUE:
             errors = glGetProgramInfoLog(program)
             if len(errors) > 0:
-                errors = errors.decode('utf-8')
-            print('Program linking error:\n{}\n\n'.format(errors))
-            raise RuntimeError(errors)
+                raise ShaderProgramLinkingError(errors.decode('utf-8'))
         for shader in shaderlist:
             glDetachShader(program, shader)
             glDeleteShader(shader)

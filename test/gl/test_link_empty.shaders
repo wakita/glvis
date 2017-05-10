@@ -1,0 +1,5 @@
+# vertex shader
+# version 410
+
+void main() {
+}

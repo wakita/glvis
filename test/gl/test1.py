@@ -23,6 +23,7 @@ class Widget(GLWidget):
         glBufferData(GL_ARRAY_BUFFER, v_offset.nbytes, v_offset, GL_STATIC_DRAW)
 
         self.program = Program('test1.shaders')
+        print(self.program.u['no_uniform_var'].loc)
 
 #       pos = glGetAttribLocation(self.program._program, 'v_offset')
 #       print('pos:', pos)
