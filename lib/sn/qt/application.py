@@ -18,6 +18,7 @@ class Application(QApplication):
         def excepthook(type, value, tback):
             print('{}:\n    {}'.format(type.__name__, value), file=sys.stderr)
             traceback.print_exception(type, value, tback, file=sys.stderr)
+            exit(1)
         sys.excepthook = excepthook
 
 
