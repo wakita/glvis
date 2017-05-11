@@ -51,22 +51,6 @@ class SIZEI(UINT):
     pass
 
 
-class SSBlock_Information(ProgramResource):
-    _fields_, _features_ = ProgramResource.specs([
-        ('name_length', GL_NAME_LENGTH),
-        ('num_active_variables', GL_NUM_ACTIVE_VARIABLES),
-        ('buffer_binding', GL_BUFFER_BINDING),
-        ('buffer_data_size', GL_BUFFER_DATA_SIZE)])
-
-class SSB_Variable_Information(ProgramResource):
-    _fields_, _features_ = ProgramResource.specs([
-        ('type', GL_TYPE),
-        ('array_size', GL_ARRAY_SIZE),
-        ('offset', GL_OFFSET),
-        ('array_stride', GL_ARRAY_STRIDE),
-        ('name_length', GL_NAME_LENGTH),
-        ('top_level_array_size', GL_TOP_LEVEL_ARRAY_SIZE)])
-
 
 name_buf = bytes(256)
 
@@ -118,6 +102,24 @@ def _examine_uniforms_(self):
         # print(u)
 
 
+class SSBlock_Information(ProgramResource):
+    _fields_, _features_ = ProgramResource.specs([
+        ('name_length', GL_NAME_LENGTH),
+        ('num_active_variables', GL_NUM_ACTIVE_VARIABLES),
+        ('buffer_binding', GL_BUFFER_BINDING),
+        ('buffer_data_size', GL_BUFFER_DATA_SIZE)])
+
+
+class SSB_Variable_Information(ProgramResource):
+    _fields_, _features_ = ProgramResource.specs([
+        ('type', GL_TYPE),
+        ('array_size', GL_ARRAY_SIZE),
+        ('offset', GL_OFFSET),
+        ('array_stride', GL_ARRAY_STRIDE),
+        ('name_length', GL_NAME_LENGTH),
+        ('top_level_array_size', GL_TOP_LEVEL_ARRAY_SIZE)])
+
+
 def _examine_shader_storage_block_(self):
     p = self._program
     ssb = self.ssb = dict()
@@ -125,26 +127,31 @@ def _examine_shader_storage_block_(self):
     glGetProgramInterfaceiv(p, GL_SHADER_STORAGE_BLOCK, GL_ACTIVE_RESOURCES, pointer(glres))
     active_blocks = glres.val
     print('#active shader storage block(s) = {}'.format(active_blocks))
+    print()
 
     ssb_info = SSBlock_Information()
     ssb_varinfo = SSB_Variable_Information()
     for block in range(active_blocks):
         ssb_info.query(p, GL_SHADER_STORAGE_BLOCK, block)
-        print('name length = {}, #active variables = {}\nbuffer binding = {}, buffer data size = {}'.format(ssb_info.name_length, ssb_info.num_active_variables, ssb_info.buffer_binding, ssb_info.buffer_data_size))
+        print('block = {}, name length = {}, #active variables = {}\nbuffer binding = {}, buffer data size = {}'.format(block, ssb_info.name_length, ssb_info.num_active_variables, ssb_info.buffer_binding, ssb_info.buffer_data_size))
 
         # Retrieving an active SS-Block name
-        #glGetProgramResourceName(p, GL_SHADER_STORAGE_BLOCK, block, len(name_buf), glres.pointer(), name_buf)
-        #name = name_buf[:ssb_info.name_length - 1].decode('utf-8')
         name = resource_name(p, GL_SHADER_STORAGE_BLOCK, block, ssb_info.name_length)
-        print('name: "{}"'.format(name))
-        ssb[name] = ssb_info.buffer_binding
+        print('ssb name: "{}"'.format(name))
+        ssb[name] = block
+
+        variables = np.zeros(ssb_info.num_active_variables, dtype=np.int32)
+        glGetProgramResourceiv(p, GL_SHADER_STORAGE_BLOCK, block, 1,
+                               [GL_ACTIVE_VARIABLES], ssb_info.num_active_variables, pointer(glres), variables)
+        print('Active variables: {}'.format(variables))
 
         # Retrieving indices of the active member variables
-        for var in range(ssb_info.num_active_variables):
+        for var in variables:
             ssb_varinfo.query(p, GL_BUFFER_VARIABLE, var)
             print(ssb_varinfo.type, ssb_varinfo.array_size, ssb_varinfo.offset, ssb_varinfo.array_stride, ssb_varinfo.name_length, ssb_varinfo.top_level_array_size)
             var_name = resource_name(p, GL_BUFFER_VARIABLE, var, ssb_varinfo.name_length)
             print('active variable[{}]: length: {}, name: "{}"'.format(var, ssb_varinfo.name_length,  var_name))
+            print()
 
 
 class Program(_GLObject_):
