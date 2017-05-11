@@ -14,6 +14,12 @@ class Application(QApplication):
 
     def __init__(self):
         super(QApplication, self).__init__(sys.argv)
+        import traceback
+        def excepthook(type, value, tback):
+            print('{}:\n    {}'.format(type.__name__, value), file=sys.stderr)
+            traceback.print_exception(type, value, tback, file=sys.stderr)
+        sys.excepthook = excepthook
+
 
     def startTimer(self, timeout=(1000/60.), onTick=None):
         cls = self.__class__
