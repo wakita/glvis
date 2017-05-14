@@ -1,6 +1,7 @@
 import math
 from sb03 import *
 
+
 class W(SB03):
     program = None
 

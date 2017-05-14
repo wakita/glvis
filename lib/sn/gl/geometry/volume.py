@@ -7,10 +7,10 @@ import sn.gl.geometry.t3d as T
 class V(Shape): pass
 
 class D(Demo, GLWidget3D):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         super(D, self).__init__(parent)
 
-    def initializeGL(self, shaderpath, Geometry):
+    def initializeGL(self, shaderpath=None, Geometry=None):
         eye, target, up = T.vec3(0, 0, 5), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
         self.View = T.lookat(eye, target, up)
         super(D, self).initializeGL(shaderpath, Geometry)

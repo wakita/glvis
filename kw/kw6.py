@@ -1,24 +1,19 @@
 from sn.gl import *
 from sn.qt import *
-import sn.gl.debug
+import sn.sn_logging as sn_logging
 
-sn.gl.debug._logOnSetUniform_ = True
+sn_logging.log_on_uniform_update(True)
+
 
 class KW6(GLWidget):
-    def onTick(self): self.updateGL()
-
     def initializeGL(self):
         super().initializeGL()
-        self.program = Program('kw6.shaders')
         VertexArray().bind()
+        Program('kw6.shaders').use()
 
     def paintGL(self):
         super().paintGL()
-        self.program.use()
-
-        self.program.u['t'](self.time)
         glDrawArrays(GL_PATCHES, 0, 4)
-        glFlush()
-        sn.gl.debug._logOnSetUniform_ = False
+        sn_logging.log_on_uniform_update(False)
 
-KW6.start(KW6)
+KW6.start()

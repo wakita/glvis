@@ -16,7 +16,7 @@ class SB05(GLWidget):
 
     def minimumSizeHint(self): return QtCore.QSize(self._width, self._height)
 
-    def onTick(self):
+    def on_tick(self):
         self.updateGL()
 
     keyPressEvent = Window.keyPressEvent
@@ -25,7 +25,7 @@ def start(Widget):
     app = Application()
     widget = Widget(None)
     widget.show()
-    app.startTimer(timeout = 1000/60, onTick = widget.onTick)
+    app.startTimer(timeout = 1000/60, on_tick=widget.on_tick)
     app.run()
 
 if __name__ == '__main__' and False:
@@ -41,7 +41,7 @@ if __name__ == '__main__' and False:
             (2, 0, sb05d.W), (2, 1, sb05e.W), (2, 2, sb05f.W),
             (3, 1, sb05g.W) ]:
         wx = W(w, width=400, height=300)
-        Application.addOnTick(wx.onTick)
+        Application.addOnTick(wx.on_tick)
         grid.addWidget(wx, r, c)
     w.setLayout(grid)
     w.show()

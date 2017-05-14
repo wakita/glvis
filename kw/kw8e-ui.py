@@ -1,11 +1,10 @@
 import math
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QOpenGLWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from sn.qt import *
 from sn.gl import *
-#from sn.gl.geometry.volume import D as DemoWidget
 
 from glwindow import Ui_MainWindow
 
@@ -20,7 +19,7 @@ class Application(QApplication):
         timer.start(1000/60.)
 
     @classmethod
-    def addOnTick(cls, f):
+    def add_on_tick(cls, f):
         if cls._timer: cls._timer.timeout.connect(f)
 
 
@@ -34,7 +33,7 @@ class MyWidget(GLWidget):
     def minimuSizeHint(self):
         return QtCore.QSize(self._width, self._height)
 
-    def onTick(self):
+    def on_tick(self):
         self.updateGL()
 
     def initializeGL(self):
@@ -66,6 +65,6 @@ if __name__ == '__main__':
     main = MainWindow()
     main.show()
     GLWidget.printGLInfo()
-    Application.addOnTick(main.ui.glView.onTick)
+    Application.add_on_tick(main.ui.glView.on_tick)
     main.ui.quitButton.clicked.connect(lambda *args: app.quit())
     sys.exit(app.exec_())

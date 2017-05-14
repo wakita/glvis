@@ -2,7 +2,7 @@ from sn.qt import *
 from sn.gl import *
 
 class Widget(GLWidget):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         print('__init__@Widget')
         super(Widget, self).__init__(parent)
 

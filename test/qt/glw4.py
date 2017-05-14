@@ -21,7 +21,7 @@ class GLW(GLWidget):
 # 当初、__init__のなかでタイマー動作を設定していたが、タイミングバグを引き起こしていた。
 # 原因は、OpenGLの初期化が完了するまえにタイマーイベントを拾って、描画してしまうことのようだ。
 # paintGLにタイマー動作の設定コードを移動することで対応。
-        Application.addOnTick(self.tick)
+        Application.add_on_tick(self.tick)
 
     def paintGL(self):
         theta = Time.time / 10

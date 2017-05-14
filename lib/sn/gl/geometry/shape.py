@@ -25,8 +25,13 @@ class S(object):
     def render(self):
         pass
 
+
 class D(GLWidget):
     program = None
+
+    def __init__(self, parent=None):
+        print(help(super().__init__))
+        super().__init__(parent)
 
     def initializeGL(self, shaderpath, Geometry):
         super().initializeGL()

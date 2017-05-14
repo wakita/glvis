@@ -1,23 +1,12 @@
-f,*.tesc,*.tese,*.geom,*.frag,*.comprom sn.gl import *
-import sn.gl.debug
-
-from sn.gl.geometry.lines import S as Lines
-from sn.gl.geometry.lines import D as DemoWidget
+from sn.gl import *
+from sn.qt import *
+from sn.gl.geometry.lines import D as LINES
 
 
-class KW9Widget(DemoWidget):
+class KW9Widget(LINES):
     def initializeGL(self):
+        super().initializeGL()
+        [glEnable(p) for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_CLIP_PLANE0, GL_BLEND]]
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-        super().initializeGL(None, lambda program: Lines(program))
-
-        for p in [ GL_VERTEX_PROGRAM_POINT_SIZE, GL_CLIP_PLANE0, GL_BLEND ]:
-            glEnable(p)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    def paintGL(self):
-        super().paintGL()
-
-    def onTick(self):
-        self.updateGL()
-
-DemoWidget.start(DemoWidget)
+KW9Widget.start()

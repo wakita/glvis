@@ -37,7 +37,7 @@ class Widget(GLWidget):
         glDrawArrays(GL_TRIANGLES, 0, self.v_offset.nbytes)
         glFlush()
 
-    def onTick(self):
+    def on_tick(self):
         t = Time.time
         hue = math.fmod(t / 10, 1)
         c = QColor.fromHsvF(hue, 1., .5)
@@ -55,5 +55,5 @@ class Widget(GLWidget):
 app = Application()
 window = Widget(None)
 window.show()
-app.startTimer(onTick = window.onTick)
+app.startTimer(on_tick = window.on_tick)
 app.run()

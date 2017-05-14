@@ -1,4 +1,5 @@
 from ctypes import *
+import logging
 import sys
 
 from PyQt5 import QtCore, QtGui
@@ -8,10 +9,7 @@ from sn.gl.geometry.volume import D as DEMO
 from sn.gl.geometry.points import V as POINTS
 import sn.gl.geometry.t3d as T
 
-import sn.gl.debug
-sn.gl.debug.logOnShaderVariables(True)
-sn.gl.debug.logOnSetUniform(False)
-logging = True
+S = 5
 
 
 class SSB(Structure):
@@ -21,28 +19,19 @@ class SSB(Structure):
 
 
 class KW4(DEMO):
-
-    def __init__(self, widget):
-        super().__init__(widget)
+    def __init__(self):
+        super().__init__()
         self.should_handle_pick = False
-
-        s = self.S = 5
-        vvals = np.array(range(s)) * 2. / (s - 1) - 1.
-        self.points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
-
         self.click_buffer = 0
-
         self.fragment = dict()
+        '@type: Dict[str, int]'
 
-    def minimumSizeHint(self): return QtCore.QSize(600, 600)
-
-    def onTick(self): self.updateGL()
-
-    keyPressEvent = Window.keyPressEvent
+    def minimumSizeHint(self) -> QtCore.QSize:
+        return QtCore.QSize(600, 600)
 
     def initializeGL(self):
-
-        points = self.points
+        vvals = np.array(range(S)) * 2. / (S - 1) - 1.
+        points = [(x, y, z) for x in vvals for y in vvals for z in vvals]
         super().initializeGL('kw4.shaders', lambda _program: POINTS(_program, points))
 
         eye, target, up = T.vec3(0, 0, 3), T.vec3(0, 0, 0), T.vec3(0, 1, 0)
@@ -51,7 +40,7 @@ class KW4(DEMO):
         for p in [GL_VERTEX_PROGRAM_POINT_SIZE, GL_BLEND]:
             glEnable(p)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        self.program.u['pointsize'](1000 / self.S)
+        self.program.u['pointsize'](1000 / S)
 
         # Prepare an application-side SSB region
         self.click_buffer = glGenBuffers(1)
@@ -66,7 +55,7 @@ class KW4(DEMO):
 
         for f in 'paint pick'.split():
             self.fragment[f] = glGetSubroutineIndex(self.program._program, GL_FRAGMENT_SHADER, f)
-        print(self.fragment)
+        logging.debug(self.fragment)
 
     def paintGL(self):
         self.geometry.use()
@@ -86,9 +75,8 @@ class KW4(DEMO):
         # Initialize fields
         ssb.pick_z = float('-inf')         # Initially -infty
         ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
-        if logging:
-            print('float.min: {0}'.format(sys.float_info.min))
-            print('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+        logging.info('float.min: {0}'.format(sys.float_info.min))
+        logging.info('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
         # Unmap the SSB
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
         # Tell the next rendering cycle to perform pick-identification
@@ -100,14 +88,12 @@ class KW4(DEMO):
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
-            if logging:
-                print('SSB: ({0}, {1})'.format(ssb.clicked_x, ssb.clicked_y))
-                print('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
+            logging.info('SSB: ({0}, {1})'.format(ssb.clicked_x, ssb.clicked_y))
+            logging.info('id: {0} (z: {1})'.format(ssb.pick_id, ssb.pick_z))
             # Unmap the SSB
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
             # Pick-identification finished
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
             self.should_handle_pick = False
 
-if __name__ == '__main__':
-    KW4.start(KW4)
+KW4.start()

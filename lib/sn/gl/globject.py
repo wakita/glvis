@@ -1,15 +1,22 @@
-from OpenGL.GL import *
-#from .util import *
+import logging
 import numpy as np
+from OpenGL.GL import *
 
-class _GLObject_(object):
-    def create(self): pass
-    def delete(self): pass
+
+class GLObject(object):
+    def create(self, *args, **kwargs): pass
+
+    def delete(self, *args, **kwargs): pass
 
 #   def __del__(self):  self.delete()
     def __init__(self, *args, **kwargs): self.create(*args, **kwargs)
 
-class VertexArray(_GLObject_):
+
+class VertexArray(GLObject):
+    def __init__(self):
+        self._h = None
+        super().__init__()
+
     def create(self):
         self._h = glGenVertexArrays(1)
         self.bind()
@@ -17,7 +24,7 @@ class VertexArray(_GLObject_):
 
     def delete(self):
         if self._h and bool(glDeleteVertexArrays):
-            h = self._h; self._h = None
+            h, self._h = self._h, None
             glDeleteVertexArrays(1, [h])
 
     def bind(self):
@@ -32,17 +39,19 @@ class VertexArray(_GLObject_):
     def disable(self):
         glDisableVertexAttribArray(self._h)
 
-class VertexBuffer(_GLObject_):
+
+class VertexBuffer(GLObject):
     def __init__(self, buf):
+        super().__init__()
         self._buffer = buf
 
     @classmethod
-    def create(self, n):
+    def create(cls, n):
         return [VertexBuffer(buf) for buf in glGenBuffers(n)]
 
     def delete(self):
         if self._buffer and bool(glDeleteBuffers):
-            buffer = self._buffer; self._buffer = None
+            buffer, self._buffer = self._buffer, None
             glDeleteBuffers(1, [buffer])
 
     def bind(self):
@@ -50,10 +59,11 @@ class VertexBuffer(_GLObject_):
 
     _np2glType = dict()
     for npT, glT in [(np.float64, GL_DOUBLE), (np.float32, GL_FLOAT), (np.int32, GL_INT),
-            (np.int16, GL_SHORT), (np.int8, GL_UNSIGNED_BYTE), (np.uint8, GL_BYTE)]:
+                     (np.int16, GL_SHORT), (np.int8, GL_UNSIGNED_BYTE), (np.uint8, GL_BYTE)]:
         _np2glType[np.dtype(npT)] = glT
 
-    def allocate(self, data, usage):
+    @staticmethod
+    def allocate(data, usage):
         # print('data: {0}, usage: {1}'.format(data.nbytes, usage))
         glBufferData(GL_ARRAY_BUFFER, data.nbytes, data, usage)
 
@@ -63,9 +73,11 @@ class VertexBuffer(_GLObject_):
 
     def dataFormat(self, elem, nelems, normalized=GL_FALSE, stride=0, offset=None):
         t = self._np2glType[elem.dtype]
-        # print('dataFormat: buffer: {0}, bytes: {1}, type: {2}, offset: {3}'.format(self._buffer, elem.nbytes, t, offset))
+        logging.info('dataFormat: buffer: {0}, bytes: {1}, type: {2}, offset: {3}'.format(
+            self._buffer, elem.nbytes, t, offset))
         glVertexAttribPointer(self._buffer, nelems, t, normalized, stride, offset)
 
+'''
 if __name__ == '__main__':
     from sn.qt import Application, GLWidget
     app = Application()
@@ -82,3 +94,4 @@ if __name__ == '__main__':
 
     window = Widget(None)
     window.show()
+'''

@@ -1,15 +1,13 @@
-from sn.gl.geometry.plane import D as Demo
+from sn.gl.geometry.plane import D as DEMO
+import sn.sn_logging as sn_logging
 
-import sn.gl.debug
-sn.gl.debug._logOnSetUniform_ = True
+sn_logging.log_on_uniform_update(True)
 
-class KW5(Demo):
+
+class KW5(DEMO):
     def paintGL(self):
         self.program.u['t'](self.time)
         super().paintGL()
-        sn.gl.debug._logOnSetUniform_ = False
+        sn_logging.log_on_uniform_update(False)
 
-    def onTick(self):
-        self.updateGL()
-
-KW5.start(KW5, fullscreen=True)
+KW5.start(fullscreen=True)

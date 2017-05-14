@@ -1,10 +1,11 @@
 import os.path
 from .. import *
-from .shape import S as Shape
-from .shape import D as Demo
+from .shape import S as SHAPE
+from .shape import D as DEMO
 import sn.gl.geometry.t3d as T
 
-class S(Shape):
+
+class S(SHAPE):
 
     program = None
 
@@ -47,7 +48,8 @@ class S(Shape):
         super().render()
         glDrawElements(GL_LINES, self.E, self.edgetype, self.e)
 
-class D(Demo):
+
+class D(DEMO):
 
     def initializeGL(self):
         N = 36

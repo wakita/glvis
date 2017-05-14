@@ -1,16 +1,15 @@
-import sys
+import logging
 import numpy as np
-from PyQt5 import (QtGui, QtOpenGL, QtWidgets)
+from typing import Type
+from PyQt5 import (QtGui, QtOpenGL)
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QWindow
-#import OpenGL
-#OpenGL.ERROR_CHEKING = True
-#OpenGL.FULL_LOGGING = True
 from OpenGL.GL import *
 from . import *
 from ..gl.geometry import t3d as T
 from .application import Application
 from .window import Window
+
 
 class GLWidget(QtOpenGL.QGLWidget):
 
@@ -20,7 +19,7 @@ class GLWidget(QtOpenGL.QGLWidget):
     format.setSampleBuffers(True)
     format.setStereo(False)
 
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         super(GLWidget, self).__init__(self.format, parent)
         self.parent = parent
         self.time = Time.time
@@ -28,15 +27,15 @@ class GLWidget(QtOpenGL.QGLWidget):
         self.frames = 0
         self.fps = 0
 
-    def minimumSizeHint(self):
+    def minimumSizeHint(self) -> QSize:
         return QSize(800, 600)
 
     def initializeGL(self):
         super().initializeGL()
-        if not self.parent: GLWidget.printGLInfo()
+        GLWidget.print_gl_info() if not self.parent else None
         glClearColor(.0, .0, .0, 1)
 
-    def resizeGL(self, w, h):
+    def resizeGL(self, w: int, h: int):
         super().resizeGL(w, h)
         glViewport(0, 0, w, h)
 
@@ -44,51 +43,56 @@ class GLWidget(QtOpenGL.QGLWidget):
         self.time = t = Time.time
         if t > self.nextFPS:
             self.fps = self.frames
-            print('Frames/sec = {0}'.format(self.fps))
+            logging.info('Frames/sec = {0}'.format(self.fps))
             self.nextFPS = t + 1
             self.frames = 0
         self.frames = self.frames + 1
         super().paintGL()
         glClear(GL_COLOR_BUFFER_BIT)
 
-    def onTick(self): pass
+    def on_tick(self):
+        self.updateGL()
 
     keyPressEvent = Window.keyPressEvent
 
     @classmethod
-    def printGLInfo(cls, fmt=None):
+    def print_gl_info(cls, fmt : QtGui.QSurfaceFormat = None):
         profiles = ['No profile', 'Core profile', 'Compatibility profile']
-        if fmt == None:
+        if fmt is None:
             fmt = QtGui.QOpenGLContext.currentContext().format()
-        print("{0:8} {1}.{2}".format('Version',  fmt.majorVersion(), fmt.minorVersion()))
-        print("{0:8} {1}"    .format('Profile',  profiles[fmt.profile()]))
-        print("{0:8} {1}"    .format('Vendor',   glGetString(GL_VENDOR).decode('utf-8')))
-        print('{0:8} {1}'    .format('Renderer', glGetString(GL_RENDERER).decode('utf-8')))
-        print('{0:8} {1}'    .format('GLSL',     glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8')))
-        print()
+        logging.info('{0:8} {1}.{2}'.format('Version',  fmt.majorVersion(), fmt.minorVersion()))
+        logging.info('{0:8} {1}'    .format('Profile',  profiles[fmt.profile()]))
+        logging.info('{0:8} {1}'    .format('Vendor',   glGetString(GL_VENDOR).decode('utf-8')))
+        logging.info('{0:8} {1}'    .format('Renderer', glGetString(GL_RENDERER).decode('utf-8')))
+        logging.info('{0:8} {1}\n'  .format('GLSL',     glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8')))
 
     @classmethod
-    def start(cls, W, fullscreen=False, timeout=1000/60):
+    def start(cls, fullscreen=False, timeout=1000/60):
         app = Application()
-        widget = W(None)
+        widget = cls()
         widget.show()
-        app.startTimer(timeout = timeout, onTick = widget.onTick)
-        #if fullscreen: app.activeWindow().setVisibility(QWindow.FullScreen)
-        if fullscreen: widget.windowHandle().setVisibility(QWindow.FullScreen)
+        app.startTimer(timeout=timeout, on_tick=widget.on_tick)
+        # if fullscreen: app.activeWindow().setVisibility(QWindow.FullScreen)
+        if fullscreen:
+            widget.windowHandle().setVisibility(QWindow.FullScreen)
         app.run()
 
-class GLWidget3D(GLWidget):
 
-    Model = np.eye(4, dtype=np.float32)
-    View = T.translate(0, 0, -3)
+class GLWidget3D(GLWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.Model: np.ndarray = np.eye(4, dtype=np.float32)
+        self.View: np.ndarray = T.translate(0, 0, -3)
+        self.Projection: np.ndarray = None
 
     def initializeGL(self, *args):
         super().initializeGL()
         glEnable(GL_DEPTH_TEST)
 
-    def resizeGL(self, w, h):
+    def resizeGL(self, w: int, h: int):
         super().resizeGL(w, h)
-        self.program.u['V'](self.View)
+        if self.program.u['V']:
+            self.program.u['V'](self.View)
 
         self.Projection = T.perspective(45., w/float(h), 0.1, 1000.)
         self.program.u['P'](self.Projection)

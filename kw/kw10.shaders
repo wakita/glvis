@@ -1,22 +1,25 @@
 # vertex shader
 # version 430
 
-in vec2 pos;
+in vec2 position_vs;
+in vec3 color_vs;
+out vec3 color_fs;
 
-//uniform mat4 P;
-//uniform mat4 V;
+const vec3 white = vec3(1, 1, 1);
+const float alpha = 0.5;
 
 void main(void) {
-    gl_Position = vec4(pos, 0, 1);
-    gl_PointSize = 2;
-    //gl_Position = P * V * vec4(pos, 1);
+    gl_Position = vec4(position_vs, 0, 1);
+    gl_PointSize = 10;
+    color_fs = white * (1 - alpha) + color_vs * alpha;
 }
 
 # fragment shader
 # version 430
 
-out vec4 color_fs;
+in vec3 color_fs;
+out vec4 color_fb;
 
 void main(void) {
-    color_fs = vec4(0.8, 0.8, 1.0, 0.3);
+    color_fb = vec4(color_fs, 0.8);
 }

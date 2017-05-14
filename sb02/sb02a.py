@@ -1,29 +1,29 @@
 #!/usr/bin/env python
 
-from PyQt5 import QtGui, QtOpenGL, QtWidgets
+from PyQt5 import QtOpenGL, QtWidgets
 from PyQt5.QtOpenGL import QGLWidget
 
 from OpenGL.GL import *
 
+
 class GLPlotWidget(QGLWidget):
     width, height = 600, 600
 
-    def __init__(self, format = None):
-        super(GLPlotWidget, self).__init__(format, None)
+    def __init__(self, fmt=None):
+        super(GLPlotWidget, self).__init__(fmt, None)
 
     def initializeGL(self):
         glClearColor(1.0, 0.0, 0.0, 1.0)
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT)
-
         glFlush()
 
 if __name__ == '__main__':
     import sys
 
     class TestWindow(QtWidgets.QMainWindow):
-        def __init__(self, parent = None):
+        def __init__(self, parent=None):
             super(TestWindow, self).__init__(parent)
 
             glformat = QtOpenGL.QGLFormat()

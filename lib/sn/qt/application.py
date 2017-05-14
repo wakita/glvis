@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget)
 
 class __TIME__(type):
     @property
-    def time(cls):
+    def time(cls) -> float:
         return cls._time.elapsed() / 1000.
 
 class Time(metaclass = __TIME__):
@@ -22,14 +22,14 @@ class Application(QApplication):
         sys.excepthook = excepthook
 
 
-    def startTimer(self, timeout=(1000/60.), onTick=None):
+    def startTimer(self, timeout=(1000/60.), on_tick=None):
         cls = self.__class__
         cls._timer = QTimer(self)
         cls._timer.start(timeout)
-        if onTick != None: cls.addOnTick(onTick)
+        if on_tick != None: cls.add_on_tick(on_tick)
 
     @classmethod
-    def addOnTick(cls, onTick): cls._timer.timeout.connect(onTick)
+    def add_on_tick(cls, on_tick): cls._timer.timeout.connect(on_tick)
 
     def run(self):
         sys.exit(self.exec_())
