@@ -5,12 +5,10 @@
 
 import math
 
-import sn.gl.debug as debug
 import sn.gl.geometry.t3d as T
 from sn.gl import *
 from sn.gl.geometry.points import V as POINTS
 from sn.gl.geometry.volume import D as DEMO_WIDGET
-debug.logOnSetUniform(True)
 
 
 class KW1AWidget(DEMO_WIDGET):
@@ -51,6 +49,5 @@ class KW1AWidget(DEMO_WIDGET):
             self.doPaint = dp
             glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, [self.doPaint])
         super().paintGL()
-        debug.logOnSetUniform(False)
 
 KW1AWidget.start(fullscreen=True)
