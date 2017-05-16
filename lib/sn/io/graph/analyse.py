@@ -1,19 +1,17 @@
 from pathlib import PurePath, Path
 import json
+import logging
 import re
 import sys
-from typing import Dict, Tuple
 
 from igraph import Graph
 import numpy as np
 
-from sn.io import pickle, io_array
+from sn.io.util import pickle, io_array
 import sn.utils
 from sn.utils import time as benchmark
 
 _DEBUG_ = False
-
-sn.utils._VERBOSE_ = True
 
 
 def read(path: PurePath, *args, **kwds) -> Graph:
@@ -21,22 +19,22 @@ def read(path: PurePath, *args, **kwds) -> Graph:
         g = Graph.Read(str(path), *args, **kwds)
         benchmark(message='Reading "{0}"'.format(path))
         try:
-            print(path.parent.joinpath(path.stem + '.labels'))
+            logging.info(path.parent.joinpath(path.stem + '.labels'))
             with open(str(path.parent.joinpath(path.stem + '.labels'))) as r:
                 g.vs['label'] = [re.sub(r'\n', '', line) for line in r.readlines()]
         except FileNotFoundError:
             pass
         return g
     except:
-        print('Parsing failure:', path)
+        logging.critical('Parsing failure: {}'.format(path))
         e, message, trace = sys.exc_info()
-        print(message)
+        logging.critical(message)
         raise e
 
 
 def normalize(g: Graph, profile: dict) -> Graph:
     graph_dir = PurePath(profile['root']).joinpath(profile['name'], 'graph')
-    print('graph_dir:', graph_dir, 'name:', profile['name'])
+    logging.info('graph_dir: {}, name: {}', graph_dir, profile['name'])
 
     benchmark(message='Starting normalize')
     # Convert to undirected graph
@@ -63,7 +61,7 @@ def normalize(g: Graph, profile: dict) -> Graph:
     for attribute in profile['attributes']:
         pickle(attribute_dir.joinpath(attribute), g.vs[attribute])
 
-    print()
+    logging.info('')
 
     return g
 
@@ -72,22 +70,22 @@ if __name__ == '__main__' and False:
     def test1():
         g = Graph([(0, 1), (0, 2), (2, 3), (3, 4), (4, 2), (2, 5), (5, 0), (6, 3), (5, 6)])
         g.vs["name"] = ["Alice", "Bob", "Claire", "Dennis", "Esther", "Frank", "George"]
-        print(g.vs['name'])
-        print(g)
-        print(g.vs[0])
+        logging.info(g.vs['name'])
+        logging.info(g)
+        logging.info(g.vs[0])
 
     def test2():
         g = Graph([(0, 1), (0, 0), (0, 2), (2, 3), (3, 4), (4, 2), (2, 5), (5, 0), (6, 3), (5, 6),
                    (7, 8), (8, 8), (8, 9), (9, 10), (10, 11), (11, 12), (12, 13), (13, 14), (14, 15), (15, 16)])
-        print(g)
+        logging.info(g)
         g.to_undirected()
-        print(g)
-        print(len(g.decompose()))
-        print(g.decompose()[0])
-        print(g.decompose()[1])
+        logging.info(g)
+        logging.info(len(g.decompose()))
+        logging.info(g.decompose()[0])
+        logging.info(g.decompose()[1])
         g = g.decompose(maxcompno=1)[0]
         g.simplify()
-        print(g)
+        logging.info(g)
 
     test1()
     test2()
@@ -112,7 +110,7 @@ def cmdscale(g: Graph, profile: dict):
         d = np.array(paths, dtype=np.int)
         io_array(str(distance_file), d)
         if _DEBUG_ and len(g.vs) < 100:
-            print(d)
+            logging.info(d)
         benchmark(message='All-pairs shortest path length over the graph')
 
     # Classical Multi Dimensional Scaling
@@ -133,7 +131,7 @@ def cmdscale(g: Graph, profile: dict):
         for i in range(dim_hd):
             v = E[:, i]
             diff = B.dot(v) - Λ[i] * v
-            print(diff.dot(diff))
+            logging.info(diff.dot(diff))
             assert diff.dot(diff) < 1e-10  # Confirm that E are truely eigenvectors
 
     L = np.eye(N, dim_hd).dot(np.diag(Λ))
@@ -179,15 +177,16 @@ def centrality(g: Graph, profile: dict):
 def analyse(root: PurePath, path: PurePath, profile: dict) -> Graph:
     g = normalize(read(path), profile)
 
-    Λ, E = cmdscale(g, profile)
+    cmdscale(g, profile)
     centrality(g, profile)
 
     pickle(root.joinpath(profile['name'], 'misc', 'profile'), profile)
-    print(json.dumps(profile, indent=4))
+    logging.info(json.dumps(profile, indent=4))
 
     return g
 
 
+''' This part of code has been separated to sn.io.graph.load
 class Loader:
     def __init__(self, dataset_dir: PurePath, name: str):
         self.name = name
@@ -244,6 +243,7 @@ class Loader:
 def load(dataset_dir: PurePath, name: str) -> Loader:
     loader = Loader(dataset_dir, name)
     return loader
+'''
 
 
 if __name__ == '__main__':
@@ -256,7 +256,7 @@ if __name__ == '__main__':
         testcase = {
             'hypercube-4d': dataset_dir.joinpath('graphs', 'hypercube-4d.graphml'),
             'lesmis': dataset_dir.joinpath('lesmis.gml'),
-            #'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
+            # 'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
             'gdea_conf': dataset_dir.joinpath('gdea_conf_paper_1995_2011_nographics.gml'),
             '4dai': dataset_dir.joinpath('twitter', '4dai_uni_d_nolabel.gml'),
             'techchan': dataset_dir.joinpath('twitter', 'techchan_uni_d_nolabel.gml')
@@ -265,25 +265,27 @@ if __name__ == '__main__':
         for name, path in testcase.items():
             g = analyse(root, path, dict(profile, name=name))
             if 'label' in g.vs.attribute_names() and all([len(label) > 0 for label in g.vs['label']]):
-                print(g.vs['label'][0:4])
+                logging.info(g.vs['label'][0:4])
             else:
-                print('No labels')
+                logging.info('No labels')
+
+    from .load import load as load_dataset
 
     def load_test():
         dataset_dir = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
-        g = Loader(dataset_dir, 'lesmis')
+        g = load_dataset(dataset_dir, 'lesmis')
         nv, ne = g.size()
-        print('#V = {}, #E = {}'.format(nv, ne))
+        logging.info('#V = {}, #E = {}'.format(nv, ne))
         dim_hd = g.dim_hd()
-        print('dim(HD): {}'.format(dim_hd))
+        logging.info('dim(HD): {}'.format(dim_hd))
         assert dim_hd[0] == nv
-        print(g.attributes())
+        logging.info(g.attributes())
         for a in g.attribute('label'):
-            print(a)
+            logging.info(a)
         Λ, E = g.eigens()
-        print('Shape(Λ): {}, Shape(E): {}'.format(Λ.shape, E.shape))
+        logging.info('Shape(Λ): {}, Shape(E): {}'.format(Λ.shape, E.shape))
         layout_hd = g.layout_hd()
-        print('Shape(layout_hd): {}'.format(layout_hd.shape))
+        logging.info('Shape(layout_hd): {}'.format(layout_hd.shape))
 
     # Crash on load bug
     # techchan_uni_ud.gml, 4dai_uni_d.gml, gdea_conf_paper_1995_2011.gml
