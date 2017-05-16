@@ -81,9 +81,9 @@ class GLWidget(QtOpenGL.QGLWidget):
 class GLWidget3D(GLWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.Model: np.ndarray = np.eye(4, dtype=np.float32)
-        self.View: np.ndarray = T.translate(0, 0, -3)
-        self.Projection: np.ndarray = None
+        self.Model = np.eye(4, dtype=np.float32)
+        self.View = T.translate(0, 0, -3)
+        self.Projection = None
 
     def initializeGL(self, *args):
         super().initializeGL()
