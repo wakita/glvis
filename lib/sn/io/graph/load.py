@@ -1,7 +1,7 @@
 from pathlib import PurePath
 import numpy as np
 
-from sn.io import pickle, io_array
+from sn.io.util import pickle, io_array
 
 
 class Loader:
