@@ -21,7 +21,7 @@ def show(constants, n=None):
 
 class KW3(GLWidget):
     def initializeGL(self):
-        GLWidget.printGLInfo()
+        GLWidget.print_gl_info()
 
         logging.info('GPU memory (NVX)')
         show([
