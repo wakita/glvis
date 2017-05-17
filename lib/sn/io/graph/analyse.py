@@ -249,10 +249,10 @@ def load(dataset_dir: PurePath, name: str) -> Loader:
 if __name__ == '__main__':
     def analyse_test():
         profile = dict(force=True,
-                       root='/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+                       root='/Users/wakita/Dropbox/work/glvis/data/dataset')
 
         root = PurePath(profile['root'])
-        dataset_dir = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/takami-svf')
+        dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/takami-svf')
         testcase = {
             'hypercube-4d': dataset_dir.joinpath('graphs', 'hypercube-4d.graphml'),
             'lesmis': dataset_dir.joinpath('lesmis.gml'),
@@ -269,10 +269,10 @@ if __name__ == '__main__':
             else:
                 logging.info('No labels')
 
-    from .load import load as load_dataset
+    from sn.io.graph.load import load as load_dataset
 
     def load_test():
-        dataset_dir = PurePath('/Users/wakita/Dropbox (smartnova)/work/glvis/data/dataset')
+        dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/dataset')
         g = load_dataset(dataset_dir, 'lesmis')
         nv, ne = g.size()
         logging.info('#V = {}, #E = {}'.format(nv, ne))
