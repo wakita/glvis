@@ -10,6 +10,7 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
 from .globject import GLObject
+from .raw.vertexattrib import lookup as lookup_vertex_attrib
 import sn.sn_logging as sn_logging
 
 OpenGL.FORWARD_COMPATIBLE_ONLY = True
@@ -243,14 +244,28 @@ class AnalyseVertexAttributes(Analyse):
             if location == -1:
                 continue
             name = bbuf[:lengths[0]].decode('utf-8')
-            typestr = types[types.index(info[1])].__repr__()
+            typestr = '???'
+            try:
+                typestr = types[types.index(info[1])].__repr__()
+                f = self.vertex_attribute_handler[info[1]]
+                a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
+            except: pass
             if sn_logging.log_on_shader_variables():
                 logging.info('attribute {0}:{1}@{2}'.format(name, typestr, location))
-            f = self.vertex_attribute_handler[info[1]]
-            a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
-            a[name].name, a[name].loc = name, location
+            a[name].name, a[name].loc, a[name].type = name, location, info[1]
+            # assumption: vec3 in pos_vs
+            # pos_vs_f = prog.vertexAttrib('pos_vs', GL_Float, GL_Float, GL_Float) => glVertexAttrib1f)
+            # pos_vs_f(1.0, 1.0)
+            # pos_vs_sv = prog.vertexAttrib('pos_vs', [GL_Short, GL_Short, GL_Short]) => glVertexAttrib1sv)
+            # pos_vs_sv(np.array([1, 1]), dtype=np.short)
 
         super().examine()
+
+    def vertexAttrib(self, name, *signature):
+        attr = self.a[name]
+        loc = attr.loc
+        f = lookup_vertex_attrib(attr.type, *signature)
+        return lambda *args, loc=loc: f(loc, *args)
 
 
 class AnalyseUniforms(Analyse):
