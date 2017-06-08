@@ -197,13 +197,16 @@ class ProgramCore:
             self._program = None
             glDeleteProgram(p)
 
+    def use(self):
+        logging.debug('use@ProgramCore({})'.format(self._program))
+        glUseProgram(self._program)
+
 
 class Analyse:
     def examine(self):
         pass
 
-
-class ProgramVertexAttributes(Analyse):
+class AnalyseVertexAttributes(Analyse):
     vertex_attribute_handler = dict([
         (GL_FLOAT_VEC2, glVertexAttrib2f),
         (GL_FLOAT_VEC3, glVertexAttrib3f),
@@ -250,7 +253,7 @@ class ProgramVertexAttributes(Analyse):
         super().examine()
 
 
-class ProgramUniforms(Analyse):
+class AnalyseUniforms(Analyse):
 
     @staticmethod
     def _gl_uniform_(f, loc, name, v):
@@ -393,7 +396,7 @@ class SSBVariableInformation(ProgramResource):
         ('top_level_array_size', GL_TOP_LEVEL_ARRAY_SIZE)])
 
 
-class ProgramShaderStorageBlock(Analyse):
+class AnalyseShaderStorageBlock(Analyse):
     def __init__(self, *args):
         logging.debug('__init__@ProgramShaderStorageBlock')
         self.ssb = dict()
@@ -441,12 +444,14 @@ class ProgramShaderStorageBlock(Analyse):
         super().examine()
 
 
-class _ProgramCore(GLObject):
+class _Program(GLObject):
     def examine(self, *args):
         pass
 
 
-class Program(ProgramCore, ProgramVertexAttributes, ProgramUniforms, ProgramShaderStorageBlock, _ProgramCore):
+class Program(ProgramCore,
+              AnalyseVertexAttributes, AnalyseUniforms, AnalyseShaderStorageBlock,
+              _Program):
     def __init__(self, path):
         logging.debug('__init__@Program')
         super().__init__(path)
@@ -456,12 +461,3 @@ class Program(ProgramCore, ProgramVertexAttributes, ProgramUniforms, ProgramShad
         logging.debug('create@Program')
         super().create()
         super().examine()
-
-    def _get_active_resources(self, interface) -> np.ndarray:
-        ibuf = np.zeros(5, dtype=np.int32)
-        glGetProgramInterfaceiv(self._program, interface, GL_ACTIVE_RESOURCES, ibuf)
-        return ibuf
-
-    def use(self):
-        logging.debug('use@Program({})'.format(self._program))
-        glUseProgram(self._program)
