@@ -2,8 +2,6 @@ from OpenGL.GL import *
 from OpenGL.arrays.arraydatatype import *
 import re
 
-Types = [GL_INT, GL_INT_VEC2, GL_INT_VEC3, GL_INT_VEC4, GL_UNSIGNED_INT, GL_UNSIGNED_INT_VEC2, GL_UNSIGNED_INT_VEC3, GL_UNSIGNED_INT_VEC4, GL_FLOAT, GL_FLOAT_VEC2, GL_FLOAT_VEC3, GL_FLOAT_VEC4, GL_DOUBLE, GL_DOUBLE_VEC2, GL_DOUBLE_VEC3, GL_DOUBLE_VEC4]
-
 Datatype_CommandPrefix = '''# Table 11.3@p. 366, OpenGL 4.5 (Core Profile) - May 28, 2015
 GL_INT               int    glVertexAttribI1i
 GL_INT_VEC2          ivec2  glVertexAttribI2i
