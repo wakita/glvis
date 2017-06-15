@@ -289,7 +289,7 @@ for name in VertexAttribNames:
     # 関数の名称から関数本体を OpenGL.GL モジュールより取得
     f = getattr(OpenGL.GL, name)
     # 関数が要求するデータ数をその arity 属性に保存するハック (e.g., glVertexAttrib2f.arity = 2)
-    f.arity = int(re1234.search(name)[0])
+    f.arity = int(re1234.search(name).group(0))
     for gl_type, glsl_type, command_prefix in Datatype_CommandPrefix:
         if name.startswith(command_prefix):
             Datatype_Functions[gl_type].add(f)
