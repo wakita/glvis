@@ -8,7 +8,7 @@ class Loader:
     def __init__(self, dataset_dir: PurePath, name: str):
         self.name = name
         self.root = dataset_dir.joinpath(name)
-        self.g = io_array(self.root.joinpath('graph', 'adjacency'))
+        self.g = io_array(self.root.joinpath('graph', 'adjacency.npy'))
         self.profile = pickle(self.root.joinpath('misc', 'profile'))
 
     def g(self):
@@ -37,12 +37,12 @@ class Loader:
         return self.profile['dim_hd']
 
     def layout_hd(self):
-        return io_array(self.root.joinpath('layout', 'layout_hd'))
+        return io_array(self.root.joinpath('layout', 'layout_hd.npy'))
 
     def eigens(self):
         layout_dir = self.root.joinpath('layout')
-        Λ = io_array(layout_dir.joinpath('eigenvalues'))
-        E = io_array(layout_dir.joinpath('eigenvectors'))
+        Λ = io_array(layout_dir.joinpath('eigenvalues.npy'))
+        E = io_array(layout_dir.joinpath('eigenvectors.npy'))
         return Λ, E
 
     def centralities(self):
@@ -50,11 +50,11 @@ class Loader:
 
     def centrality_v(self, name) -> np.array:
         assert name in self.centralities()['v']
-        return io_array(self.root.joinpath('centrality', 'v', name))
+        return io_array(self.root.joinpath('centrality.npy', 'v', name))
 
     def centrality_e(self, name) -> np.array:
         assert name in self.centralities()['e']
-        return io_array(self.root.joinpath('centrality', 'e', name))
+        return io_array(self.root.joinpath('centrality.npy', 'e', name))
 
 
 def load(dataset_dir: PurePath, name: str) -> Loader:

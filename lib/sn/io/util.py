@@ -20,7 +20,7 @@ def pickle(path: PurePath, data=None):
 
 def io_array(path, data=None):
     import numpy as np
-    path = str(path) + '.npy'
+    path = str(path)
     if data is None:
         return np.load(path)
     else:
