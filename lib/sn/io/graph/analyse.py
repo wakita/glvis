@@ -91,7 +91,7 @@ if __name__ == '__main__' and False:
     test2()
 
 
-def cmdscale(g: Graph, profile: dict):
+def cmdscale(g: Graph, profile: dict, max_eigens: int = 500, steps: int = 500):
     # cmdscale: http://www.nervouscomputer.com/hfs/cmdscale-in-python/
 
     graph_dir = PurePath(profile['root']).joinpath(profile['name'])
@@ -107,7 +107,8 @@ def cmdscale(g: Graph, profile: dict):
         d = io_array(distance_file)
     except FileNotFoundError:
         paths = g.shortest_paths(weights=None)
-        d = np.array(paths, dtype=np.int)
+        #d = np.array(paths, dtype=np.int)
+        d = np.array(paths, dtype=np.uint8)
         io_array(str(distance_file), d)
         if _DEBUG_ and len(g.vs) < 100:
             logging.info(d)
@@ -124,6 +125,10 @@ def cmdscale(g: Graph, profile: dict):
     Λ_descending = np.argsort(-Λ)            # Organize in descending order of eigenvalues
     Λ, E = Λ[Λ_descending], E[:, Λ_descending]
     dim_hd = Λ.shape[0]
+    if dim_hd > max_eigens:
+        Λ = Λ[0:max_eigens]
+        E = E[:, 0:max_eigens]
+        dim_hd = Λ.shape[0]
     layout_hd = E.dot(np.diag(np.sqrt(Λ)))
     profile['dim_hd'] = layout_hd.shape
 
@@ -137,9 +142,12 @@ def cmdscale(g: Graph, profile: dict):
     L = np.eye(N, dim_hd).dot(np.diag(Λ))
 
     layout_dir = graph_dir.joinpath('layout')
-    io_array(layout_dir.joinpath('eigenvalues'),  Λ)
-    io_array(layout_dir.joinpath('eigenvectors'), E)
-    io_array(layout_dir.joinpath('layout_hd'),    layout_hd)
+    if max_eigens <= steps:
+        io_array(layout_dir.joinpath('eigenvalues'),  Λ)
+        io_array(layout_dir.joinpath('eigenvectors'), E)
+        io_array(layout_dir.joinpath('layout_hd'),    layout_hd)
+    else:
+        pass
 
     benchmark(message='Classical multi dimensional scaling')
 
@@ -269,11 +277,16 @@ if __name__ == '__main__':
             else:
                 logging.info('No labels')
 
+        dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/large')
+        g = analyse(root, dataset_dir.joinpath('internet_routers-22july06.gml'),
+                dict(profile, force=False, name='internet_routers'))
+
     from sn.io.graph.load import load as load_dataset
 
     def load_test():
         dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/dataset')
-        g = load_dataset(dataset_dir, 'lesmis')
+        g = load_dataset(dataset_dir, 'internet_routers')
+        # g = load_dataset(dataset_dir, 'lesmis')
         nv, ne = g.size()
         logging.info('#V = {}, #E = {}'.format(nv, ne))
         dim_hd = g.dim_hd()
@@ -283,6 +296,7 @@ if __name__ == '__main__':
         for a in g.attribute('label'):
             logging.info(a)
         Λ, E = g.eigens()
+        logging.getLogger().setLevel(logging.INFO)
         logging.info('Shape(Λ): {}, Shape(E): {}'.format(Λ.shape, E.shape))
         layout_hd = g.layout_hd()
         logging.info('Shape(layout_hd): {}'.format(layout_hd.shape))
@@ -290,5 +304,5 @@ if __name__ == '__main__':
     # Crash on load bug
     # techchan_uni_ud.gml, 4dai_uni_d.gml, gdea_conf_paper_1995_2011.gml
 
-    analyse_test()
+    #analyse_test()
     load_test()
