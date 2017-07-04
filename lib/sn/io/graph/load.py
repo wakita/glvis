@@ -1,4 +1,5 @@
-from pathlib import PurePath
+import json
+from pathlib import PurePath, Path
 import numpy as np
 
 from sn.io.util import pickle, io_array
@@ -8,8 +9,9 @@ class Loader:
     def __init__(self, dataset_dir: PurePath, name: str):
         self.name = name
         self.root = dataset_dir.joinpath(name)
-        self.g = io_array(self.root.joinpath('graph', 'adjacency.npy'))
-        self.profile = pickle(self.root.joinpath('misc', 'profile'))
+        self.g = io_array(str(self.root.joinpath('graph', 'adjacency.npy')))
+        with open(str(self.root.joinpath('misc', 'profile.json'))) as r:
+            self.profile = json.load(r)
 
     def g(self):
         return self.g

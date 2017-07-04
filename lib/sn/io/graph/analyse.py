@@ -68,8 +68,7 @@ def normalize(g: Graph, profile: dict) -> Graph:
 
 
 def cmdscale(g: Graph, profile: dict):
-    force = 'force' in profile and profile['force']
-    print('force', force)
+    force = profile.get('force', False)
 
     # cmdscale: http://www.nervouscomputer.com/hfs/cmdscale-in-python/
 
@@ -136,7 +135,7 @@ def cmdscale(g: Graph, profile: dict):
 
 
 def centrality(g: Graph, profile: dict):
-    force = 'force' in profile and profile['force']
+    force = profile.get('force', False)
 
     directory = None
 
@@ -172,9 +171,10 @@ def analyse(root: PurePath, path: PurePath, profile: dict) -> Graph:
     cmdscale(g, profile)
     centrality(g, profile)
 
-    path_profile = Path(root.joinpath(profile['name'], 'misc', 'profile'))
-    if 'force' in profile and profile['force'] or not path_profile.exists():
-        pickle(path_profile, profile)
+    path_profile = Path(root.joinpath(profile['name'], 'misc', 'profile.json'))
+    if profile.get('force', False) or not path_profile.exists():
+        with open(str(path_profile), 'w') as w:
+            json.dump(profile, w, ensure_ascii=False, indent=4)
         logging.info(json.dumps(profile, indent=4))
 
     return g
@@ -188,16 +188,16 @@ if __name__ == '__main__':
         root = PurePath(profile['root'])
         dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/takami-svf')
         testcase = {
-            'hypercube-4d': dataset_dir.joinpath('graphs', 'hypercube-4d.graphml'),
-            'lesmis': dataset_dir.joinpath('lesmis.gml'),
-            # 'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
-            'gdea_conf': dataset_dir.joinpath('gdea_conf_paper_1995_2011_nographics.gml'),
-            '4dai': dataset_dir.joinpath('twitter', '4dai_uni_d_nolabel.gml'),
-            'techchan': dataset_dir.joinpath('twitter', 'techchan_uni_d_nolabel.gml')
+            # 'hypercube-4d': dataset_dir.joinpath('graphs', 'hypercube-4d.graphml'),
+            # 'lesmis': dataset_dir.joinpath('lesmis.gml'),
+            'math': dataset_dir.joinpath('math.wikipedia/math.graphml')
+            # 'gdea_conf': dataset_dir.joinpath('gdea_conf_paper_1995_2011_nographics.gml'),
+            # '4dai': dataset_dir.joinpath('twitter', '4dai_uni_d_nolabel.gml'),
+            # 'techchan': dataset_dir.joinpath('twitter', 'techchan_uni_d_nolabel.gml')
         }
 
         for name, path in testcase.items():
-            logging.critical(name)
+            logging.info(name)
             g = analyse(root, path, dict(profile, name=name))
             if 'label' in g.vs.attribute_names() and all([len(label) > 0 for label in g.vs['label']]):
                 logging.info(g.vs['label'][0:4])
@@ -205,7 +205,7 @@ if __name__ == '__main__':
                 logging.info('No labels')
 
         dataset_dir = PurePath('/Users/wakita/Dropbox/work/glvis/data/large')
-        logging.critical('internet routers')
+        logging.info('internet routers')
         g = analyse(root, dataset_dir.joinpath('internet_routers-22july06.gml'),
                 dict(profile, force=False, name='internet_routers'))
 
