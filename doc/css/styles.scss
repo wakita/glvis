@@ -1,0 +1,131 @@
+---
+---
+
+$post: "div.post-content";
+
+#{$post} {
+  font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
+
+#{$post} h1 {
+  font-size: 24px;
+  border-style: solid none none none;
+  border-width: thin;
+  margin: 2em 0px 1em 0px;
+  padding: .5em 0px .5em 0px;
+}
+
+#{$post} h2 {
+  font-size: 20px;
+  margin: 2em 0px 1em 0px;
+}
+
+#{$post} h3 {
+  font-size: 18;
+}
+
+article.post dt {
+  padding-top: 1ex;
+  font-weight: bold;
+}
+
+/*
+#{$post} strong {
+  background: #fbb;
+}
+
+#{$post} em {
+  font-style: normal;
+  background: #acf;
+}
+*/
+
+#{$post} span[highlight] em {
+  padding: 2px;
+  font-style: normal;
+}
+#{$post} span[highlight="topic"] em {
+  background: #fbb;
+}
+#{$post} span[highlight="evidence"] em {
+  background: #acf;
+}
+#{$post} span[highlight="interesting"] em {
+  background: #bfb;
+}
+#{$post} span[highlight="other"] em {
+  background: #ff8;
+}
+#{$post} span[highlight="vocabulary"] em {
+  text-decoration: underline;
+  background: transparent;
+}
+
+#{$post} span.citation {
+  color: blue;
+}
+
+#{$post} div.references em {
+  background: #fff;
+}
+
+#{$post} table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 3ex;
+  margin-bottom: 3ex;
+}
+
+#{$post} th {
+  background: #444;
+  color: #fff;
+}
+
+#{$post} th {
+  padding: 5px;
+}
+
+#{$post} table td {
+  border: 3px 0px 3px 0px;
+  vertical-align: text-top;
+}
+
+#{$post} table tr:nth-child(even) {
+  background: #def;
+}
+
+#{$post} figcaption {
+  text-align: center;
+  font-weight: bold;
+}
+
+/*
+div.post-content table tr:nth-child(odd) {
+  background: #fff;
+}
+*/
+
+#{$post} table tr:nth-child(odd) {
+  background: #fff;
+}
+
+@mixin link_properties($selector) {
+  #{$selector} {
+    color: #a00;
+  }
+}
+
+@include link_properties("article.post a:link");
+@include link_properties("article.post a:visited");
+
+div.PageNavigation a.prev {
+  padding-right: 3em;
+}
+
+dif.PageNavigation a.next {
+  padding-left: 3em;
+}
+
+#{$post} a.footnoteRef {
+  font-weight: bold;
+}

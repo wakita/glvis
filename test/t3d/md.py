@@ -1,11 +1,12 @@
 #!/bin/env python3
 
+import argparse
 import os
 from pathlib import PurePath
 import sys
 import sympy as sp
 
-project_root = PurePath('d:/wakita/work/glvis')
+project_root = PurePath('{}/glvis'.format(os.environ['WORK']))
 doc_root = project_root.joinpath('doc', 'note')
 
 class LaTeXMath(object):
@@ -28,27 +29,41 @@ def Math(*xs):
     return LaTeXMath.display(*xs)
 
 class Markdown(object):
-    def __init__(self, output=None):
-        self.output = output
+    @staticmethod
+    def add_parser_option(parser):
+        parser.add_argument('--symdoc', dest='symdoc', action='store_true')
 
-    def __enter__(self):
-        output = self.output
+    def __init__(self, output=None, **kwds):
         if output is None:
+            self.output = None
             self.w = sys.stdout
         else:
-            p = str(doc_root.joinpath(output.replace('.', '/') + '.md'))
-            os.makedirs(os.path.dirname(p), exist_ok=True)
-            self.w = open(p, 'w')
-        self.md(
-'''---
-layout: symdoc
-title: "Documentation of the {output} package"
----
-'''.format(output=output))
-        return self
+            self.output = str(doc_root.joinpath(output.replace('.', '/') + '.md'))
+            os.makedirs(os.path.dirname(self.output), exist_ok=True)
+            self.w = open(self.output, 'w')
+        kwds.setdefault('layout', 'page')
+        kwds.setdefault('title', output or '???')
+        self.markdown('---\n{}\n---\n', '\n'.join(['{}: {}'.format(k, v) for k, v in kwds.items()]))
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __del__(self):
+        if self.output is not None:
+            print('closing ' + self.output)
         self.w.close()
+
+    @staticmethod
+    def convert(x):
+        if isinstance(x, (sp.Basic, sp.MutableDenseMatrix, tuple)):
+            return sp.latex(x)
+        elif isinstance(x, str):
+            return x
+        elif isinstance(x, (int, float)):
+            return str(x)
+        else: pass
+
+    def markdown(self, document, *xs, **kwds):
+        xs = [Markdown.convert(x) for x in xs]
+        kwds = dict([(k, Markdown.convert(v)) for k, v in kwds.items()])
+        self.w.write(document.format(*xs, **kwds) + '\n\n')
 
     def md(self, *xs):
         s = []
