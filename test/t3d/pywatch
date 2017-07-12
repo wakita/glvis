@@ -1,0 +1,6 @@
+#!/bin/sh
+
+fswatch -0 t3d.py | while read -d "" event
+do
+  python t3d.py --symdoc
+done

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#py=/Users/wakita/Dropbox/work/glvis/test/t3d.py
+#html=/Users/wakita/Sites/glvis/note/test/t3d.html
+
+#(cd ../../; bin/serve) &
+
+#browser-sync start --proxy "http://localhost:4001/note/test/t3d.html" --files $html &
+
+fswatch -0 symdoc.py t3d.py | while read -d "" event
+do
+  python t3d.py --symdoc
+  echo Updated t3d.md at `date "+%H:%M:%S"`
+  echo
+done

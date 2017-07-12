@@ -1,0 +1,13 @@
+{
+  "name": "glvis-doc",
+  "version": "1.0.0",
+  "description": "glvis-doc",
+  "author": "Ken Wakita",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-exec": "^2.1.3",
+    "js-yaml": "^3.9.0"
+  }
+}

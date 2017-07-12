@@ -1,4 +1,11 @@
 #!/bin/sh
 
-# bundle exec jekyll serve --force_polling --incremental $*
+# standard jekyll
 bundle exec jekyll serve --incremental --open-url $*
+#bundle exec jekyll serve --port 4001 --incremental --open-url $*
+
+# for jekyll-livereload
+# bundle exec jekyll serve --livereload --port 4001 --incremental --open-url $*
+
+# for hawkins
+# bundle exec jekyll liveserve --port 4001 --incremental --open-url $*
