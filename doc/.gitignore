@@ -2,3 +2,4 @@ _site
 .sass-cache
 .jekyll-metadata
 /Gemfile.lock
+/lib/node/node_modules

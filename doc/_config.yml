@@ -3,6 +3,7 @@ email: wakita@is.titech.ac.jp
 description: glvis project
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+port: 4001
 github_username:  wakita
 
 # Build settings
@@ -12,6 +13,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - bin
+  - lib
 
 theme: minima
 
