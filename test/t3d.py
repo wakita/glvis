@@ -3,6 +3,7 @@ import sys
 import sympy as sp
 import typing
 
+
 from symdoc import Markdown, doit, symfunc, gsym
 
 cmdline_parser = argparse.ArgumentParser()
@@ -90,6 +91,7 @@ def normalize(v: np.ndarray) -> np.ndarray:
     if norm==0: return v
     return v/norm
 
+
 ######################################################################
 
 @symfunc
@@ -115,13 +117,13 @@ r'''
 
 三次元デカルト座標系(*Cartesian coordinate system*)における点の座標の**同次座標**(*Homogeneous coordinate*)は，任意の非零実数${w}$を用いて変換されます。
 
-$${fHomogeneous}\left({pc}, {w}\right) = {ph}$$
+$${fHomogeneous}\left({pc.T}, {w}\right) = {ph.T}$$
 
 同次座標を用いた座標系のことを**同次座標系**(*Homogeneous coordinate system*)と呼びます．
 
 逆に，同次座標をデカルト座標に変換することもできます。
 
-$${fCartesian}\left({ph}\right) = {pc2}$$''',
+$${fCartesian}\left({ph.T}\right) = {pc2.T}$$''',
              
              **locals())
 
@@ -177,13 +179,17 @@ $${fScale} = {Scale}$$''', **locals())
 
     markdown(
 r'''
-実際に確認してみると、確かにそのとおりになっていることがわかります。
+-----
+
+では、実際に確認してみましょう。
 
 \begin{align}
 {fScale} {fHomogeneous}\left({pc}\right)
     &= {Scale} {ph}  \\
     &= {Scale_ph} = {fHomogeneous}\left({Scale_pc}\right)
-\end{align}''', **locals())
+\end{align}
+
+確かにそのとおりになっていますね。''', **locals())
 
 def scale(sx:float, sy:float, sz:float) -> np.ndarray:
     '(X, Y, Z)-軸について、それぞれ(sx, sy, sz)倍するモデル変換行列を与える'
@@ -208,25 +214,75 @@ def __rotate__():
 
     impl_rotX, impl_rotY, impl_rotZ = [(R, mat32(theta, R)) for R in Rotate]
 
-# Symbolic test
+# Documentation of the implementation
+    markdown('## 回転変換: ${fRotate[0]}, {fRotate[1]}, {fRotate[2]}$', **locals())
 
-    # X-軸を中心とした回転によって
+    for axis, fRot, Rot in zip('X Y Z'.split(), fRotate, Rotate):
+        markdown(
+r'''
+- 回転変換行列 (${fRot}$) に同次座標を乗ずると，その座標を${axis}$軸のまわりに${theta}$だけ回転した点の同次座標を与えます．
+
+    $${fRot} {ph} = {Rot} {ph} = {result}$$''',
+                 
+                 result=Rot * ph, **locals())
+
     axisX = Vec3(1, 0, 0)
     RotateX = Rotate[0]
-    px = Cartesian(RotateX * Homogeneous(pc))
 
-    # test 1. 原点からの距離は変化しないこと（ノルムの二乗が等しいこと）
-    pcpc, pxpx = pc.dot(pc), px.dot(px)
+    p1, p2 = sp.var(r'\mathbf{p_1} \mathbf{p_2}')
+    pc1, ph1 = pc, ph
+    pc2 = sp.simplify(Cartesian(RotateX * ph1))
+    pc21 = pc2 - pc1
+    movex_axisX = pc21.dot(axisX)
+
+# Symbolic test
+
+    markdown(r'''
+-----
+
+では、ここで得られた変換${fRotate[0]}$が確かに回転であることを確認してみましょう。この変換で点${p1}$が${p2}$に移ったものとします：
+
+\begin{align}
+{p1}^T &= {pc1.T} \\
+{p2}^T &= {pc2.T}
+\end{align}''', **locals())
+
+    markdown(
+'1. 変換前後でベクトルと原点の距離は変化しないこと')
+
+    def vnorm2(v): return v.dot(v)
+
+    p1norm2, p2norm2 = vnorm2(pc1), vnorm2(pc2)
+    p2norm2_simp = sp.simplify(p2norm2)
     if cmdline.symtest:
-        assert(sp.simplify(sp.Eq(pcpc, pxpx)))
+        assert(sp.simplify(sp.Eq(p1norm2, p2norm2)))
 
-    # test 2. 移動前後のベクトルの差分はX軸に直交すること
+    markdown(r'''
+    \begin{align}
+    \|{p1}\|^2 &= \left\|{pc1.T}^T\right\|^2 = {p1norm2} \\
+    \|{p2}\|^2 &= \left\|{pc2.T}^T\right\|^2 \\
+    &= {p2norm2_simp}
+    \end{align}''', **locals())
+
+
+    markdown(
+'1. 変換前後のベクトルの差分が回転軸となるX軸と直交すること')
+
+    markdown(r'''
+    $p$をX軸を中心として回転するとき、その回転のあいだ$p$はX軸と直交する平面を移動します。したがって、移動後の$p'$もそのX軸と直交する平面にあるはずです。$p, p'$がともにX軸と直交する平面上の点ということは、$p' - p$はこの平面上のベクトルということになるので、X軸と直交するはずです。
+
+    $$({pc21.T}, {axisX.T}) = {movex_axisX}$$
+
+    内積が0なので直交していることが確認できました。''', **locals())
+
     if cmdline.symtest:
-        assert(sp.simplify(sp.Eq((px-pc).dot(axisX), 0)))
+        assert(sp.simplify(sp.Eq((pc2-pc1).dot(axisX), 0)))
 
-    proj = px.dot(axisX) * axisX
-    # test 3. v1 = (pc - proj) と v2 = (px - proj) がなす角度がθであること
-    v1, v2 = pc - proj, px - proj
+    markdown(
+'1. 回転角が確かに${theta}$であること', **locals())
+
+    proj = pc2.dot(axisX) * axisX
+    v1, v2 = pc - proj, pc2 - proj
     l1, l2 = sp.sqrt(v1.T.dot(v1)), sp.simplify(sp.sqrt(v2.T.dot(v2)))
     iprod_v1v2 = v1.dot(v2)
     iprod_v1v2_simplified = sp.simplify(iprod_v1v2)
@@ -237,60 +293,15 @@ def __rotate__():
     if cmdline.symtest:
         assert(sp.simplify(sp.Eq(iprod_v1v2, l1_l2_cos_theta)))
 
-# Documentation of the implementation
-    markdown('## 回転変換: ${}, {}, {}$', *fRotate)
-
-    for axis, fRot, Rot in zip('X Y Z'.split(), fRotate, Rotate):
-        markdown(
-'''
-- 回転変換行列 (${fRot}$) に同次座標を乗ずると，その座標を${axis}$軸のまわりに${theta}$だけ回転した点の同次座標を与えます．
-
-    $${fRot} {ph} = {Rot} {ph} = {result}$$''',
-                 
-                 result=Rot * ph, **locals())
-
-    fRotX = fRotate[0]
-    RotateX = Rotate[0]
-    px = sp.simplify(Cartesian(RotateX * ph))
-    pcpc = pc.dot(pc)
-    pxpx = sp.simplify(px.dot(px))
-    px_pc = px - pc
-    movex_axisX=px_pc.dot(axisX)
-
-    markdown(
-r'''
-では、ここで得られた変換${fRotX}$が確かに回転であることを確認してみよう。この変換で点$p$が$p'$に移ったものとすると：
-
-\begin{align}
-p &= {pc} \\
-p' &= {px}
-\end{align}
-
-+ 変換前後でベクトルと原点の距離は変化しないこと
-
-    \begin{align}
-    \|p\|^2 &= \left\|{v1}\right\|^2 = {pcpc} \\
-    \|p'\|^2 &= \left\|{v2}\right\|^2 = {pxpx}
-    \end{align}
-
-+ 変換前後のベクトルの差分が回転軸となるX軸と直交すること
-
-    $p$をX軸を中心として回転するとき、その回転のあいだ$p$はX軸と直交する平面を移動します。したがって、移動後の$p'$もそのX軸と直交する平面にあるはずです。$p, p'$がともにX軸と直交する平面上の点ということは、$p' - p$はこの平面上のベクトルということになるので、X軸と直交するはずです。
-
-    $$\left({px_pc}, {axisX}\right) = {movex_axisX}$$
-
-    内積が0なので直交していることが確認できました。
-
-+ 回転角が確かに${theta}$であること
-
+    markdown(r'''
     X軸を中心として$p$を${theta}$回転して$p'$に移すということは、$p$と$p'$のなす角度が${theta}$というような気もしますが、実はそうではありません。ベクトル$p$は円錐の表面を撫でるようにして$p'$に写るからです。${theta}$となるのは、$p$からX軸への垂線の足となる$p_x$について$p$と$p'$がなす角度です。
 
-    では、まず$p_x$を求めてみましょう。これをベクトルだと思うとX軸方向の単位ベクトル${axisX}$と同じ向きで、長さが前述の垂線の足にあたる点と原点の距離です。この距離は$p$と${axisX}$の内積で与えられますので、結局$p_x = (p_x, {axisX}) {axisX} = {proj}$となります。
+    では、まず$p_x$を求めてみましょう。これをベクトルだと思うとX軸方向の単位ベクトル${axisX.T}$と同じ向きで、長さが前述の垂線の足にあたる点と原点の距離です。この距離は$p^T$と${axisX.T}$の内積で与えられますので、結局$p_x^T = (p_x^T, {axisX.T}) {axisX.T} = {proj.T}$となります。
 
     角度が${theta}$であることは($p-p_x$)と($p'-p_x$)の内積に関する性質について確認すればよいでしょう。
 
     \begin{align}
-    (p - p_x, p' - p_x) &= ({v1}, {v2}) \\
+    ((p - p_x)^T, (p' - p_x)^T) &= ({v1.T}, {v2.T}) \\
         &= {iprod_v1v2} \\
         &= {iprod_v1v2_simplified}
     \end{align}
@@ -327,6 +338,7 @@ def __translate__():
     global impl_translate
 
     Translates = sp.var('t_x t_y t_z')
+    print(type(Translates))
     fTranslate = sp.Function('Translate')(*Translates)
     Translate = sp.eye(3).row_join(sp.Matrix(Translates)).col_join(sp.Matrix([[0, 0, 0, 1]]))
 
@@ -334,11 +346,11 @@ def __translate__():
 
 # Documentation of the implementation
     vTranslates = Vec3(*Translates)
-    Translate_ph = Translate * ph
+    Translate_ph = sp.simplify(Translate * ph)
     Translate_pc = Cartesian(Translate_ph)
 
     markdown(
-r'''## 並行移動変換: {fTranslate}
+r'''## 並行移動変換: ${fTranslate}$
 
 以下の行列 ${fTranslate}$ に同次座標を乗じたものは，デカルト座標を${Translates}$だけ平行移動したものの同次座標を与えます．
 
@@ -351,7 +363,8 @@ $$ {fTranslate} = {Translate} $$
 \begin{align}
 {fTranslate}{fHomogeneous}\left({pc}\right)
     &= {Translate} {ph} \\
-    &= {Translate_ph} = {fHomogeneous}\left({pc} + {vTranslates}\right)
+    &= {Translate_ph} \\
+    &= {fHomogeneous}\left({pc} + {vTranslates}\right)
 \end{align}
 ''', **locals())
 
@@ -359,7 +372,7 @@ $$ {fTranslate} = {Translate} $$
     if cmdline.symtest:
         assert(sp.simplify(sp.Eq(Translate_pc, pc + vTranslates)))
 
-    gsym.tx, gsym.ty, gsym.tz = Translates
+    gsym.Translates = Translates
     gsym.Translate = Translate
 
 def translate(tx:float, ty:float, tz:float) -> np.ndarray:
@@ -375,7 +388,8 @@ def __lookat__():
         sp.var('H_x H_y H_z'), sp.var('F_x F_y F_z')]
     [I, S, H, F] = [sp.Matrix(3, 1, M) for M in LookAtVectors]
 
-    LookAtTranslate = gsym.Translate.subs({ gsym.tx: -I_x, gsym.ty: -I_y, gsym.tz: -I_z })
+    tx, ty, tz = gsym.Translates
+    LookAtTranslate = gsym.Translate.subs({tx: -I_x, ty: -I_y, tz: -I_z})
     invLookAtRotate = sp.Matrix(sp.BlockMatrix([[S, H, -F, sp.zeros(3, 1)]])).col_join(sp.Matrix([[0, 0, 0, 1]]))
     LookAtRotate = invLookAtRotate.T  # 回転行列は正規直交行列なので，逆行列は転置行列
 
@@ -395,7 +409,7 @@ r'''
 視野変換は全体座標系を視点に平行移動する変換${mLookAtTranslate}$と，視線の向きを$Z$軸方向から視線の向きに回転する
 変換${mLookAtRotate}$を合成(${mLookAtRotate} \times {mLookAtTranslate}$)したものと考えられます．''', **locals())
 
-    fTranslate = sp.latex(sp.Function('Translate'))
+    fTranslate = sp.Function('Translate')
     eye = sp.Symbol('eye')
 
     markdown(r'''

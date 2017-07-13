@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# t3d.py を実行すると、静的ウェブサイト Jekyll の記事(t3d.md)を自動生成するプログラムです。
+# Jekyll は Markdown サイトを常時監視し、ファイル更新を検知すると自動的に .md を .html に変換します。前述の t3d.md が更新されると t3d.html が自動的に更新されます。
+
+# このスクリプトは t3d.py と t3d.html を監視し、t3d.py の更新を検出したらそれを自動的に実行します。た、t3d.html の更新を検出したら Google Chrome の画面を更新します。その結果、t3d.py の開発において、エディタからファイルを保存するだけで、Python の実行、Markdown と HTML の生成、生成された結果のブラウザでの確認の一連の処理が自動化されます。
+
+html_path=note/test/t3d.html 
+
+# Jekyll のサーバを起動する。
+jekyll_port=14001
+(cd ../doc; bundle exec jekyll serve --port $jekyll_port --incremental) &
+
+# （2秒後にGoogle Chromeで、所定の Jekyll ページを開く）
+(sleep 2; chrome-cli open http://localhost:$jekyll_port/$html_path) &
+
+# (t3d.htmlを監視し、更新されたら Google Chrome のページを更新する)
+html=$HOME/Sites/glvis/$html_path
+(fswatch -0 $html | while read -d "" event
+  do
+    if [ -s $html ]
+      then chrome-cli reload
+    fi
+  done) &
+
+# (t3d.pyを監視し、更新されたらそれを Python で実行する。このプログラムは t3d.md を生成し、それを検出した Jekyll が t3d.html を作成する。)
+(fswatch -0 symdoc.py t3d.py | while read -d "" event
+  do
+    python t3d.py --symdoc
+    echo `date "+%H:%M:%S"`"に t3d.md を更新しました。"
+  done)
