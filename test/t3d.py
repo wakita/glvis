@@ -226,14 +226,12 @@ r'''
                  
                  result=Rot * ph, **locals())
 
-    axisX = Vec3(1, 0, 0)
-    RotateX = Rotate[0]
-
-    p1, p2 = sp.var(r'\mathbf{p_1} \mathbf{p_2}')
-    pc1, ph1 = pc, ph
-    pc2 = sp.simplify(Cartesian(RotateX * ph1))
-    pc21 = pc2 - pc1
-    movex_axisX = pc21.dot(axisX)
+    ex, p1, p2 = sp.var(r'\mathbf{e_x} \mathbf{p_1} \mathbf{p_2}')
+    _ex = Vec3(1, 0, 0)
+    _p1, _ph1 = pc, ph
+    _p2 = sp.simplify(Cartesian(Rotate[0] * _ph1))
+    _p21 = _p2 - _p1
+    _p21_dot_ex = _p21.dot(_ex)
 
 # Symbolic test
 
@@ -243,8 +241,10 @@ r'''
 では、ここで得られた変換${fRotate[0]}$が確かに回転であることを確認してみましょう。この変換で点${p1}$が${p2}$に移ったものとします：
 
 \begin{align}
-{p1}^T &= {pc1.T} \\
-{p2}^T &= {pc2.T}
+{p1}^T &= {_p1.T} \\
+{p2}^T &= ({fRotate[0]} {p1})^T \\
+       &= \left({Rotate[0]}{_p1}\right)^T \\
+       &= {_p2.T}
 \end{align}''', **locals())
 
     markdown(
@@ -252,16 +252,16 @@ r'''
 
     def vnorm2(v): return v.dot(v)
 
-    p1norm2, p2norm2 = vnorm2(pc1), vnorm2(pc2)
-    p2norm2_simp = sp.simplify(p2norm2)
+    p1N2, p2N2 = vnorm2(_p1), vnorm2(_p2)
+    p2N2_simplified = sp.simplify(p2N2)
     if cmdline.symtest:
-        assert(sp.simplify(sp.Eq(p1norm2, p2norm2)))
+        assert(sp.simplify(sp.Eq(p1N2, p2N2)))
 
     markdown(r'''
     \begin{align}
-    \|{p1}\|^2 &= \left\|{pc1.T}^T\right\|^2 = {p1norm2} \\
-    \|{p2}\|^2 &= \left\|{pc2.T}^T\right\|^2 \\
-    &= {p2norm2_simp}
+    \|{p1}\|^2 &= \left\|{_p1.T}^T\right\|^2 = {p1N2} \\
+    \|{p2}\|^2 &= \left\|{_p2.T}^T\right\|^2 \\
+    &= {p2N2_simplified}
     \end{align}''', **locals())
 
 
@@ -269,53 +269,56 @@ r'''
 '1. 変換前後のベクトルの差分が回転軸となるX軸と直交すること')
 
     markdown(r'''
-    $p$をX軸を中心として回転するとき、その回転のあいだ$p$はX軸と直交する平面を移動します。したがって、移動後の$p'$もそのX軸と直交する平面にあるはずです。$p, p'$がともにX軸と直交する平面上の点ということは、$p' - p$はこの平面上のベクトルということになるので、X軸と直交するはずです。
+    ${p1}$をX軸を中心として回転するとき、回転のあいだ${p1}$はX軸と直交する平面を移動します。したがって、移動後の${p2}$もそのX軸と直交する平面にあるはずです。${p1}, {p2}$がともにX軸と直交する平面上の点ということは、$({p2} - {p1})$はこの平面上のベクトルということになるので、X軸と直交するはずです。
 
-    $$({pc21.T}, {axisX.T}) = {movex_axisX}$$
+    $$
+    ({p2} - {p1}, {ex}) = \left({_p1} - {_p2}, {_ex}\right) = {_p21_dot_ex}
+    $$
 
     内積が0なので直交していることが確認できました。''', **locals())
 
     if cmdline.symtest:
-        assert(sp.simplify(sp.Eq((pc2-pc1).dot(axisX), 0)))
+        assert(sp.simplify(sp.Eq((_p2 - _p1).dot(_ex), 0)))
 
     markdown(
-'1. 回転角が確かに${theta}$であること', **locals())
+'1. 回転角が${theta}$であること', **locals())
 
-    proj = pc2.dot(axisX) * axisX
-    v1, v2 = pc - proj, pc2 - proj
-    l1, l2 = sp.sqrt(v1.T.dot(v1)), sp.simplify(sp.sqrt(v2.T.dot(v2)))
-    iprod_v1v2 = v1.dot(v2)
-    iprod_v1v2_simplified = sp.simplify(iprod_v1v2)
-
-    cos_theta=sp.cos(theta)
-    l1_l2_cos_theta = l1 * l2 * cos_theta
-
-    if cmdline.symtest:
-        assert(sp.simplify(sp.Eq(iprod_v1v2, l1_l2_cos_theta)))
+    p0 = sp.var('\mathbf{p_0}')
+    _p0 = _p2.dot(_ex) * _ex
+    _v1, _v2 = _p1 - _p0, _p2 - _p0
+    l1, l2 = sp.var('\ell_1 \ell_2')
+    _l1, _l2 = sp.sqrt(vnorm2(_v1)), sp.simplify(sp.sqrt(vnorm2(_v2)))
+    _v1_dot_v2 = _v1.dot(_v2)
+    _v1_dot_v2_simplified = sp.simplify(_v1_dot_v2)
+    cos_theta = sp.cos(theta)
+    l1_l2_cos_theta = _l1 * _l2 * cos_theta
 
     markdown(r'''
-    X軸を中心として$p$を${theta}$回転して$p'$に移すということは、$p$と$p'$のなす角度が${theta}$というような気もしますが、実はそうではありません。ベクトル$p$は円錐の表面を撫でるようにして$p'$に写るからです。${theta}$となるのは、$p$からX軸への垂線の足となる$p_x$について$p$と$p'$がなす角度です。
+    X軸を中心として$p$を${theta}$回転して$p'$に移すということは、$p$と$p'$のなす角度が${theta}$というような気もしますが、実はそうではありません。ベクトル$p$は円錐の表面を撫でるようにして$p'$に写るからです。${theta}$となるのは、$p$からX軸への垂線の足となる${p0}$について$p$と$p'$がなす角度です。
 
-    では、まず$p_x$を求めてみましょう。これをベクトルだと思うとX軸方向の単位ベクトル${axisX.T}$と同じ向きで、長さが前述の垂線の足にあたる点と原点の距離です。この距離は$p^T$と${axisX.T}$の内積で与えられますので、結局$p_x^T = (p_x^T, {axisX.T}) {axisX.T} = {proj.T}$となります。
+    では、まず${p0}$を求めてみましょう。これをベクトルだと思うとX軸方向の単位ベクトル${ex}^T$と同じ向きで、長さが前述の垂線の足にあたる点と原点の距離です。この距離は$p^T$と${ex}^T$の内積で与えられますので、結局${p0}^T = ({p1}^T, {ex}^T) {ex}^T = {_p0}^T$となります。
 
-    角度が${theta}$であることは($p-p_x$)と($p'-p_x$)の内積に関する性質について確認すればよいでしょう。
+    角度が${theta}$であることは(${p1}-{p0}$)と(${p2}-{p0}$)の内積に関する性質について確認すればよいでしょう。
 
     \begin{align}
-    ((p - p_x)^T, (p' - p_x)^T) &= ({v1.T}, {v2.T}) \\
-        &= {iprod_v1v2} \\
-        &= {iprod_v1v2_simplified}
+    ((p - p_x)^T, (p' - p_x)^T) &= ({_v1.T}, {_v2.T}) \\
+        &= {_v1_dot_v2} \\
+        &= {_v1_dot_v2_simplified}
     \end{align}
 
     一方、$p-p_x$と$p'-p_x$のなす角が{theta}ならば、その内積は$\ell_1 \ell_2 {cos_theta}$になるはずです。
 
     \begin{align}
-    \ell_1 &= \|p - p_x\| = {l1} \\
-    \ell_2 &= \|p' - p_x\| = {l2} \\
-    \ell_1 \ell_2 {cos_theta} &= {l1} {l2} {cos_theta} = {l1_l2_cos_theta}
+    {l1} &= \|p - p_x\| = {_l1} \\
+    {l2} &= \|p' - p_x\| = {_l2} \\
+    {l1} {l2} {cos_theta} &= {_l1} {_l2} {cos_theta} = {l1_l2_cos_theta}
     \end{align}
 
-    以上より$(p-p_x, p'-p_x) = \ell_1 \ell_2 {cos_theta}$が確認できました。''',
+    以上より$((p-p_x)^T, (p'-p_x)^T) = {l1} {l2} {cos_theta}$が確認できました。''',
              **locals())
+
+    if cmdline.symtest:
+        assert(sp.simplify(sp.Eq(_v1_dot_v2, l1_l2_cos_theta)))
 
 def rotateX(theta:float) -> np.ndarray:
     '(X)-軸を中心にtheta回転するモデル変換行列を与える'
