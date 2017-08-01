@@ -165,8 +165,8 @@ def centrality(g: Graph, profile: dict):
     }
 
 
-def analyse(root: PurePath, path: PurePath, profile: dict) -> Graph:
-    g = normalize(read(path), profile)
+def analyse(root: PurePath, path: PurePath, profile: dict, **kwds) -> Graph:
+    g = normalize(read(path, **kwds), profile)
 
     cmdscale(g, profile)
     centrality(g, profile)
