@@ -7,6 +7,7 @@ from typing import Callable
 
 from igraph import Graph
 import numpy as np
+import scipy.linalg
 
 from sn.io.util import pickle, io_array
 import sn.utils
@@ -35,7 +36,7 @@ def read(path: PurePath, *args, **kwds) -> Graph:
 
 def normalize(g: Graph, profile: dict) -> Graph:
     graph_dir = PurePath(profile['root']).joinpath(profile['name'], 'graph')
-    logging.info('graph_dir: {}, name: {}', graph_dir, profile['name'])
+    logging.info('graph_dir: {}, name: {}'.format(graph_dir, profile['name']))
 
     benchmark(message='Starting normalize')
     # Convert to undirected graph
@@ -101,7 +102,8 @@ def cmdscale(g: Graph, profile: dict):
     N, _ = d.shape
     J = np.eye(N) - np.ones((N, N)) / N      # Centering matrix
     B = - J.dot(d * d).dot(J) / 2.0          # Apply double centering
-    Λ, E = np.linalg.eigh(B)
+    # Λ, E = np.linalg.eigh(B)
+    Λ, E = scipy.linalg.eigh(B, eigvals=(0, min(N, 500 - 1)))
 
     Λ_positive = Λ > 0                       # Choose positive eigenvalues
     Λ, E = Λ[Λ_positive], E[:, Λ_positive]
