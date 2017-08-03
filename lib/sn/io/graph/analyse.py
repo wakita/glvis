@@ -9,7 +9,7 @@ from igraph import Graph
 import numpy as np
 import scipy.linalg
 
-from sn.io.util import pickle, io_array
+from sn.io.util import mkdir_parent, pickle, io_array
 import sn.utils
 from sn.utils import time as benchmark
 
@@ -82,6 +82,7 @@ def cmdscale(g: Graph, profile: dict):
         print('Layout files found and returning')
         return io_array(Λ_path), io_array(E_path)
     print('Layout files not found', Λ_path)
+    print('Starting CMDS computation')
 
     # Distance matrix (All-pairs shortest path length in numpy array)
     distance_file = graph_dir.joinpath('graph', 'distance.npy')
@@ -90,25 +91,33 @@ def cmdscale(g: Graph, profile: dict):
             raise FileNotFoundError
         d = io_array(distance_file)
     except FileNotFoundError:
+        print('All-pairs shortest path')
         paths = g.shortest_paths(weights=None)
         #d = np.array(paths, dtype=np.int)
         d = np.array(paths, dtype=np.uint8)
+        benchmark(message='All-pairs shortest path done')
         io_array(distance_file, d)
         if _DEBUG_ and len(g.vs) < 100:
             logging.info(d)
-        benchmark(message='All-pairs shortest path length over the graph')
+        benchmark(message='All-pairs shortest path length written')
 
     # Classical Multi Dimensional Scaling
+
+    print('CMDS computation')
     N, _ = d.shape
     J = np.eye(N) - np.ones((N, N)) / N      # Centering matrix
     B = - J.dot(d * d).dot(J) / 2.0          # Apply double centering
     # Λ, E = np.linalg.eigh(B)
-    Λ, E = scipy.linalg.eigh(B, eigvals=(0, min(N, 500 - 1)))
+    n_eigvals = min(N, 500)
+    Λ, E = scipy.linalg.eigh(B, eigvals=(N - n_eigvals, N - 1))
+    # print('#Λ: {}, #E: {}'.format(Λ.shape, E.shape))
 
     Λ_positive = Λ > 0                       # Choose positive eigenvalues
     Λ, E = Λ[Λ_positive], E[:, Λ_positive]
+    # print('positives: #Λ: {}, #E: {}'.format(Λ.shape, E.shape))
     Λ_descending = np.argsort(-Λ)            # Organize in descending order of eigenvalues
     Λ, E = Λ[Λ_descending], E[:, Λ_descending]
+    # print('after sort: #Λ: {}, #E: {}'.format(Λ.shape, E.shape))
     dim_hd = Λ.shape[0]
     max_eigens = 'max_eigens' in profile and profile['max_eigens'] or 500
     if dim_hd > max_eigens:
@@ -118,6 +127,8 @@ def cmdscale(g: Graph, profile: dict):
     layout_hd = E.dot(np.diag(np.sqrt(Λ)))
     profile['dim_hd'] = layout_hd.shape
 
+    benchmark(message='CMDS comptation done')
+
     if _DEBUG_:
         for i in range(dim_hd):
             v = E[:, i]
@@ -125,13 +136,12 @@ def cmdscale(g: Graph, profile: dict):
             logging.info(diff.dot(diff))
             assert diff.dot(diff) < 1e-10  # Confirm that E are truely eigenvectors
 
-    L = np.eye(N, dim_hd).dot(np.diag(Λ))
+    # L = np.eye(N, dim_hd).dot(np.diag(Λ))
 
     io_array(Λ_path,  Λ)
     io_array(E_path,   E)
     io_array(layout_dir.joinpath('layout_hd'),    layout_hd)
-
-    benchmark(message='Classical multi dimensional scaling')
+    benchmark(message='CMDS result stored')
 
     return Λ, E
 
@@ -175,6 +185,7 @@ def analyse(root: PurePath, path: PurePath, profile: dict, **kwds) -> Graph:
 
     path_profile = Path(root.joinpath(profile['name'], 'misc', 'profile.json'))
     if profile.get('force', False) or not path_profile.exists():
+        mkdir_parent(path_profile)
         with open(str(path_profile), 'w') as w:
             json.dump(profile, w, ensure_ascii=False, indent=4)
         logging.info(json.dumps(profile, indent=4))
