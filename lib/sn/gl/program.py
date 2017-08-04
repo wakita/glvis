@@ -295,7 +295,7 @@ class AnalyseUniforms(Analyse):
         f(loc, *vec)
 
     @staticmethod
-    def _uniform_(f): return lambda loc, name, v: Program._gl_uniform_.__func__(f, loc, name, v)
+    def _uniform_(f): return lambda loc, name, v: Program._gl_uniform_(f, loc, name, v)
 
     @staticmethod
     def _uniformv_(f): return lambda loc, name, *vec: Program._gl_uniformv_(f, loc, name, vec)
