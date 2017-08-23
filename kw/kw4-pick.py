@@ -21,7 +21,7 @@ class SSB(Structure):
 class KW4(DEMO):
     def __init__(self):
         super().__init__()
-        self.should_handle_pick = False
+        self.clicked_pos = None
         self.click_buffer = 0
         self.fragment = dict()
         '@type: Dict[str, int]'
@@ -59,32 +59,38 @@ class KW4(DEMO):
 
     def paintGL(self):
         self.geometry.use()
-        pick_or_paint = self.fragment['pick' if self.should_handle_pick else 'paint']
+        self.handle_pick_before()
+        pick_or_paint = self.fragment['pick' if self.should_handle_pick() else 'paint']
         glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, pick_or_paint)
         super().paintGL()
-        self.handle_pick()
+        self.handle_pick_after()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
-        pos = ev.pos()
+        self.clicked_pos = ev.pos()
 
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
-        # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
-        ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
-        # Save the clicked location information
-        ssb.clicked_x, ssb.clicked_y = pos.x(), pos.y()
-        # Initialize fields
-        ssb.pick_z = float('-inf')         # Initially -infty
-        ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
-        logging.info('float.min: {0}'.format(sys.float_info.min))
-        logging.info('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
-        # Unmap the SSB
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
-        # Tell the next rendering cycle to perform pick-identification
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
-        self.should_handle_pick = True
+    def should_handle_pick(self):
+        return self.clicked_pos is not None
 
-    def handle_pick(self):
-        if self.should_handle_pick:
+    def handle_pick_before(self):
+        if self.should_handle_pick():
+            glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
+            # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
+            ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
+            # Save the clicked location information
+            pos = self.clicked_pos
+            ssb.clicked_x, ssb.clicked_y = pos.x(), pos.y()
+            # Initialize fields
+            ssb.pick_z = float('-inf')         # Initially -infty
+            ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
+            logging.info('float.min: {0}'.format(sys.float_info.min))
+            logging.info('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+            # Unmap the SSB
+            glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
+            # Tell the next rendering cycle to perform pick-identification
+            glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
+
+    def handle_pick_after(self):
+        if self.should_handle_pick():
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
@@ -94,6 +100,6 @@ class KW4(DEMO):
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
             # Pick-identification finished
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
-            self.should_handle_pick = False
+            self.clicked_pos = None
 
 KW4.start()
