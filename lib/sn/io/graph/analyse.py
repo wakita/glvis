@@ -78,7 +78,7 @@ def cmdscale(g: Graph, profile: dict):
             Path(layout_dir.joinpath(name + '.npy'))
             for name in 'eigenvalues eigenvectors layout_hd'.split()]
     if not force and Λ_path.exists() and E_path.exists():
-        print('Layout files found and returning')
+        logging.info('Layout files found and returning')
         return io_array(Λ_path), io_array(E_path)
     logging.debug('Layout files not found: {}'.format(Λ_path))
 
@@ -217,7 +217,7 @@ if __name__ == '__main__':
         # g = load_dataset(dataset_dir, 'lesmis')
         nv, ne = g.size()
         logging.info('#V = {}, #E = {}'.format(nv, ne))
-        print(g.profile)
+        logging.info(g.profile)
         dim_hd = g.dim_hd()
         logging.info('dim(HD): {}'.format(dim_hd))
         assert dim_hd[0] == nv
