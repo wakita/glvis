@@ -80,7 +80,7 @@ def cmdscale(g: Graph, profile: dict):
     if not force and Λ_path.exists() and E_path.exists():
         print('Layout files found and returning')
         return io_array(Λ_path), io_array(E_path)
-    print('Layout files not found', Λ_path)
+    logging.debug('Layout files not found: {}'.format(Λ_path))
 
     # Distance matrix (All-pairs shortest path length in numpy array)
     distance_file = graph_dir.joinpath('graph', 'distance.npy')
