@@ -9,7 +9,7 @@ from sn.gl.geometry.volume import D as DEMO
 from sn.gl.geometry.points import V as POINTS
 import sn.gl.geometry.t3d as T
 
-S = 5
+S = 100
 
 
 class SSB(Structure):
@@ -66,13 +66,16 @@ class KW4(DEMO):
         self.handle_pick_after()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
-        self.clicked_pos = ev.pos()
+        self.should_handle_pick(ev.pos())
 
-    def should_handle_pick(self):
+    def should_handle_pick(self, pos=False):
+        if not self.clicked_pos and pos:
+            self.clicked_pos = pos
         return self.clicked_pos is not None
 
     def handle_pick_before(self):
         if self.should_handle_pick():
+            glFinish() # Make sure that the graphic pipeline is idle
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
             # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
             ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
@@ -83,7 +86,8 @@ class KW4(DEMO):
             ssb.pick_z = float('-inf')         # Initially -infty
             ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
             logging.info('float.min: {0}'.format(sys.float_info.min))
-            logging.info('Mouse released: pos: ({0}, {1}), z: {2}'.format(ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
+            logging.info('Mouse released: pos: ({0}, {1}), z: {2}'.format(
+                ssb.clicked_x, ssb.clicked_y, ssb.pick_z))
             # Unmap the SSB
             glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
             # Tell the next rendering cycle to perform pick-identification
@@ -91,6 +95,7 @@ class KW4(DEMO):
 
     def handle_pick_after(self):
         if self.should_handle_pick():
+            glFinish() # Make sure that the graphic pipeline is idle
             glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
             # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
             ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
