@@ -102,6 +102,7 @@ class KW4(DEMO):
 
     def handle_pick_after(self):
         logging.debug('after - glBindBuffer')
+        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
         # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
         ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
