@@ -51,17 +51,19 @@ subroutine void Fragment(float, float);
 subroutine uniform Fragment fragment;
 
 /* Warning: A hidden bug seems to live here.
- * We should update pick_{z,id,lock} as a transation and spread their values to other threads.
+ * We should update pick_{z,id,lock} as a transaction and broadcast their values to other threads.
  */
 subroutine (Fragment)
 void pick(float D, float d) {
-  bool done = int(gl_FragCoord.x) != clicked_x || int(gl_FragCoord.y) != clicked_y;
-  while (!done && pick_z < vertexZ_fs) {
+  if (int(gl_FragCoord.x) != clicked_x) return;
+  if (int(gl_FragCoord.y) != clicked_y) return;
+
+  while (pick_z < vertexZ_fs) {
     if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
       pick_z = vertexZ_fs;
       pick_id = vertexID_fs;
       pick_lock = UNLOCKED;
-      done = true;
+      return;
     }
   }
 }

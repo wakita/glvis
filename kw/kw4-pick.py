@@ -88,11 +88,11 @@ class KW4(DEMO):
         # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
         ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
         # Save the clicked location information
-        ssb.clicked_x, ssb_clicked_y = self.clicked_pos.x(), self.clicked_pos.y()
+        ssb.clicked_x, ssb.clicked_y = self.clicked_pos.x(), self.clicked_pos.y()
         # Initialize fields
         ssb.pick_z = float('-inf')         # Initially -infty
         ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
-        logging.info('clicked pos: ({}, {})'.format(ssb.clicked_x, ssb.clicked_y))
+        logging.debug('clicked pos: ({}, {})'.format(ssb.clicked_x, ssb.clicked_y))
         # Unmap the SSB
         logging.debug('before - glUnmapBuffer')
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
@@ -105,7 +105,8 @@ class KW4(DEMO):
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
         # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
         ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
-        logging.debug('after - id: {} (z: {})'.format(ssb.pick_id, ssb.pick_z))
+        logging.debug('x: {}, y: {}'.format(ssb.clicked_x, ssb.clicked_y))
+        logging.info('id: {} (z: {})'.format(ssb.pick_id, ssb.pick_z))
         # Unmap the SSB
         logging.debug('after - glUnmapBuffer')
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
