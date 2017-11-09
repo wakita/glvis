@@ -341,7 +341,9 @@ class AnalyseUniforms(Analyse):
         (GL_FLOAT_MAT3x2, glUniformMatrix3x2fv),
         (GL_FLOAT_MAT3x4, glUniformMatrix3x4fv),
         (GL_FLOAT_MAT4x2, glUniformMatrix4x2fv),
-        (GL_FLOAT_MAT4x3, glUniformMatrix4x3fv)])
+        (GL_FLOAT_MAT4x3, glUniformMatrix4x3fv),
+    
+        (GL_SAMPLER_2D, _uniform_.__func__(glUniform1i))])
 
     def __init__(self, *args):
         logging.debug('__init__@ProgramUniforms')
