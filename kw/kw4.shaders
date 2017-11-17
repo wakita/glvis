@@ -35,14 +35,15 @@ flat in float pointSize;
 
 out vec4 color_fb;
 
-layout (std430, binding = 0) buffer SSB {
+layout (std430, binding = 0)
+buffer SSB {
   // Input fields
-  uint  clicked_x, clicked_y;
+  readonly uint  clicked_x, clicked_y;
   // Internally used fields
-  float pick_z;
-  int   pick_lock;
+  volatile float pick_z;
+  volatile int   pick_lock;
   // Output field
-  int   pick_id;
+  volatile int   pick_id;
 };
 
 const int UNLOCKED = 0, LOCKED = 1;
@@ -50,15 +51,20 @@ const int UNLOCKED = 0, LOCKED = 1;
 subroutine void Fragment(float, float);
 subroutine uniform Fragment fragment;
 
+/* Warning: A hidden bug seems to live here.
+ * We should update pick_{z,id,lock} as a transaction and broadcast their values to other threads.
+ */
 subroutine (Fragment)
 void pick(float D, float d) {
-  if (int(gl_FragCoord.x) == clicked_x && int(gl_FragCoord.y) == clicked_y) {
-    while (pick_z < vertexZ_fs) {
-      if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
-        pick_z = vertexZ_fs;
-        pick_id = vertexID_fs;
-        pick_lock = UNLOCKED;
-      }
+  if (int(gl_FragCoord.x) != clicked_x) return;
+  if (int(gl_FragCoord.y) != clicked_y) return;
+
+  while (pick_z < vertexZ_fs) {
+    if (atomicCompSwap(pick_lock, UNLOCKED, LOCKED) == UNLOCKED) {
+      pick_z = vertexZ_fs;
+      pick_id = vertexID_fs;
+      pick_lock = UNLOCKED;
+      return;
     }
   }
 }
