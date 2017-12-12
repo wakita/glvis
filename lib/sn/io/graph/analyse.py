@@ -89,14 +89,15 @@ def cmdscale(g: Graph, profile: dict):
     try:
         if force:
             raise FileNotFoundError
-        d = io_array(distance_file)
+        d = io_array(distance_file).astype(np.float32)
     except FileNotFoundError:
         logging.info('All-pairs shortest path')
         paths = g.shortest_paths(weights=None)
         #d = np.array(paths, dtype=np.int)
-        d = np.array(paths, dtype=np.uint8)
+        #d = np.array(paths, dtype=np.uint8)
+        d = np.array(paths, dtype=np.float32)
         benchmark(message='All-pairs shortest path done')
-        io_array(distance_file, d)
+        io_array(distance_file, d.astype(np.uint8))
         if _DEBUG_ and len(g.vs) < 100:
             logging.info(d)
         benchmark(message='All-pairs shortest path length written')
