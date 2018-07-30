@@ -1,5 +1,6 @@
 import logging
 import re
+import string
 from collections import defaultdict
 from ctypes import *
 from typing import Dict
@@ -95,7 +96,7 @@ class ProgramCore:
         self.validate()
         logging.debug('create@ProgramCore: _program = {}'.format(self._program))
 
-    def load(self, path):
+    def load(self, path, substitute=False):
         logging.debug('load@ProgramCore')
         shader_types, shader_set = self.shader_types, []
         kind, code = None, []
@@ -109,7 +110,10 @@ class ProgramCore:
                 else:
                     code.append(line)
         if kind is not None:
-            shader_set.append((kind, ''.join(code)))
+            code = ''.join(code)
+            if substitute:
+                code = string.Template(code).substitute(substitute)
+            shader_set.append((kind, code))
         self._shader_set = shader_set
 
     def compile_link(self):
