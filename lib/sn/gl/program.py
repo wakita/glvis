@@ -10,7 +10,6 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
 from   .globject import GLObject
-from   .raw.vertexattrib import lookup as lookup_vertex_attrib
 from   .types import *
 import sn.sn_logging as sn_logging
 
@@ -33,14 +32,6 @@ class ShaderProgramLinkingError(Exception):
 
 class SIZEI(UINT):
     pass
-
-
-name_buf = bytes(256)
-
-
-def resource_name(p, interface, target, length):
-    glGetProgramResourceName(p, interface, target, len(name_buf), glres.pointer(), name_buf)
-    return name_buf[:length - 1].decode('utf-8')
 
 
 class ProgramCore:
@@ -191,7 +182,7 @@ class _Program(GLObject):
 from .analyse import *
 
 class Program(ProgramCore,
-              AnalyseVertexAttributes, AnalyseUniforms, AnalyseShaderStorageBlock,
+              AnalyseVertexAttributes, AnalyseUniforms, AnalyseShaderStorageBlock, AnalyseSubroutines,
               _Program):
     def __init__(self, path):
         logging.debug('__init__@Program')
