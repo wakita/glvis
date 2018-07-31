@@ -1,7 +1,6 @@
 import logging
 import re
 import string
-from collections import defaultdict
 from ctypes import *
 from typing import Dict
 import numpy as np
@@ -10,8 +9,9 @@ import OpenGL
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
-from .globject import GLObject
-from .raw.vertexattrib import lookup as lookup_vertex_attrib
+from   .globject import GLObject
+from   .raw.vertexattrib import lookup as lookup_vertex_attrib
+from   .types import *
 import sn.sn_logging as sn_logging
 
 OpenGL.FORWARD_COMPATIBLE_ONLY = True
@@ -29,30 +29,6 @@ class ShaderProgramSyntaxError(Exception):
 class ShaderProgramLinkingError(Exception):
     def __init__(self, message):
         self.message = message
-
-
-class ProgramResource(Structure):
-    @staticmethod
-    def specs(specs):
-        return [(name, c_uint) for name, _ in specs], [feature for _, feature in specs]
-
-    def bufinfo(self):
-        return len(self._features_), self._features_, sizeof(self), glres.pointer(), self.pointer()
-
-    def pointer(self):
-        return pointer(self)
-
-    def query(self, p, interface, target):
-        glGetProgramResourceiv(p, interface, target,
-                               len(self._features_), self._features_,
-                               sizeof(self), glres.pointer(), pointer(self))
-
-
-class UINT(ProgramResource):
-    _fields_, _features_ = ProgramResource.specs([('val', c_uint)])
-
-
-glres = UINT()
 
 
 class SIZEI(UINT):
@@ -207,268 +183,12 @@ class ProgramCore:
         glUseProgram(self._program)
 
 
-class Analyse:
-    def examine(self):
-        pass
-
-class AnalyseVertexAttributes(Analyse):
-    vertex_attribute_handler = dict([
-        (GL_FLOAT_VEC2, glVertexAttrib2f),
-        (GL_FLOAT_VEC3, glVertexAttrib3f),
-        (GL_FLOAT_VEC4, glVertexAttrib4f)])
-
-    def __init__(self, *args):
-        logging.debug('__init__@ProgramVertexAttributes')
-        self.a = dict()
-        super().__init__()
-
-    def examine(self):
-        p = self._program
-        logging.debug('examine@ProgramVertexAttributes({})'.format(p))
-
-        n = np.zeros(1, dtype=np.int32)
-        glGetProgramInterfaceiv(p, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, n)
-        if sn_logging.log_on_shader_variables():
-            logging.info('#vertex attributes = {0}'.format(n[0]))
-
-        types = list(self.vertex_attribute_handler.keys())
-        properties = np.array([GL_NAME_LENGTH, GL_TYPE, GL_LOCATION])
-
-        bbuf = bytes(256)
-        info = np.zeros(3, dtype=np.int32)
-        lengths = np.zeros(1, dtype=np.int32)
-        a = self.a
-        for attr in range(n[0]):
-            glGetProgramResourceiv(p, GL_PROGRAM_INPUT, attr,
-                                   3, properties, 3, lengths,
-                                   info)
-            logging.info('length = {0}, info = {1}'.format(lengths, info))
-            glGetProgramResourceName(p, GL_PROGRAM_INPUT, attr, len(bbuf), lengths, bbuf)
-            location = info[2]
-            if location == -1:
-                continue
-            name = bbuf[:lengths[0]].decode('utf-8')
-            typestr = '???'
-            try:
-                typestr = types[types.index(info[1])].__repr__()
-                f = self.vertex_attribute_handler[info[1]]
-                a[name] = (lambda *args, f=f, l=location: f(*([l] + list(args))))
-            except: pass
-            if sn_logging.log_on_shader_variables():
-                logging.info('attribute {0}:{1}@{2}'.format(name, typestr, location))
-            a[name].name, a[name].loc, a[name].type = name, location, info[1]
-            # assumption: vec3 in pos_vs
-            # pos_vs_f = prog.vertexAttrib('pos_vs', GL_Float, GL_Float, GL_Float) => glVertexAttrib1f)
-            # pos_vs_f(1.0, 1.0)
-            # pos_vs_sv = prog.vertexAttrib('pos_vs', [GL_Short, GL_Short, GL_Short]) => glVertexAttrib1sv)
-            # pos_vs_sv(np.array([1, 1]), dtype=np.short)
-
-        super().examine()
-
-    def vertexAttrib(self, name, *signature):
-        attr = self.a[name]
-        loc = attr.loc
-        f = lookup_vertex_attrib(attr.type, *signature)
-        return lambda *args, loc=loc: f(loc, *args)
-
-
-class AnalyseUniforms(Analyse):
-
-    @staticmethod
-    def _gl_uniform_(f, loc, name, v):
-        if sn_logging.log_on_uniform_update():
-            logging.debug('Uniform[{0}]: {1}\n'.format(name, v))
-        f(loc, v)
-
-    @staticmethod
-    def _gl_uniformv_(f, loc, name, vec):
-        if sn_logging.log_on_uniform_update():
-            logging.debug('UniformV[{0}]: {1}\n'.format(name, vec))
-        f(loc, *vec)
-
-    @staticmethod
-    def _gl_uniformf_(f, loc, name, v):
-        if sn_logging.log_on_uniform_update():
-            logging.debug('Uniformf[{0}]: {1}\n'.format(name, v))
-        f(loc, v)
-
-    @staticmethod
-    def _gl_uniformfv_(f, loc, name, vec):
-        if sn_logging.log_on_uniform_update():
-            logging.debug('UniformFV[{0}]: {1}\n'.format(name, vec))
-        f(loc, *vec)
-
-    @staticmethod
-    def _uniform_(f): return lambda loc, name, v: Program._gl_uniform_(f, loc, name, v)
-
-    @staticmethod
-    def _uniformv_(f): return lambda loc, name, *vec: Program._gl_uniformv_(f, loc, name, vec)
-
-    @staticmethod
-    def _uniformf_(f): return lambda loc, name, v: Program._gl_uniformf_(f, loc, name, v)
-
-    @staticmethod
-    def _uniformfv_(f): return lambda loc, name, *vec: Program._gl_uniformfv_(f, loc, name, vec)
-
-    @staticmethod
-    def _gl_uniform_matrix_(f, loc, name, mat):
-        if sn_logging.log_on_uniform_update():
-            logging.debug('Uniform[{0}]:\n{1}\n'.format(name, mat))
-        f(loc, 1, GL_FALSE, mat.T)  # Row-major --> Column-major conversion
-        # f(loc, 1, GL_FALSE, mat)
-
-    @staticmethod
-    def umatrix(f): return lambda loc, mat: f(loc, 1, GL_FALSE, mat.T)
-
-    @staticmethod
-    def _uniform_matrix_(f): return lambda loc, name, mat: Program._gl_uniform_matrix_(f, loc, name, mat)
-
-    @staticmethod
-    def _uniform_matrix_ignored_(): return lambda *args: None
-
-    uniform_handler = dict([
-        (GL_INT, _uniform_.__func__(glUniform1i)),
-        (GL_INT_VEC2, _uniformv_.__func__(glUniform2i)),
-        (GL_INT_VEC3, _uniformv_.__func__(glUniform3i)),
-        (GL_INT_VEC4, _uniformv_.__func__(glUniform4i)),
-        (GL_FLOAT, _uniformfv_.__func__(glUniform1f)),
-        (GL_FLOAT_VEC2, _uniformfv_.__func__(glUniform2f)),
-        (GL_FLOAT_VEC3, _uniformfv_.__func__(glUniform3f)),
-        (GL_FLOAT_VEC4, _uniformfv_.__func__(glUniform4f)),
-
-
-        (GL_FLOAT_MAT2, glUniformMatrix2fv),
-        (GL_FLOAT_MAT3, glUniformMatrix3fv),
-        (GL_FLOAT_MAT4, _uniform_matrix_.__func__(glUniformMatrix4fv)),
-        (GL_FLOAT_MAT2x3, glUniformMatrix2x3fv),
-        (GL_FLOAT_MAT2x4, glUniformMatrix2x4fv),
-        (GL_FLOAT_MAT3x2, glUniformMatrix3x2fv),
-        (GL_FLOAT_MAT3x4, glUniformMatrix3x4fv),
-        (GL_FLOAT_MAT4x2, glUniformMatrix4x2fv),
-        (GL_FLOAT_MAT4x3, glUniformMatrix4x3fv),
-    
-        (GL_SAMPLER_2D, _uniform_.__func__(glUniform1i))])
-
-    def __init__(self, *args):
-        logging.debug('__init__@ProgramUniforms')
-        self.u = defaultdict(lambda *args1, **kwargs1:
-                             lambda *args2, **kwargs2:
-                             logging.warning('なによ、この謎の Uniform 変数は！{}:{} / {}:{}'.format(
-                                 args1, kwargs1, args2, kwargs2)))
-        super().__init__()
-
-    def examine(self):
-        p = self._program
-        logging.debug('examine@ProgramUniforms({})'.format(p))
-
-        types = list(self.uniform_handler.keys())
-
-        u = self.u
-
-        ibuf = np.zeros(5, dtype=np.int32)
-        glGetProgramInterfaceiv(p, GL_UNIFORM, GL_ACTIVE_RESOURCES, ibuf)
-        n = ibuf[0]
-        if sn_logging.log_on_shader_variables():
-            logging.info('#uniforms = {0}'.format(n))
-
-        bbuf = bytes(256)
-        properties = np.array([GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX])
-        for i in range(n):
-            glGetProgramResourceiv(p, GL_UNIFORM, i, len(properties), properties,
-                                   len(ibuf), ibuf[len(properties):], ibuf)
-            loc = ibuf[2]
-            if loc == -1:
-                continue
-
-            logging.info("loc = {0}, len = {1}, type = {2}".format(loc, ibuf[0], ibuf[1]))
-            length = ibuf[0] + 1
-            _t = ibuf[1]
-            t = types[types.index(ibuf[1])].__repr__()
-            logging.info('length = {0}, type = {1}, location = {2}' .format(length, t, loc))
-
-            glGetProgramResourceName(p, GL_UNIFORM, i, len(bbuf), ibuf[:1], bbuf)
-            length = ibuf[0]
-            name = bbuf[:length].decode('utf-8')
-            if sn_logging.log_on_shader_variables():
-                logging.info('uniform {0}:{1}@{2}'.format(name, t, loc))
-            f = self.uniform_handler[_t]
-            u[name] = (lambda *args, f=f, loc=loc, name=name: f(*([loc, name] + list(args))))
-            u[name].name = name
-            u[name].loc = loc
-
-        super().examine()
-
-
-class SSBlockInformation(ProgramResource):
-    _fields_, _features_ = ProgramResource.specs([
-        ('name_length', GL_NAME_LENGTH),
-        ('num_active_variables', GL_NUM_ACTIVE_VARIABLES),
-        ('buffer_binding', GL_BUFFER_BINDING),
-        ('buffer_data_size', GL_BUFFER_DATA_SIZE)])
-
-
-class SSBVariableInformation(ProgramResource):
-    _fields_, _features_ = ProgramResource.specs([
-        ('type', GL_TYPE),
-        ('array_size', GL_ARRAY_SIZE),
-        ('offset', GL_OFFSET),
-        ('array_stride', GL_ARRAY_STRIDE),
-        ('name_length', GL_NAME_LENGTH),
-        ('top_level_array_size', GL_TOP_LEVEL_ARRAY_SIZE)])
-
-
-class AnalyseShaderStorageBlock(Analyse):
-    def __init__(self, *args):
-        logging.debug('__init__@ProgramShaderStorageBlock')
-        self.ssb = dict()
-        super().__init__()
-
-    def examine(self):
-        logging.debug('examine@ProgramShaderStorageBlock')
-        p = self._program
-        ssb = self.ssb
-
-        glGetProgramInterfaceiv(p, GL_SHADER_STORAGE_BLOCK, GL_ACTIVE_RESOURCES, pointer(glres))
-        active_blocks = glres.val
-        logging.info('#active shader storage block(s) = {}'.format(active_blocks))
-
-        ssb_info = SSBlockInformation()
-        ssb_varinfo = SSBVariableInformation()
-        for block in range(active_blocks):
-            ssb_info.query(p, GL_SHADER_STORAGE_BLOCK, block)
-            logging.info('block = {}, name length = {}, #active variables = {}'.format(
-                block, ssb_info.name_length, ssb_info.num_active_variables))
-            logging.info('buffer binding = {}, buffer data size = {}'.format(
-                ssb_info.buffer_binding, ssb_info.buffer_data_size))
-
-            # Retrieving an active SS-Block name
-            name = resource_name(p, GL_SHADER_STORAGE_BLOCK, block, ssb_info.name_length)
-            logging.info('Shader storage block name: "{}"'.format(name))
-            ssb[name] = block
-
-            variables = np.zeros(ssb_info.num_active_variables, dtype=np.int32)
-            glGetProgramResourceiv(p, GL_SHADER_STORAGE_BLOCK, block, 1,
-                                   [GL_ACTIVE_VARIABLES], ssb_info.num_active_variables, pointer(glres), variables)
-            logging.info('Active variables: {}'.format(variables))
-
-            # Retrieving indices of the active member variables
-            for var in variables:
-                ssb_varinfo.query(p, GL_BUFFER_VARIABLE, var)
-                logging.info('{}'.format([ssb_varinfo.type, ssb_varinfo.array_size,
-                                          ssb_varinfo.offset, ssb_varinfo.array_stride,
-                                          ssb_varinfo.name_length,
-                                          ssb_varinfo.top_level_array_size]))
-                var_name = resource_name(p, GL_BUFFER_VARIABLE, var, ssb_varinfo.name_length)
-                logging.info('active variable[{}]: length: {}, name: "{}"'.format(
-                    var, ssb_varinfo.name_length,  var_name))
-
-        super().examine()
-
-
 class _Program(GLObject):
     def examine(self, *args):
         pass
 
+
+from .analyse import *
 
 class Program(ProgramCore,
               AnalyseVertexAttributes, AnalyseUniforms, AnalyseShaderStorageBlock,
