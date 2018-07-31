@@ -1,4 +1,5 @@
-from .common import *
+from   .common import *
+from   ..raw.vertexattrib import lookup as lookup_vertex_attrib
 
 class A(Analyse):
     vertex_attribute_handler = dict([
@@ -59,4 +60,3 @@ class A(Analyse):
         loc = attr.loc
         f = lookup_vertex_attrib(attr.type, *signature)
         return lambda *args, loc=loc: f(loc, *args)
-

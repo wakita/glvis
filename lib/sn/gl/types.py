@@ -21,6 +21,14 @@ class ProgramResource(Structure):
                                sizeof(self), glres.pointer(), pointer(self))
 
 
+name_buf = bytes(256)
+
+
+def resource_name(p, interface, target, length):
+    glGetProgramResourceName(p, interface, target, len(name_buf), glres.pointer(), name_buf)
+    return name_buf[:length - 1].decode('utf-8')
+
+
 class UINT(ProgramResource):
     _fields_, _features_ = ProgramResource.specs([('val', c_uint)])
 
