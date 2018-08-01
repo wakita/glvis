@@ -5,7 +5,7 @@ uniform mat4 MV;
 uniform mat4 P;
 uniform float pointsize;
 
-layout (location=0) in vec3 position_vs;
+in vec3 position_vs;
 
 flat out int   vertexID_fs;
 flat out float vertexZ_fs;
@@ -35,8 +35,7 @@ flat in float pointSize;
 
 out vec4 color_fb;
 
-layout (std430, binding = 0)
-buffer SSB_Picker {
+layout (std430) buffer SSB_Picker {
   // Input fields
   readonly uint  clicked_x, clicked_y;
   // Internally used fields
@@ -51,9 +50,6 @@ const int UNLOCKED = 0, LOCKED = 1;
 subroutine void Fragment(float, float);
 subroutine uniform Fragment fragment;
 
-/* Warning: A hidden bug seems to live here.
- * We should update pick_{z,id,lock} as a transaction and broadcast their values to other threads.
- */
 subroutine (Fragment)
 void pick(float D, float d) {
   if (int(gl_FragCoord.x) != clicked_x) return;
