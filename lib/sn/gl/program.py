@@ -179,7 +179,7 @@ class _Program(GLObject):
         pass
 
 
-from .analyse import *
+from .meta import *
 
 class Program(ProgramCore,
               AnalyseVertexAttributes, AnalyseUniforms, AnalyseShaderStorageBlock, AnalyseSubroutines,

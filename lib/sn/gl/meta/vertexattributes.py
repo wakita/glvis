@@ -1,5 +1,5 @@
 from   .common import *
-from   ..raw.vertexattrib import lookup as lookup_vertex_attrib
+from   .vertexattrib import lookup as lookup_vertex_attrib
 
 class A(Analyse):
     vertex_attribute_handler = dict([
