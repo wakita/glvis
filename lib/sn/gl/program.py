@@ -193,3 +193,29 @@ class Program(ProgramCore,
         logging.debug('create@Program')
         super().create()
         super().examine()
+
+
+class open_ssb():
+    def __init__(self, buffer, Buffer, mode):
+        self.buffer = buffer
+        self.Buffer = Buffer
+        self.mode = mode
+
+    def __enter__(self):
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.buffer)
+        return cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, self.mode), POINTER(self.Buffer)).contents
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
+
+
+def allocate_ssb(binding, buf, Buffer, mode):
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding, buf)
+    ssb = Buffer()
+    glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), mode)
+    return ssb
+
+def dispatch_cs(subroutine, cs_dimension):
+    glUniformSubroutinesuiv(GL_COMPUTE_SHADER, 1, subroutine)
+    glDispatchCompute(*cs_dimension)

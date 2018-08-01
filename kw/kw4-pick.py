@@ -1,6 +1,5 @@
 from ctypes import *
 import logging
-import sys
 
 from PyQt5 import QtCore, QtGui
 from sn.gl import *
@@ -23,8 +22,6 @@ class KW4(DEMO):
         super().__init__()
         self.clicked_pos = None
         self.click_buffer = 0
-        self.fragment = dict()
-        '@type: Dict[str, int]'
 
     def minimumSizeHint(self) -> QtCore.QSize:
         return QtCore.QSize(600, 600)
@@ -46,27 +43,20 @@ class KW4(DEMO):
         self.click_buffer = glGenBuffers(1)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
         # Bind the 0'th binding point of the SSB to the application-side SSB area
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, self.click_buffer)
-        # Allocate a storage area on the application
-        ssb = SSB()
-        # Create and initialize the application-side SSB area
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), GL_DYNAMIC_READ)
+        allocate_ssb(0, self.click_buffer, SSB, GL_DYNAMIC_READ)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
-
-        for f in 'paint pick'.split():
-            self.fragment[f] = glGetSubroutineIndex(self.program._program, GL_FRAGMENT_SHADER, f)
-        logging.debug(self.fragment)
 
     def paintGL(self):
         self.geometry.use()
+        p = self.program
 
         if self.should_handle_pick():
             self.handle_pick_before()
-            glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['pick'])
+            p.F.fs.pick()
             super().paintGL()
             self.handle_pick_after()
 
-        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, self.fragment['paint'])
+        p.F.fs.paint()
         super().paintGL()
 
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent):
@@ -82,38 +72,20 @@ class KW4(DEMO):
 
     def handle_pick_before(self):
         logging.debug('before - lock ssb')
-        logging.debug('before - glBindBuffer')
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
-        logging.debug('before - glMapBuffer')
-        # Map the GPU-side shader-storage-buffer on the application, allowing for write-only access
-        ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY), POINTER(SSB)).contents
-        # Save the clicked location information
-        ssb.clicked_x, ssb.clicked_y = self.clicked_pos.x(), self.clicked_pos.y()
-        # Initialize fields
-        ssb.pick_z = float('-inf')         # Initially -infty
-        ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
-        logging.debug('clicked pos: ({}, {})'.format(ssb.clicked_x, ssb.clicked_y))
-        # Unmap the SSB
-        logging.debug('before - glUnmapBuffer')
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
-        # Tell the next rendering cycle to perform pick-identification
-        logging.debug('before - glUnbindBuffer')
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
+        with open_ssb(self.click_buffer, SSB, GL_WRITE_ONLY) as ssb:
+            # Save the clicked location information
+            ssb.clicked_x, ssb.clicked_y = self.clicked_pos.x(), self.clicked_pos.y()
+            # Initialize fields
+            ssb.pick_z = float('-inf')         # Initially -infty
+            ssb.pick_lock, ssb.pick_id = 0, -1  # Initially UNLOCKED (c.f., Unlocked@kw4.shader)
+            logging.debug('clicked pos: ({}, {})'.format(ssb.clicked_x, ssb.clicked_y))
 
     def handle_pick_after(self):
         logging.debug('after - glBindBuffer')
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT)
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
-        # Map the GPU-side shader-storage-buffer on the application, allowing for read-only access
-        ssb = cast(glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY), POINTER(SSB)).contents
-        logging.debug('x: {}, y: {}'.format(ssb.clicked_x, ssb.clicked_y))
-        logging.info('id: {} (z: {})'.format(ssb.pick_id, ssb.pick_z))
-        # Unmap the SSB
-        logging.debug('after - glUnmapBuffer')
-        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
-        # Pick-identification finished
-        logging.debug('after - glUnbindBuffer')
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
+        with open_ssb(self.click_buffer, SSB, GL_READ_ONLY) as ssb:
+            logging.debug('x: {}, y: {}'.format(ssb.clicked_x, ssb.clicked_y))
+            logging.info('id: {} (z: {})'.format(ssb.pick_id, ssb.pick_z))
         self.clicked_pos = None
 
 KW4.start()

@@ -4,6 +4,8 @@ import OpenGL
 from OpenGL.GL import *
 from OpenGL.GL.shaders import *
 
+class Object(object): pass
+
 class ProgramResource(Structure):
     @staticmethod
     def specs(specs):
