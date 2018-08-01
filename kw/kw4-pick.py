@@ -43,7 +43,7 @@ class KW4(DEMO):
         self.click_buffer = glGenBuffers(1)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, self.click_buffer)
         # Bind the 0'th binding point of the SSB to the application-side SSB area
-        allocate_ssb(0, self.click_buffer, SSB, GL_DYNAMIC_READ)
+        allocate_ssb(self.program.ssb.SSB_Picker, self.click_buffer, SSB, GL_DYNAMIC_READ)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
 
     def paintGL(self):

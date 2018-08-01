@@ -3,7 +3,7 @@ from .common import *
 class A(Analyse):
     def __init__(self, *args):
         logging.debug('__init__@ProgramShaderStorageBlock')
-        self.ssb = dict()
+        self.ssb = Object()
         super().__init__()
 
     def examine(self):
@@ -26,7 +26,7 @@ class A(Analyse):
             # Retrieving an active SS-Block name
             name = resource_name(p, GL_SHADER_STORAGE_BLOCK, block, ssb_info.name_length)
             logging.info('Shader storage block name: "{}"'.format(name))
-            ssb[name] = block
+            setattr(ssb, name, block)
 
             variables = sp.zeros(ssb_info.num_active_variables, dtype=sp.int32)
             glGetProgramResourceiv(p, GL_SHADER_STORAGE_BLOCK, block, 1,
