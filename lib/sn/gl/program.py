@@ -209,12 +209,14 @@ class open_ssb():
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER)
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
 
-
-def allocate_ssb(binding, buf, Buffer, mode):
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding, buf)
+def allocate_ssb(binding_point, Buffer, mode):
+    ssbo = glGenBuffers(1)
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo)
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding_point, ssbo)
     ssb = Buffer()
     glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(ssb), pointer(ssb), mode)
-    return ssb
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0)
+    return ssbo, ssb
 
 def dispatch_cs(subroutine, cs_dimension):
     glUniformSubroutinesuiv(GL_COMPUTE_SHADER, 1, subroutine)
